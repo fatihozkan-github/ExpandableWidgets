@@ -51,7 +51,7 @@ abstract class Expandable extends StatefulWidget {
   /// • General padding.
   ///
   /// • Recommended to set 0 if it is used with [backGroundImage].
-  final EdgeInsets? cardPadding;
+  final EdgeInsets? cardMargin;
 
   /// • Icon that changes its direction with respect to expand animation.
   final bool? showArrowIcon;
@@ -62,8 +62,16 @@ abstract class Expandable extends StatefulWidget {
 
   final TextStyle? textStyle;
 
-  /// TEST - Designed for web.
   final bool? hoverOn;
+
+  ///
+  final bool? centralizePrimaryWidget;
+
+  final bool? centralizeAdditionalWidget;
+
+  final Widget? arrowWidget;
+
+  final Widget? textWidget;
 
   /// • Expandable abstract class for general use.
   Expandable({
@@ -79,15 +87,17 @@ abstract class Expandable extends StatefulWidget {
     this.animationDuration,
     this.beforeAnimationDuration,
     this.backGroundImage,
-    this.cardPadding,
+    this.cardMargin,
     this.showArrowIcon,
     this.arrowColor,
     this.initiallyExpanded,
     this.textStyle,
-
-    /// TEST
     this.hoverOn,
     this.additionalWidget,
+    this.centralizePrimaryWidget,
+    this.arrowWidget,
+    this.centralizeAdditionalWidget,
+    this.textWidget,
   });
 
   @override
@@ -101,7 +111,7 @@ class _ExpandableState extends State<Expandable> with TickerProviderStateMixin {
   late AnimationController _rotationController;
   late Animation<double> _rotationAnimation;
   bool _isRotated = false;
-  bool? checker = false;
+  bool? initiallyExpanded = false;
 
   static final Animatable<double> _rotationTween = Tween<double>(
     begin: 0.0,
@@ -162,10 +172,10 @@ class _ExpandableState extends State<Expandable> with TickerProviderStateMixin {
 
     _sizeAnimation = _sizeTween.animate(curve);
     _rotationAnimation = _rotationTween.animate(_rotationController);
-    _sizeController.addListener(() {
-      setState(() {});
-    });
-    checker = widget.initiallyExpanded;
+    // _sizeController.addListener(() {
+    //   setState(() {});
+    // });
+    initiallyExpanded = widget.initiallyExpanded;
   }
 
   @override
@@ -175,11 +185,30 @@ class _ExpandableState extends State<Expandable> with TickerProviderStateMixin {
     super.dispose();
   }
 
+  Widget defaultIcon = Icon(
+    Icons.keyboard_arrow_up_rounded,
+    color: Colors.black,
+    size: 25.0,
+  );
+  Widget holderIconIcon = Icon(
+    Icons.keyboard_arrow_up_rounded,
+    color: Colors.transparent,
+    size: 25.0,
+  );
+
+  ShapeBorder defaultShapeBorder = RoundedRectangleBorder(
+      borderRadius: BorderRadius.all(Radius.circular(20)));
+
   @override
   Widget build(BuildContext context) {
-    if (checker == true) {
+    RotationTransition defaultRotation = RotationTransition(
+      turns: Tween(begin: 0.0, end: 1.0).animate(_rotationController),
+      child: widget.arrowWidget ?? defaultIcon,
+    );
+
+    if (initiallyExpanded == true) {
       _toggleExpand();
-      checker = false;
+      initiallyExpanded = false;
     }
     return InkWell(
       hoverColor: Colors.transparent,
@@ -210,51 +239,37 @@ class _ExpandableState extends State<Expandable> with TickerProviderStateMixin {
           image: widget.backGroundImage ?? null,
         ),
         child: Card(
-          margin: widget.cardPadding ?? EdgeInsets.all(5),
-          elevation: widget.elevation ?? 0,
-          shape: widget.shape ??
-              RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(20))),
-          color: widget.backGroundColor ?? Colors.white,
+          margin: widget.cardMargin,
+          elevation: widget.elevation,
+          shape: widget.shape ?? defaultShapeBorder,
+          color: widget.backGroundColor,
           child: Padding(
             padding: widget.padding ?? EdgeInsets.all(0),
             child: Column(
               children: [
                 widget.text!.isNotEmpty
                     ? AnimatedCrossFade(
-                        duration: widget.animationDuration ??
-                            Duration(milliseconds: 100),
+                        duration: widget.animationDuration!,
                         crossFadeState: _isExpanded
                             ? CrossFadeState.showFirst
                             : CrossFadeState.showSecond,
-                        firstChild:
-                            Text(widget.text!, style: widget.textStyle ?? null),
-                        secondChild: Text(
-                          widget.text!,
-                          style: widget.textStyle ?? null,
-                          maxLines: widget.maxLines,
-                          overflow: TextOverflow.ellipsis,
-                        ),
+                        firstChild: Text(widget.text!, style: widget.textStyle),
+                        secondChild: widget.textWidget ??
+                            Text(
+                              widget.text!,
+                              style: widget.textStyle,
+                              maxLines: widget.maxLines,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                       )
                     : widget.showArrowIcon == true
                         ? Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              Icon(
-                                Icons.keyboard_arrow_up_rounded,
-                                color: Colors.transparent,
-                                size: 25.0,
-                              ),
+                              if (widget.centralizePrimaryWidget!)
+                                holderIconIcon,
                               widget.primaryWidget!,
-                              RotationTransition(
-                                turns: Tween(begin: 0.0, end: 1.0)
-                                    .animate(_rotationController),
-                                child: Icon(
-                                  Icons.keyboard_arrow_up_rounded,
-                                  color: widget.arrowColor ?? Colors.white,
-                                  size: 25.0,
-                                ),
-                              ),
+                              defaultRotation,
                             ],
                           )
                         : widget.additionalWidget != null
@@ -269,22 +284,13 @@ class _ExpandableState extends State<Expandable> with TickerProviderStateMixin {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceEvenly,
                                         children: [
-                                          Icon(
-                                            Icons.keyboard_arrow_up_rounded,
-                                            color: Colors.transparent,
-                                            size: 25.0,
-                                          ),
+                                          if (widget
+                                              .centralizeAdditionalWidget!)
+                                            holderIconIcon,
                                           widget.additionalWidget!,
-                                          RotationTransition(
-                                            turns: Tween(begin: -1.0, end: 0.0)
-                                                .animate(_rotationController),
-                                            child: Icon(
-                                              Icons.keyboard_arrow_down_rounded,
-                                              color: widget.arrowColor ??
-                                                  Colors.white,
-                                              size: 25.0,
-                                            ),
-                                          ),
+                                          RotatedBox(
+                                              quarterTurns: 2,
+                                              child: defaultRotation),
                                         ],
                                       ),
                                     ],

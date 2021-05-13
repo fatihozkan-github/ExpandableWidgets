@@ -34,6 +34,7 @@ class MyApp extends StatelessWidget {
               ),
               backGroundColor: Colors.grey.withOpacity(0.4),
               showArrowIcon: true,
+              centralizePrimaryWidget: true,
             ),
             SizedBox(height: 10),
 
@@ -66,10 +67,11 @@ class MyApp extends StatelessWidget {
                 ),
               ),
               elevation: 10,
-              additionalWidget: Text('Show more!'),
+              additionalWidget: Text('Show more'),
               arrowColor: Colors.blueGrey,
+              centralizePrimaryWidget: true,
               initiallyExpanded: true,
-              // showArrowIcon: true,
+              centralizeAdditionalWidget: true,
             ),
             SizedBox(height: 10),
 
@@ -79,11 +81,10 @@ class MyApp extends StatelessWidget {
               secondaryWidget: Container(height: 20),
               showArrowIcon: true,
               arrowColor: Colors.black,
-              backGroundImage: DecorationImage(
-                image: AssetImage('flutter.png'),
-              ),
+              backGroundImage:
+                  DecorationImage(image: AssetImage('flutter.png')),
               backGroundColor: Colors.transparent,
-              cardPadding: EdgeInsets.all(0),
+              cardMargin: EdgeInsets.all(0),
             ),
             SizedBox(height: 10),
             ExpandableWidget(
@@ -91,6 +92,7 @@ class MyApp extends StatelessWidget {
               secondaryWidget: Center(child: Text('Hello world')),
               showArrowIcon: true,
               backGroundColor: Colors.orange,
+              centralizePrimaryWidget: true,
             ),
           ],
         ),
