@@ -1,3 +1,11 @@
-## [0.0.1] - Release Date: TODO: Add release date.
+## [0.0.1] - Release Date: 13.05.2021
 
-* TODO: Describe initial release.
+## Initial Release ##
+   # Widgets:
+     • Expandable
+     • Expandable.singleTextChild
+     • Expandable.extended
+
+   # TODOs:
+     • ArrowWidget input and alignments.
+     • Fixing test error.

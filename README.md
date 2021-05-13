@@ -1,8 +1,6 @@
-Expandable widget
-
-<h1>Introduction</h1>
-A package that provides expandable widgets.
-
+<h1>Expandable Widgets</h1>
+A package that provides expandable widgets for Flutter.
+Written in %100 Dart.
 
 <h1>Examples</h1>
 General use:
@@ -23,8 +21,9 @@ General use:
                   ),
                 ),
               ),
-              backGroundColor: Colors.grey.withOpacity(0.4),
+              backgroundColor: Colors.grey.withOpacity(0.4),
               showArrowIcon: true,
+              centralizePrimaryWidget: true,
             ),
 
 For long texts:
@@ -40,45 +39,41 @@ For long texts:
 
 Extended example:
 
-             ExpandableWidget.extended(
-               primaryWidget: Container(
-                 height: 30,
-                 child: Center(child: Text('Hello world!')),
-               ),
-               secondaryWidget: Container(
-                 height: 45,
-                 child: Center(
-                   child: Column(
-                     children: [
-                       Text('Hello'),
-                       Text('World!'),
-                     ],
-                   ),
-                 ),
-               ),
-               elevation: 10,
-               additionalWidget: Text('Show more!'),
-               arrowColor: Colors.blueGrey,
-               initiallyExpanded: true,
-             ),
+            ExpandableWidget.extended(
+              elevation: 10,
+              initiallyExpanded: true,
+              centralizePrimaryWidget: true,
+              centralizeAdditionalWidget: true,
+              primaryWidget: Container(
+                height: 30,
+                child: Center(child: Text('Important Summary')),
+              ),
+              secondaryWidget: Container(
+                height: 70,
+                child: Center(
+                  child: Column(
+                    children: [
+                      Text('More'),
+                      Text('Details'),
+                      Text('About'),
+                      Text('Something'),
+                    ],
+                  ),
+                ),
+              ),
+              additionalWidget: Text('Show me'),
+            ),
 
 Example with background image:
  
              ExpandableWidget(
-               primaryWidget: Container(height: 10),
-               secondaryWidget: Container(height: 20),
-               showArrowIcon: true,
-               arrowColor: Colors.black,
-               backGroundImage: DecorationImage(
-                 image: AssetImage('flutter.png'),
-               ),
-               backGroundColor: Colors.transparent,
-               cardPadding: EdgeInsets.all(0),
-             ),
-
-Another example:
-
-             ExpandableWidget(
-               primaryWidget: Container(),
-               secondaryWidget: Text('Hello world'),
+               primaryWidget:
+                   Container(height: 30, color: Colors.grey.withOpacity(.3)),
+               secondaryWidget:
+                   Container(height: 30, color: Colors.blue.withOpacity(.3)),
+               showArrowIcon: false,
+               backgroundImage:
+                   DecorationImage(image: AssetImage('flutter.png')),
+               backgroundColor: Colors.transparent,
+               cardMargin: EdgeInsets.all(0),
              ),
