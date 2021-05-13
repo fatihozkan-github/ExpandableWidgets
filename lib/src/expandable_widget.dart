@@ -19,6 +19,7 @@ class ExpandableWidget extends Expandable {
     EdgeInsets? cardPadding,
     bool? showArrowIcon = false,
     bool? hoverOn,
+    Color? arrowColor,
   })  : assert(primaryWidget != null || secondaryWidget != null),
         super(
           primaryWidget: primaryWidget,
@@ -34,7 +35,8 @@ class ExpandableWidget extends Expandable {
           cardPadding: cardPadding,
           hoverOn: hoverOn,
           showArrowIcon: showArrowIcon,
-        text: '',
+          arrowColor: arrowColor,
+          text: '',
         );
 
   /// • Provides an expandable widget for a long text.
@@ -50,7 +52,7 @@ class ExpandableWidget extends Expandable {
     Duration? animationDuration,
     Function? onPressed,
     TextStyle? textStyle,
-  })  : super(
+  }) : super(
           backGroundColor: backGroundColor,
           text: text,
           elevation: elevation,
@@ -75,7 +77,6 @@ class ExpandableWidget extends Expandable {
     Duration? beforeAnimationDuration,
     DecorationImage? backGroundImage,
     EdgeInsets? cardPadding,
-    bool? showArrowIcon = false,
     bool? hoverOn,
     Color? arrowColor,
     bool? initiallyExpanded,
@@ -94,9 +95,8 @@ class ExpandableWidget extends Expandable {
           backGroundImage: backGroundImage,
           cardPadding: cardPadding,
           hoverOn: hoverOn,
-          showArrowIcon: showArrowIcon,
           arrowColor: arrowColor,
           initiallyExpanded: initiallyExpanded,
-        text: '',
+          text: '',
         );
 }

@@ -236,10 +236,15 @@ class _ExpandableState extends State<Expandable> with TickerProviderStateMixin {
                           overflow: TextOverflow.ellipsis,
                         ),
                       )
-                    : widget.showArrowIcon == false
+                    : widget.showArrowIcon == true
                         ? Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
+                              Icon(
+                                Icons.keyboard_arrow_up_rounded,
+                                color: Colors.transparent,
+                                size: 25.0,
+                              ),
                               widget.primaryWidget!,
                               RotationTransition(
                                 turns: Tween(begin: 0.0, end: 1.0)
@@ -252,7 +257,41 @@ class _ExpandableState extends State<Expandable> with TickerProviderStateMixin {
                               ),
                             ],
                           )
-                        : widget.primaryWidget!,
+                        : widget.additionalWidget != null
+                            ? Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Column(
+                                    children: [
+                                      widget.primaryWidget!,
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          Icon(
+                                            Icons.keyboard_arrow_up_rounded,
+                                            color: Colors.transparent,
+                                            size: 25.0,
+                                          ),
+                                          widget.additionalWidget!,
+                                          RotationTransition(
+                                            turns: Tween(begin: 0.0, end: 1.0)
+                                                .animate(_rotationController),
+                                            child: Icon(
+                                              Icons.keyboard_arrow_up_rounded,
+                                              color: widget.arrowColor ??
+                                                  Colors.white,
+                                              size: 25.0,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              )
+                            : widget.primaryWidget!,
                 SizeTransition(
                   axisAlignment: 0.0,
                   sizeFactor: _sizeAnimation,

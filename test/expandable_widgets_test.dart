@@ -13,7 +13,6 @@ void main() {
       primaryWidget: Text('hello world!'),
       secondaryWidget: Text('STILL D.R.E'),
       backGroundColor: Colors.orange,
-      showArrowIcon: true,
     ));
   });
 }
