@@ -88,7 +88,9 @@ class MyApp extends StatelessWidget {
             SizedBox(height: 10),
             ExpandableWidget(
               primaryWidget: Container(),
-              secondaryWidget: Text('Hello world'),
+              secondaryWidget: Center(child: Text('Hello world')),
+              showArrowIcon: true,
+              backGroundColor: Colors.orange,
             ),
           ],
         ),
