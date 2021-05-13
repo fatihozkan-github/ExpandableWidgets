@@ -1,4 +1,4 @@
-## [0.0.1] - Release Date: 13.05.2021
+## [1.0.0] - Release Date: 13.05.2021
 
 ## Initial Release ##
    # Widgets:
