@@ -1,7 +1,7 @@
 Expandable widget
 
-Introduction
+<h1>Introduction</h1>
 A package that provides expandable widgets.
 
 
-Examples
+<h1>Examples</h1>
