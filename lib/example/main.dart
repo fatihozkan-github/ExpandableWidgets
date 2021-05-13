@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
                   ),
                 ),
               ),
-              backGroundColor: Colors.grey.withOpacity(0.4),
+              backgroundColor: Colors.grey.withOpacity(0.4),
               showArrowIcon: true,
               centralizePrimaryWidget: true,
             ),
@@ -51,27 +51,28 @@ class MyApp extends StatelessWidget {
 
             /// Extended example
             ExpandableWidget.extended(
+              elevation: 10,
+              initiallyExpanded: true,
+              centralizePrimaryWidget: true,
+              centralizeAdditionalWidget: true,
               primaryWidget: Container(
                 height: 30,
-                child: Center(child: Text('Hello world!')),
+                child: Center(child: Text('Important Summary')),
               ),
               secondaryWidget: Container(
                 height: 45,
                 child: Center(
                   child: Column(
                     children: [
-                      Text('Hello'),
-                      Text('World!'),
+                      Text('More'),
+                      Text('Details'),
+                      Text('About'),
+                      Text('Something'),
                     ],
                   ),
                 ),
               ),
-              elevation: 10,
-              additionalWidget: Text('Show more'),
-              arrowColor: Colors.blueGrey,
-              centralizePrimaryWidget: true,
-              initiallyExpanded: true,
-              centralizeAdditionalWidget: true,
+              additionalWidget: Text('Show me details'),
             ),
             SizedBox(height: 10),
 
@@ -80,20 +81,12 @@ class MyApp extends StatelessWidget {
               primaryWidget: Container(height: 10),
               secondaryWidget: Container(height: 20),
               showArrowIcon: true,
-              arrowColor: Colors.black,
-              backGroundImage:
+              backgroundImage:
                   DecorationImage(image: AssetImage('flutter.png')),
-              backGroundColor: Colors.transparent,
+              backgroundColor: Colors.transparent,
               cardMargin: EdgeInsets.all(0),
             ),
             SizedBox(height: 10),
-            ExpandableWidget(
-              primaryWidget: Container(),
-              secondaryWidget: Center(child: Text('Hello world')),
-              showArrowIcon: true,
-              backGroundColor: Colors.orange,
-              centralizePrimaryWidget: true,
-            ),
           ],
         ),
       ),

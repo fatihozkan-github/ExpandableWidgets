@@ -2,6 +2,32 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 abstract class Expandable extends StatefulWidget {
+  /// • Expandable abstract class for general use.
+  Expandable({
+    this.primaryWidget,
+    this.secondaryWidget,
+    this.onPressed,
+    this.padding,
+    this.backgroundColor,
+    this.text,
+    this.elevation,
+    this.maxLines,
+    this.shape,
+    this.animationDuration,
+    this.beforeAnimationDuration,
+    this.backgroundImage,
+    this.cardMargin,
+    this.showArrowIcon,
+    this.initiallyExpanded,
+    this.textStyle,
+    this.hoverOn,
+    this.additionalWidget,
+    this.centralizePrimaryWidget,
+    this.arrowWidget,
+    this.centralizeAdditionalWidget,
+    this.textWidget,
+  });
+
   /// • The widget that is placed at the non-collapsing part of the expandable.
   final Widget? primaryWidget;
 
@@ -10,7 +36,7 @@ abstract class Expandable extends StatefulWidget {
 
   /// • Used for [ExpandableWidget.extended].
   ///
-  /// • Brings an arrow with it.
+  /// • Brings an arrow widget which is next to it.
   final Widget? additionalWidget;
 
   /// • Function that is placed top of the widget tree.
@@ -26,79 +52,55 @@ abstract class Expandable extends StatefulWidget {
   /// • Needed for [ExpandableWidget.singleTextChild].
   final String? text;
 
-  /// • Determines the maximum line of the [text] when the widget is collapsed.
+  /// • Determines the maximum line of the [text] when the expandable is collapsed.
   final int? maxLines;
 
-  final Color? backGroundColor;
+  /// • Background color of the expandable.
+  final Color? backgroundColor;
 
-  /// • Elevation of expandable widget.
+  /// • Elevation of the expandable widget.
   final double? elevation;
 
   /// • Shape of the component.
   ///
-  /// • Notice that [shape] is a [ShapeBorder] not [BoxShape].
+  /// • Notice that [shape] is a [ShapeBorder], not [BoxShape].
   final ShapeBorder? shape;
 
-  /// • Duration for expand animation.
+  /// • Duration for expand & rotate animations.
   final Duration? animationDuration;
 
   /// • Duration between [onPressed] & expand animation.
   final Duration? beforeAnimationDuration;
 
   /// • Background image of the expandable.
-  final DecorationImage? backGroundImage;
+  final DecorationImage? backgroundImage;
 
-  /// • General padding.
+  /// • Added for take more control over the widget.
   ///
-  /// • Recommended to set 0 if it is used with [backGroundImage].
+  /// • Recommended to set 0 if it is used with [backgroundImage].
   final EdgeInsets? cardMargin;
 
   /// • Icon that changes its direction with respect to expand animation.
   final bool? showArrowIcon;
 
-  final Color? arrowColor;
-
+  /// • Whether this expandable widget will be expanded or collapsed at first.
   final bool? initiallyExpanded;
 
+  /// • [TextStyle] for [text] at [ExpandableWidget.singleTextChild].
   final TextStyle? textStyle;
 
+  /// • Whether expand animation will be triggered when hovered over this widget or not .
   final bool? hoverOn;
 
-  ///
+  /// • Provides better alignment for [primaryWidget].
   final bool? centralizePrimaryWidget;
 
+  /// • Provides better alignment for [additionalWidget].
   final bool? centralizeAdditionalWidget;
 
+  /// TEST
   final Widget? arrowWidget;
-
   final Widget? textWidget;
-
-  /// • Expandable abstract class for general use.
-  Expandable({
-    this.primaryWidget,
-    this.secondaryWidget,
-    this.onPressed,
-    this.padding,
-    this.backGroundColor,
-    this.text,
-    this.elevation,
-    this.maxLines,
-    this.shape,
-    this.animationDuration,
-    this.beforeAnimationDuration,
-    this.backGroundImage,
-    this.cardMargin,
-    this.showArrowIcon,
-    this.arrowColor,
-    this.initiallyExpanded,
-    this.textStyle,
-    this.hoverOn,
-    this.additionalWidget,
-    this.centralizePrimaryWidget,
-    this.arrowWidget,
-    this.centralizeAdditionalWidget,
-    this.textWidget,
-  });
 
   @override
   _ExpandableState createState() => _ExpandableState();
@@ -236,13 +238,13 @@ class _ExpandableState extends State<Expandable> with TickerProviderStateMixin {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
-          image: widget.backGroundImage ?? null,
+          image: widget.backgroundImage ?? null,
         ),
         child: Card(
           margin: widget.cardMargin,
           elevation: widget.elevation,
           shape: widget.shape ?? defaultShapeBorder,
-          color: widget.backGroundColor,
+          color: widget.backgroundColor,
           child: Padding(
             padding: widget.padding ?? EdgeInsets.all(0),
             child: Column(
