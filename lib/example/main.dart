@@ -1,4 +1,5 @@
 import 'package:expandable_widgets/expandable_widgets.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -60,7 +61,7 @@ class MyApp extends StatelessWidget {
                 child: Center(child: Text('Important Summary')),
               ),
               secondaryWidget: Container(
-                height: 45,
+                height: 70,
                 child: Center(
                   child: Column(
                     children: [
@@ -72,15 +73,17 @@ class MyApp extends StatelessWidget {
                   ),
                 ),
               ),
-              additionalWidget: Text('Show me details'),
+              additionalWidget: Text('Show me'),
             ),
             SizedBox(height: 10),
 
             /// Example with background image
             ExpandableWidget(
-              primaryWidget: Container(height: 10),
-              secondaryWidget: Container(height: 20),
-              showArrowIcon: true,
+              primaryWidget:
+                  Container(height: 30, color: Colors.grey.withOpacity(.3)),
+              secondaryWidget:
+                  Container(height: 30, color: Colors.blue.withOpacity(.3)),
+              showArrowIcon: false,
               backgroundImage:
                   DecorationImage(image: AssetImage('flutter.png')),
               backgroundColor: Colors.transparent,
