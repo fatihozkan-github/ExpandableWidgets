@@ -182,125 +182,121 @@ class _ExpandableState extends State<Expandable> with TickerProviderStateMixin {
       _toggleExpand();
       checker = false;
     }
-    return MaterialApp(
-      home: Material(
-        child: InkWell(
-          hoverColor: Colors.transparent,
-          splashColor: Colors.transparent,
-          onHover: widget.hoverOn ?? false
-              ? (value) {
-                  if (value = true) {
-                    _toggleExpand();
-                    _toggleRotate();
-                  } else if (value = false) {
-                    _isExpanded = true;
-                  }
+    return InkWell(
+        hoverColor: Colors.transparent,
+        splashColor: Colors.transparent,
+        onHover: widget.hoverOn ?? false
+            ? (value) {
+                if (value = true) {
+                  _toggleExpand();
+                  _toggleRotate();
+                } else if (value = false) {
+                  _isExpanded = true;
                 }
-              : null,
-          onTap: () {
-            if (widget.onPressed.toString() != 'null') {
-              widget.onPressed();
-            }
+              }
+            : null,
+        onTap: () {
+          if (widget.onPressed.toString() != 'null') {
+            widget.onPressed();
+          }
 
-            Timer(widget.beforeAnimationDuration ?? Duration(milliseconds: 20),
-                () {
-              _toggleExpand();
-              _toggleRotate();
-            });
-          },
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              image: widget.backGroundImage ?? null,
-            ),
-            child: Card(
-              margin: widget.cardPadding ?? EdgeInsets.all(5),
-              elevation: widget.elevation ?? 0,
-              shape: widget.shape ??
-                  RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(20))),
-              color: widget.backGroundColor ?? Colors.white,
-              child: Padding(
-                padding: widget.padding ?? EdgeInsets.all(0),
-                child: Column(
-                  children: [
-                    widget.text != null
-                        ? AnimatedCrossFade(
-                            duration: widget.animationDuration ??
-                                Duration(milliseconds: 100),
-                            crossFadeState: _isExpanded
-                                ? CrossFadeState.showFirst
-                                : CrossFadeState.showSecond,
-                            firstChild: Text(widget.text,
-                                style: widget.textStyle ?? null),
-                            secondChild: Text(
-                              widget.text,
-                              style: widget.textStyle ?? null,
-                              maxLines: widget.maxLines,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          )
-                        : widget.showArrowIcon
-                            ? Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  widget.primaryWidget,
-                                  RotationTransition(
-                                    turns: Tween(begin: 0.0, end: 1.0)
-                                        .animate(_rotationController),
-                                    child: Icon(
-                                      Icons.keyboard_arrow_up_rounded,
-                                      color: widget.arrowColor ?? Colors.white,
-                                      size: 25.0,
-                                    ),
+          Timer(widget.beforeAnimationDuration ?? Duration(milliseconds: 20),
+              () {
+            _toggleExpand();
+            _toggleRotate();
+          });
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            image: widget.backGroundImage ?? null,
+          ),
+          child: Card(
+            margin: widget.cardPadding ?? EdgeInsets.all(5),
+            elevation: widget.elevation ?? 0,
+            shape: widget.shape ??
+                RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(20))),
+            color: widget.backGroundColor ?? Colors.white,
+            child: Padding(
+              padding: widget.padding ?? EdgeInsets.all(0),
+              child: Column(
+                children: [
+                  widget.text != null
+                      ? AnimatedCrossFade(
+                          duration: widget.animationDuration ??
+                              Duration(milliseconds: 100),
+                          crossFadeState: _isExpanded
+                              ? CrossFadeState.showFirst
+                              : CrossFadeState.showSecond,
+                          firstChild: Text(widget.text,
+                              style: widget.textStyle ?? null),
+                          secondChild: Text(
+                            widget.text,
+                            style: widget.textStyle ?? null,
+                            maxLines: widget.maxLines,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        )
+                      : widget.showArrowIcon
+                          ? Row(
+                              mainAxisAlignment:
+                                  MainAxisAlignment.spaceEvenly,
+                              children: [
+                                widget.primaryWidget,
+                                RotationTransition(
+                                  turns: Tween(begin: 0.0, end: 1.0)
+                                      .animate(_rotationController),
+                                  child: Icon(
+                                    Icons.keyboard_arrow_up_rounded,
+                                    color: widget.arrowColor ?? Colors.white,
+                                    size: 25.0,
                                   ),
-                                ],
-                              )
-                            : widget.additionalWidget.toString() != 'null'
-                                ? Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      Column(
-                                        children: [
-                                          widget.primaryWidget,
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceEvenly,
-                                            children: [
-                                              widget.additionalWidget,
-                                              RotationTransition(
-                                                turns: Tween(
-                                                        begin: 0.0, end: 1.0)
-                                                    .animate(
-                                                        _rotationController),
-                                                child: Icon(
-                                                  Icons
-                                                      .keyboard_arrow_up_rounded,
-                                                  color: widget.arrowColor ??
-                                                      Colors.white,
-                                                  size: 25.0,
-                                                ),
+                                ),
+                              ],
+                            )
+                          : widget.additionalWidget.toString() != 'null'
+                              ? Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Column(
+                                      children: [
+                                        widget.primaryWidget,
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            widget.additionalWidget,
+                                            RotationTransition(
+                                              turns: Tween(
+                                                      begin: 0.0, end: 1.0)
+                                                  .animate(
+                                                      _rotationController),
+                                              child: Icon(
+                                                Icons
+                                                    .keyboard_arrow_up_rounded,
+                                                color: widget.arrowColor ??
+                                                    Colors.white,
+                                                size: 25.0,
                                               ),
-                                            ],
-                                          ),
-                                        ],
-                                      )
-                                    ],
-                                  )
-                                : widget.primaryWidget,
-                    SizeTransition(
-                      axisAlignment: 0.0,
-                      sizeFactor: _sizeAnimation,
-                      child: widget.secondaryWidget,
-                    ),
-                  ],
-                ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                )
+                              : widget.primaryWidget,
+                  SizeTransition(
+                    axisAlignment: 0.0,
+                    sizeFactor: _sizeAnimation,
+                    child: widget.secondaryWidget,
+                  ),
+                ],
               ),
             ),
           ),
-        ),
       ),
     );
   }
