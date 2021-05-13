@@ -6,19 +6,19 @@ class ExpandableWidget extends Expandable {
   ///
   /// • See [Expandable] for more details.
   ExpandableWidget({
-    Widget primaryWidget,
-    Widget secondaryWidget,
-    Function onPressed,
-    Color backGroundColor,
-    double elevation,
-    ShapeBorder shape,
-    EdgeInsets padding,
-    Duration animationDuration,
-    Duration beforeAnimationDuration,
-    DecorationImage backGroundImage,
-    EdgeInsets cardPadding,
-    bool showArrowIcon = false,
-    bool hoverOn,
+    Widget? primaryWidget,
+    Widget? secondaryWidget,
+    Function? onPressed,
+    Color? backGroundColor,
+    double? elevation,
+    ShapeBorder? shape,
+    EdgeInsets? padding,
+    Duration? animationDuration,
+    Duration? beforeAnimationDuration,
+    DecorationImage? backGroundImage,
+    EdgeInsets? cardPadding,
+    bool? showArrowIcon = false,
+    bool? hoverOn,
   })  : assert(primaryWidget != null || secondaryWidget != null),
         super(
           primaryWidget: primaryWidget,
@@ -34,23 +34,23 @@ class ExpandableWidget extends Expandable {
           cardPadding: cardPadding,
           hoverOn: hoverOn,
           showArrowIcon: showArrowIcon,
+        text: '',
         );
 
   /// • Provides an expandable widget for a long text.
   ///
   /// • See [Expandable] for more details.
   ExpandableWidget.singleTextChild({
-    String text,
-    Color backGroundColor,
-    double elevation,
-    EdgeInsets padding,
-    int maxLines = 2,
-    ShapeBorder shape,
-    Duration animationDuration,
-    Function onPressed,
-    TextStyle textStyle,
-  })  : assert(text != null),
-        super(
+    String? text,
+    Color? backGroundColor,
+    double? elevation,
+    EdgeInsets? padding,
+    int? maxLines = 2,
+    ShapeBorder? shape,
+    Duration? animationDuration,
+    Function? onPressed,
+    TextStyle? textStyle,
+  })  : super(
           backGroundColor: backGroundColor,
           text: text,
           elevation: elevation,
@@ -63,22 +63,22 @@ class ExpandableWidget extends Expandable {
         );
 
   ExpandableWidget.extended({
-    Widget primaryWidget,
-    Widget secondaryWidget,
-    Widget additionalWidget,
-    Function onPressed,
-    Color backGroundColor,
-    double elevation,
-    ShapeBorder shape,
-    EdgeInsets padding,
-    Duration animationDuration,
-    Duration beforeAnimationDuration,
-    DecorationImage backGroundImage,
-    EdgeInsets cardPadding,
-    bool showArrowIcon = false,
-    bool hoverOn,
-    Color arrowColor,
-    bool initiallyExpanded,
+    Widget? primaryWidget,
+    Widget? secondaryWidget,
+    Widget? additionalWidget,
+    Function? onPressed,
+    Color? backGroundColor,
+    double? elevation,
+    ShapeBorder? shape,
+    EdgeInsets? padding,
+    Duration? animationDuration,
+    Duration? beforeAnimationDuration,
+    DecorationImage? backGroundImage,
+    EdgeInsets? cardPadding,
+    bool? showArrowIcon = false,
+    bool? hoverOn,
+    Color? arrowColor,
+    bool? initiallyExpanded,
   })  : assert(primaryWidget != null || secondaryWidget != null),
         super(
           primaryWidget: primaryWidget,
@@ -97,5 +97,6 @@ class ExpandableWidget extends Expandable {
           showArrowIcon: showArrowIcon,
           arrowColor: arrowColor,
           initiallyExpanded: initiallyExpanded,
+        text: '',
         );
 }
