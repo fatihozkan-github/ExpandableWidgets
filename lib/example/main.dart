@@ -86,6 +86,10 @@ class MyApp extends StatelessWidget {
               cardPadding: EdgeInsets.all(0),
             ),
             SizedBox(height: 10),
+            ExpandableWidget(
+              primaryWidget: Container(),
+              secondaryWidget: Text('Hello world'),
+            ),
           ],
         ),
       ),

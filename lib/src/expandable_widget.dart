@@ -20,7 +20,7 @@ class ExpandableWidget extends Expandable {
     bool? showArrowIcon = false,
     bool? hoverOn,
     Color? arrowColor,
-  })  : assert(primaryWidget != null || secondaryWidget != null),
+  })  : assert(primaryWidget != null),
         super(
           primaryWidget: primaryWidget,
           secondaryWidget: secondaryWidget,
@@ -52,7 +52,8 @@ class ExpandableWidget extends Expandable {
     Duration? animationDuration,
     Function? onPressed,
     TextStyle? textStyle,
-  }) : super(
+  })  : assert(text != null),
+        super(
           backGroundColor: backGroundColor,
           text: text,
           elevation: elevation,

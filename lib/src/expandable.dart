@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 abstract class Expandable extends StatefulWidget {
-  /// • The widget that is placed at the collapsed part of the expandable.
+  /// • The widget that is placed at the non-collapsing part of the expandable.
   final Widget? primaryWidget;
 
   /// • The widget that [sizeTransition] affects.
