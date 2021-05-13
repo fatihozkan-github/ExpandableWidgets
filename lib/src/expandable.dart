@@ -192,7 +192,7 @@ class _ExpandableState extends State<Expandable> with TickerProviderStateMixin {
     color: Colors.black,
     size: 25.0,
   );
-  Widget holderIconIcon = Icon(
+  Widget holderIcon = Icon(
     Icons.keyboard_arrow_up_rounded,
     color: Colors.transparent,
     size: 25.0,
@@ -272,7 +272,7 @@ class _ExpandableState extends State<Expandable> with TickerProviderStateMixin {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 if (widget.centralizePrimaryWidget!)
-                                  holderIconIcon,
+                                  holderIcon,
                                 widget.primaryWidget!,
                                 defaultRotation,
                               ],
@@ -291,7 +291,7 @@ class _ExpandableState extends State<Expandable> with TickerProviderStateMixin {
                                           children: [
                                             if (widget
                                                 .centralizeAdditionalWidget!)
-                                              holderIconIcon,
+                                              holderIcon,
                                             widget.additionalWidget!,
                                             RotatedBox(
                                                 quarterTurns: 2,
