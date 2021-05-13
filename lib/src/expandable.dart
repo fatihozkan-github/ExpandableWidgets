@@ -279,7 +279,7 @@ class _ExpandableState extends State<Expandable> with TickerProviderStateMixin {
                                             turns: Tween(begin: -1.0, end: 0.0)
                                                 .animate(_rotationController),
                                             child: Icon(
-                                              Icons.keyboard_arrow_up_rounded,
+                                              Icons.keyboard_arrow_down_rounded,
                                               color: widget.arrowColor ??
                                                   Colors.white,
                                               size: 25.0,
