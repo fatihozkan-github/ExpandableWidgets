@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
             ExpandableWidget.extended(
               elevation: 10,
               initiallyExpanded: true,
-              centralizePrimaryWidget: true,
+              centralizePrimaryWidget: false,
               centralizeAdditionalWidget: true,
               primaryWidget: Container(
                 height: 30,
@@ -78,15 +78,20 @@ class MyApp extends StatelessWidget {
 
             /// Example with background image
             ExpandableWidget(
-              primaryWidget:
-                  Container(height: 30, color: Colors.grey.withOpacity(.3)),
-              secondaryWidget:
-                  Container(height: 30, color: Colors.blue.withOpacity(.3)),
-              showArrowIcon: false,
+              primaryWidget: Container(height: 30),
+              secondaryWidget: Container(height: 30),
+              showArrowIcon: true,
               backgroundImage:
                   DecorationImage(image: AssetImage('flutter.png')),
-              backgroundColor: Colors.transparent,
+              backgroundColor: Colors.grey.withOpacity(.3),
               cardMargin: EdgeInsets.all(0),
+              arrowWidget: Icon(
+                Icons.arrow_upward_rounded,
+                color: Colors.blue,
+                size: 20.0,
+              ),
+              animationDuration: Duration(seconds: 1),
+              centralizePrimaryWidget: true,
             ),
             SizedBox(height: 10),
           ],

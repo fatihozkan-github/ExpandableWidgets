@@ -92,6 +92,7 @@ class ExpandableWidget extends Expandable {
     bool? initiallyExpanded,
     bool? centralizePrimaryWidget = false,
     bool? centralizeAdditionalWidget = false,
+    Widget? arrowWidget,
   })  : assert(primaryWidget != null || secondaryWidget != null),
         super(
           primaryWidget: primaryWidget,
@@ -111,5 +112,6 @@ class ExpandableWidget extends Expandable {
           text: '',
           centralizePrimaryWidget: centralizePrimaryWidget,
           centralizeAdditionalWidget: centralizeAdditionalWidget,
+          arrowWidget: arrowWidget,
         );
 }

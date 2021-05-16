@@ -197,10 +197,8 @@ class _ExpandableState extends State<Expandable> with TickerProviderStateMixin {
     color: Colors.transparent,
     size: 25.0,
   );
-
   ShapeBorder defaultShapeBorder = RoundedRectangleBorder(
       borderRadius: BorderRadius.all(Radius.circular(20)));
-
   @override
   Widget build(BuildContext context) {
     RotationTransition defaultRotation = RotationTransition(
@@ -212,103 +210,122 @@ class _ExpandableState extends State<Expandable> with TickerProviderStateMixin {
       _toggleExpand();
       initiallyExpanded = false;
     }
-    return Material(
-      child: InkWell(
-        hoverColor: Colors.transparent,
-        splashColor: Colors.transparent,
-        onHover: widget.hoverOn ?? false
-            ? (value) {
-                if (value = true) {
-                  _toggleExpand();
-                  _toggleRotate();
-                } else if (value = false) {
-                  _isExpanded = true;
-                }
-              }
-            : null,
-        onTap: () {
-          if (widget.onPressed.toString() != 'null') {
-            widget.onPressed!();
-          }
 
-          Timer(widget.beforeAnimationDuration ?? Duration(milliseconds: 20),
-              () {
-            _toggleExpand();
-            _toggleRotate();
-          });
-        },
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            image: widget.backgroundImage ?? null,
-          ),
-          child: Card(
-            margin: widget.cardMargin,
-            elevation: widget.elevation,
-            shape: widget.shape ?? defaultShapeBorder,
-            color: widget.backgroundColor,
-            child: Padding(
-              padding: widget.padding ?? EdgeInsets.all(0),
-              child: Column(
-                children: [
-                  widget.text!.isNotEmpty
-                      ? AnimatedCrossFade(
-                          duration: widget.animationDuration!,
-                          crossFadeState: _isExpanded
-                              ? CrossFadeState.showFirst
-                              : CrossFadeState.showSecond,
-                          firstChild:
-                              Text(widget.text!, style: widget.textStyle),
-                          secondChild: widget.textWidget ??
-                              Text(
-                                widget.text!,
-                                style: widget.textStyle,
-                                maxLines: widget.maxLines,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                        )
-                      : widget.showArrowIcon == true
-                          ? Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                if (widget.centralizePrimaryWidget!)
-                                  holderIcon,
-                                widget.primaryWidget!,
-                                defaultRotation,
-                              ],
-                            )
-                          : widget.additionalWidget != null
-                              ? Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Column(
-                                      children: [
-                                        widget.primaryWidget!,
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
-                                          children: [
-                                            if (widget
-                                                .centralizeAdditionalWidget!)
-                                              holderIcon,
-                                            widget.additionalWidget!,
-                                            RotatedBox(
+    return Directionality(
+      textDirection: TextDirection.ltr,
+      child: Material(
+        child: InkWell(
+          hoverColor: Colors.transparent,
+          splashColor: Colors.transparent,
+          onHover: widget.hoverOn ?? false
+              ? (value) {
+                  if (value = true) {
+                    _toggleExpand();
+                    _toggleRotate();
+                  } else if (value = false) {
+                    _isExpanded = true;
+                  }
+                }
+              : null,
+          onTap: () {
+            if (widget.onPressed.toString() != 'null') {
+              widget.onPressed!();
+            }
+
+            Timer(widget.beforeAnimationDuration ?? Duration(milliseconds: 20),
+                () {
+              _toggleExpand();
+              _toggleRotate();
+            });
+          },
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              image: widget.backgroundImage ?? null,
+            ),
+            child: Card(
+              margin: widget.cardMargin,
+              elevation: widget.elevation,
+              shape: widget.shape ?? defaultShapeBorder,
+              color: widget.backgroundColor,
+              child: Padding(
+                padding: widget.padding ?? EdgeInsets.all(0),
+                child: Column(
+                  children: [
+                    widget.text!.isNotEmpty
+                        ? AnimatedCrossFade(
+                            duration: widget.animationDuration!,
+                            crossFadeState: _isExpanded
+                                ? CrossFadeState.showFirst
+                                : CrossFadeState.showSecond,
+                            firstChild:
+                                Text(widget.text!, style: widget.textStyle),
+                            secondChild: widget.textWidget ??
+                                Text(
+                                  widget.text!,
+                                  style: widget.textStyle,
+                                  maxLines: widget.maxLines,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                          )
+                        : widget.showArrowIcon == true
+                            ? Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  if (widget.centralizePrimaryWidget!)
+                                    holderIcon,
+                                  if (widget.centralizePrimaryWidget! &&
+                                      widget.arrowWidget != null)
+                                    Opacity(
+                                      opacity: 0,
+                                      child: widget.arrowWidget,
+                                    ),
+                                  widget.primaryWidget!,
+                                  defaultRotation,
+                                ],
+                              )
+                            : widget.additionalWidget != null
+                                ? Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Column(
+                                        children: [
+                                          widget.primaryWidget!,
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceEvenly,
+                                            children: [
+                                              if (widget
+                                                  .centralizeAdditionalWidget!)
+                                                holderIcon,
+                                              widget.additionalWidget!,
+                                              RotatedBox(
                                                 quarterTurns: 2,
-                                                child: defaultRotation),
-                                          ],
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                )
-                              : widget.primaryWidget!,
-                  SizeTransition(
-                    axisAlignment: 0.0,
-                    sizeFactor: _sizeAnimation,
-                    child: widget.secondaryWidget,
-                  ),
-                ],
+                                                child: RotationTransition(
+                                                  turns: Tween(
+                                                          begin: 0.0, end: 1.0)
+                                                      .animate(
+                                                          _rotationController),
+                                                  child: widget.arrowWidget ??
+                                                      defaultIcon,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  )
+                                : widget.primaryWidget!,
+                    SizeTransition(
+                      axisAlignment: 0.0,
+                      sizeFactor: _sizeAnimation,
+                      child: widget.secondaryWidget,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
