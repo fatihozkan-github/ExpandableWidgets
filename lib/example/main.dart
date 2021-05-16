@@ -82,7 +82,7 @@ class MyApp extends StatelessWidget {
               secondaryWidget: Container(height: 30),
               showArrowIcon: true,
               backgroundImage: DecorationImage(
-                image: AssetImage('flutter.png'),
+                image: AssetImage('background.png'),
                 repeat: ImageRepeat.repeatX,
               ),
               backgroundColor: Colors.grey.withOpacity(.3),
