@@ -81,8 +81,10 @@ class MyApp extends StatelessWidget {
               primaryWidget: Container(height: 30),
               secondaryWidget: Container(height: 30),
               showArrowIcon: true,
-              backgroundImage:
-                  DecorationImage(image: AssetImage('flutter.png')),
+              backgroundImage: DecorationImage(
+                image: AssetImage('flutter.png'),
+                repeat: ImageRepeat.repeatX,
+              ),
               backgroundColor: Colors.grey.withOpacity(.3),
               cardMargin: EdgeInsets.all(0),
               arrowWidget: Icon(

@@ -68,7 +68,10 @@ void main() {
       primaryWidget: Container(height: 10),
       secondaryWidget: Container(height: 20),
       showArrowIcon: true,
-      backgroundImage: DecorationImage(image: AssetImage('flutter.png')),
+      backgroundImage: DecorationImage(
+        image: AssetImage('flutter.png'),
+        repeat: ImageRepeat.repeatX,
+      ),
       backgroundColor: Colors.transparent,
       cardMargin: EdgeInsets.all(0),
     ));

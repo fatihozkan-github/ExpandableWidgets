@@ -1,4 +1,4 @@
-## [1.0.0] - Release Date: 13.05.2021
+## [1.0.0] - Release Date: 17.05.2021
 
 ## Initial Release ##
    # Widgets:
@@ -7,5 +7,6 @@
      • Expandable.extended
 
    # TODOs:
-     • ArrowWidget input and alignments.
      • Fixing test error.
+     • Separating expandable & expandable text widgets.
+     • More features for both widgets.

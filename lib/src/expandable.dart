@@ -75,7 +75,7 @@ abstract class Expandable extends StatefulWidget {
   /// • Background image of the expandable.
   final DecorationImage? backgroundImage;
 
-  /// • Added for take more control over the widget.
+  /// • Added for taking more control over the widget.
   ///
   /// • Recommended to set 0 if it is used with [backgroundImage].
   final EdgeInsets? cardMargin;
@@ -90,6 +90,8 @@ abstract class Expandable extends StatefulWidget {
   final TextStyle? textStyle;
 
   /// • Whether expand animation will be triggered when hovered over this widget or not .
+  ///
+  /// • Added for web.
   final bool? hoverOn;
 
   /// • Provides better alignment for [primaryWidget].
