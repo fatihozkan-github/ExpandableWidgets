@@ -41,32 +41,6 @@ class ExpandableWidget extends Expandable {
           centralizePrimaryWidget: centralizePrimaryWidget,
         );
 
-  /// • Provides an expandable widget for a long text.
-  ///
-  /// • See [Expandable] for more details.
-  ExpandableWidget.singleTextChild({
-    String? text,
-    Color? backGroundColor,
-    double? elevation = 0,
-    EdgeInsets? padding,
-    int? maxLines = 2,
-    ShapeBorder? shape,
-    Duration? animationDuration = const Duration(milliseconds: 100),
-    Function? onPressed,
-    TextStyle? textStyle,
-  })  : assert(text != null),
-        super(
-          backgroundColor: backGroundColor,
-          text: text,
-          elevation: elevation,
-          padding: padding,
-          maxLines: maxLines,
-          shape: shape,
-          animationDuration: animationDuration,
-          onPressed: onPressed,
-          textStyle: textStyle,
-          centralizePrimaryWidget: false,
-        );
 
   /// • Almost similar to [ExpandableWidget].
   ///

@@ -199,8 +199,10 @@ class _ExpandableState extends State<Expandable> with TickerProviderStateMixin {
     color: Colors.transparent,
     size: 25.0,
   );
+
   ShapeBorder defaultShapeBorder = RoundedRectangleBorder(
       borderRadius: BorderRadius.all(Radius.circular(20)));
+
   @override
   Widget build(BuildContext context) {
     RotationTransition defaultRotation = RotationTransition(
