@@ -18,6 +18,8 @@ class ExpandableTextWidget extends ExpandableText {
     Text? textWidget,
     bool? hoverOn = false,
     DecorationImage? backgroundImage,
+    bool? showArrowIcon = false,
+    bool? initiallyExpanded = false,
   })  : assert(textWidget != null),
         // assert(textWidget?.maxLines != null),
         super(
@@ -30,5 +32,7 @@ class ExpandableTextWidget extends ExpandableText {
           textWidget: textWidget,
           hoverOn: hoverOn,
           backgroundImage: backgroundImage,
+          showArrowIcon: showArrowIcon,
+          initiallyExpanded: initiallyExpanded,
         );
 }

@@ -68,6 +68,8 @@ class ExpandableWidget extends Expandable {
     Widget? arrowWidget,
     bool? isClickable,
   })  : assert(primaryWidget != null || secondaryWidget != null),
+        assert((isClickable == false && arrowWidget != null) ||
+            (isClickable == true)),
         super(
           primaryWidget: primaryWidget,
           secondaryWidget: secondaryWidget,

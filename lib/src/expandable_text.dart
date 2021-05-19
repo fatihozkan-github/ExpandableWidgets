@@ -130,6 +130,7 @@ class _ExpandableTextState extends State<ExpandableText>
       Radius.circular(20),
     ),
   );
+
   @override
   initState() {
     super.initState();
@@ -151,6 +152,10 @@ class _ExpandableTextState extends State<ExpandableText>
 
   @override
   Widget build(BuildContext context) {
+    if (initiallyExpanded == true) {
+      _toggleExpand();
+      initiallyExpanded = false;
+    }
     return Directionality(
       textDirection: TextDirection.ltr,
       child: Material(
@@ -185,17 +190,48 @@ class _ExpandableTextState extends State<ExpandableText>
           child: Container(
             decoration: BoxDecoration(image: widget.backgroundImage ?? null),
             padding: widget.padding ?? EdgeInsets.all(0),
-            child: AnimatedCrossFade(
-              duration: widget.animationDuration!,
-              crossFadeState: _isExpanded
-                  ? CrossFadeState.showFirst
-                  : CrossFadeState.showSecond,
-              firstChild: Text(
-                widget.textWidget!.data!,
-                style: widget.textWidget!.style!,
-              ),
-              secondChild: widget.textWidget!,
-            ),
+            child: widget.showArrowIcon!
+                ? Stack(
+                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                    alignment: AlignmentDirectional.topEnd,
+                    children: [
+                      AnimatedCrossFade(
+                        duration: widget.animationDuration!,
+                        crossFadeState: _isExpanded
+                            ? CrossFadeState.showFirst
+                            : CrossFadeState.showSecond,
+                        firstChild: Text(
+                          widget.textWidget!.data!,
+                          style: widget.textWidget!.style!,
+                        ),
+                        secondChild: Row(
+                          children: [
+                            SizedBox(
+                                width: MediaQuery.of(context).size.width -
+                                    46 -
+                                    widget.padding!.right,
+                                child: widget.textWidget!),
+                            Icon(
+                              Icons.keyboard_arrow_down_rounded,
+                              color: Colors.black,
+                              size: 25.0,
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  )
+                : AnimatedCrossFade(
+                    duration: widget.animationDuration!,
+                    crossFadeState: _isExpanded
+                        ? CrossFadeState.showFirst
+                        : CrossFadeState.showSecond,
+                    firstChild: Text(
+                      widget.textWidget!.data!,
+                      style: widget.textWidget!.style!,
+                    ),
+                    secondChild: widget.textWidget!,
+                  ),
           ),
         ),
       ),

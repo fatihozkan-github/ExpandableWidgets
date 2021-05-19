@@ -295,8 +295,29 @@ class _ExpandableState extends State<Expandable> with TickerProviderStateMixin {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceEvenly,
                                       children: [
-                                        if (widget.centralizeAdditionalWidget!)
-                                          holderIcon,
+                                        if (widget.centralizeAdditionalWidget! &&
+                                            widget.arrowWidget == null)
+                                          holderIcon
+                                        else if (widget
+                                                .centralizePrimaryWidget! &&
+                                            widget.arrowWidget != null)
+                                          Opacity(
+                                            opacity: 0,
+                                            child: TextButton(
+                                              child: widget.arrowWidget!,
+                                              clipBehavior: Clip.antiAlias,
+                                              style: ButtonStyle(
+                                                overlayColor:
+                                                    MaterialStateProperty.all(
+                                                        Colors.transparent),
+                                                mouseCursor:
+                                                    MaterialStateProperty.all(
+                                                        SystemMouseCursors
+                                                            .basic),
+                                              ),
+                                              onPressed: () {},
+                                            ),
+                                          ),
                                         widget.additionalWidget!,
                                         RotatedBox(
                                           quarterTurns: 2,
