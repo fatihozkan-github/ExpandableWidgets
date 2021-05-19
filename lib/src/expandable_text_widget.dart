@@ -4,28 +4,31 @@ import 'package:flutter/material.dart';
 class ExpandableTextWidget extends ExpandableText {
   /// • Provides an expandable widget for a long text.
   ///
+  /// • One should add [maxLines] property to [textWidget] otherwise widget will
+  /// not be expandable.
+  ///
   /// • See [Expandable] for more details.
-  ExpandableTextWidget.singleTextChild({
-    String? text,
+  ExpandableTextWidget({
     Color? backGroundColor,
-    double? elevation = 0,
-    EdgeInsets? padding,
-    int? maxLines = 2,
+    double? elevation = 0.0,
+    EdgeInsets? padding = const EdgeInsets.all(5.0),
     ShapeBorder? shape,
     Duration? animationDuration = const Duration(milliseconds: 100),
     Function? onPressed,
-    TextStyle? textStyle,
-  })  : assert(text != null),
+    Text? textWidget,
+    bool? hoverOn = false,
+    DecorationImage? backgroundImage,
+  })  : assert(textWidget != null),
+        // assert(textWidget?.maxLines != null),
         super(
-        backgroundColor: backGroundColor,
-        text: text,
-        elevation: elevation,
-        padding: padding,
-        maxLines: maxLines,
-        shape: shape,
-        animationDuration: animationDuration,
-        onPressed: onPressed,
-        textStyle: textStyle,
-      );
-
+          backgroundColor: backGroundColor,
+          elevation: elevation,
+          padding: padding,
+          shape: shape,
+          animationDuration: animationDuration,
+          onPressed: onPressed,
+          textWidget: textWidget,
+          hoverOn: hoverOn,
+          backgroundImage: backgroundImage,
+        );
 }

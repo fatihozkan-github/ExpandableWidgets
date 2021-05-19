@@ -12,16 +12,18 @@ class ExpandableWidget extends Expandable {
     Color? backgroundColor = Colors.white,
     double? elevation = 0,
     ShapeBorder? shape,
-    EdgeInsets? padding,
+    EdgeInsets? padding = const EdgeInsets.all(5.0),
     Duration? animationDuration = const Duration(milliseconds: 100),
     Duration? beforeAnimationDuration,
     DecorationImage? backgroundImage,
-    EdgeInsets? cardMargin = const EdgeInsets.all(5.0),
     bool? showArrowIcon = false,
     bool? hoverOn,
     Widget? arrowWidget,
     bool? centralizePrimaryWidget = false,
+    bool? isClickable,
   })  : assert(primaryWidget != null),
+        assert((isClickable == false && arrowWidget != null) ||
+            (isClickable == true)),
         super(
           primaryWidget: primaryWidget,
           secondaryWidget: secondaryWidget,
@@ -33,14 +35,12 @@ class ExpandableWidget extends Expandable {
           beforeAnimationDuration: beforeAnimationDuration,
           padding: padding,
           backgroundImage: backgroundImage,
-          cardMargin: cardMargin,
           hoverOn: hoverOn,
           showArrowIcon: showArrowIcon,
           arrowWidget: arrowWidget,
-          text: '',
           centralizePrimaryWidget: centralizePrimaryWidget,
+          isClickable: isClickable,
         );
-
 
   /// • Almost similar to [ExpandableWidget].
   ///
@@ -57,16 +57,16 @@ class ExpandableWidget extends Expandable {
     Color? backGroundColor = Colors.white,
     double? elevation = 0,
     ShapeBorder? shape,
-    EdgeInsets? padding,
+    EdgeInsets? padding = const EdgeInsets.all(5.0),
     Duration? animationDuration = const Duration(milliseconds: 100),
     Duration? beforeAnimationDuration,
     DecorationImage? backgroundImage,
-    EdgeInsets? cardMargin = const EdgeInsets.all(5.0),
     bool? hoverOn,
     bool? initiallyExpanded,
     bool? centralizePrimaryWidget = false,
     bool? centralizeAdditionalWidget = false,
     Widget? arrowWidget,
+    bool? isClickable,
   })  : assert(primaryWidget != null || secondaryWidget != null),
         super(
           primaryWidget: primaryWidget,
@@ -80,12 +80,11 @@ class ExpandableWidget extends Expandable {
           beforeAnimationDuration: beforeAnimationDuration,
           padding: padding,
           backgroundImage: backgroundImage,
-          cardMargin: cardMargin,
           hoverOn: hoverOn,
           initiallyExpanded: initiallyExpanded,
-          text: '',
           centralizePrimaryWidget: centralizePrimaryWidget,
           centralizeAdditionalWidget: centralizeAdditionalWidget,
           arrowWidget: arrowWidget,
+          isClickable: isClickable,
         );
 }

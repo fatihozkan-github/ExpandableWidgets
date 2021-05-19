@@ -4,26 +4,26 @@ import 'package:flutter/material.dart';
 
 abstract class ExpandableText extends StatefulWidget {
   ExpandableText({
+    this.textWidget,
     this.onPressed,
     this.padding,
     this.backgroundColor,
-    this.text,
     this.elevation,
-    this.maxLines,
     this.shape,
     this.animationDuration,
     this.beforeAnimationDuration,
     this.backgroundImage,
     this.cardMargin,
     this.initiallyExpanded,
-    this.textStyle,
     this.hoverOn,
-    this.arrowWidget,
-    this.textWidget,
 
     /// TODO
     this.showArrowIcon,
+    this.arrowWidget,
   });
+
+  /// [Text] widget for [ExpandableTextWidget].
+  final Text? textWidget;
 
   /// • Function that is placed top of the widget tree.
   ///
@@ -34,12 +34,6 @@ abstract class ExpandableText extends StatefulWidget {
 
   /// • Padding that affects inside of the widget.
   final EdgeInsets? padding;
-
-  /// • Needed for [ExpandableWidget.singleTextChild].
-  final String? text;
-
-  /// • Determines the maximum line of the [text] when the expandable is collapsed.
-  final int? maxLines;
 
   /// • Background color of the expandable.
   final Color? backgroundColor;
@@ -72,9 +66,6 @@ abstract class ExpandableText extends StatefulWidget {
   /// • Whether this expandable widget will be expanded or collapsed at first.
   final bool? initiallyExpanded;
 
-  /// • [TextStyle] for [text] at [ExpandableWidget.singleTextChild].
-  final TextStyle? textStyle;
-
   /// • Whether expand animation will be triggered when hovered over this widget or not .
   ///
   /// • Added for web.
@@ -82,7 +73,6 @@ abstract class ExpandableText extends StatefulWidget {
 
   /// TEST
   final Widget? arrowWidget;
-  final Text? textWidget;
 
   @override
   _ExpandableTextState createState() => _ExpandableTextState();
@@ -95,10 +85,12 @@ class _ExpandableTextState extends State<ExpandableText>
   bool _isExpanded = false;
   // bool _isRotated = false;
   bool? initiallyExpanded = false;
+
   static final Animatable<double> _sizeTween = Tween<double>(
     begin: 00,
     end: 1.0,
   );
+
   _toggleExpand() {
     setState(() {
       _isExpanded = !_isExpanded;
@@ -134,7 +126,10 @@ class _ExpandableTextState extends State<ExpandableText>
   // }
 
   ShapeBorder defaultShapeBorder = RoundedRectangleBorder(
-      borderRadius: BorderRadius.all(Radius.circular(20)));
+    borderRadius: BorderRadius.all(
+      Radius.circular(20),
+    ),
+  );
   @override
   initState() {
     super.initState();
@@ -159,7 +154,10 @@ class _ExpandableTextState extends State<ExpandableText>
     return Directionality(
       textDirection: TextDirection.ltr,
       child: Material(
-        color: Colors.transparent,
+        color: widget.backgroundColor ?? Colors.white,
+        elevation: widget.elevation ?? 0,
+        shape: widget.shape ?? defaultShapeBorder,
+        clipBehavior: Clip.antiAlias,
         child: InkWell(
           hoverColor: Colors.transparent,
           splashColor: Colors.transparent,
@@ -185,37 +183,18 @@ class _ExpandableTextState extends State<ExpandableText>
             });
           },
           child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              image: widget.backgroundImage ?? null,
-            ),
-            child: Card(
-              margin: widget.cardMargin,
-              elevation: widget.elevation,
-              shape: widget.shape ?? defaultShapeBorder,
-              color: widget.backgroundColor,
-              child: Padding(
-                padding: widget.padding ?? EdgeInsets.all(0),
-                child: Column(
-                  children: [
-                    AnimatedCrossFade(
-                      duration: widget.animationDuration!,
-                      crossFadeState: _isExpanded
-                          ? CrossFadeState.showFirst
-                          : CrossFadeState.showSecond,
-                      firstChild: Text(widget.text!, style: widget.textStyle),
-                      secondChild: widget.textWidget ??
-                          Text(
-                            widget.text!,
-                            style: widget.textStyle,
-                            maxLines: widget.maxLines,
-                            // maxLines: widget.textWidget!.maxLines,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                    ),
-                  ],
-                ),
+            decoration: BoxDecoration(image: widget.backgroundImage ?? null),
+            padding: widget.padding ?? EdgeInsets.all(0),
+            child: AnimatedCrossFade(
+              duration: widget.animationDuration!,
+              crossFadeState: _isExpanded
+                  ? CrossFadeState.showFirst
+                  : CrossFadeState.showSecond,
+              firstChild: Text(
+                widget.textWidget!.data!,
+                style: widget.textWidget!.style!,
               ),
+              secondChild: widget.textWidget!,
             ),
           ),
         ),
