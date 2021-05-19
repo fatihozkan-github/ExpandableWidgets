@@ -20,7 +20,7 @@ class ExpandableWidget extends Expandable {
     bool? hoverOn,
     Widget? arrowWidget,
     bool? centralizePrimaryWidget = false,
-    bool? isClickable,
+    bool? isClickable = true,
   })  : assert(primaryWidget != null),
         assert((isClickable == false && arrowWidget != null) ||
             (isClickable == true)),
@@ -66,7 +66,7 @@ class ExpandableWidget extends Expandable {
     bool? centralizePrimaryWidget = false,
     bool? centralizeAdditionalWidget = false,
     Widget? arrowWidget,
-    bool? isClickable,
+    bool? isClickable = true,
   })  : assert(primaryWidget != null || secondaryWidget != null),
         assert((isClickable == false && arrowWidget != null) ||
             (isClickable == true)),

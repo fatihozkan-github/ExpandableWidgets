@@ -202,7 +202,8 @@ class _ExpandableTextState extends State<ExpandableText>
                             : CrossFadeState.showSecond,
                         firstChild: Text(
                           widget.textWidget!.data!,
-                          style: widget.textWidget!.style!,
+                          style: widget.textWidget!.style ??
+                              TextStyle(color: Colors.black),
                         ),
                         secondChild: Row(
                           children: [
@@ -228,7 +229,8 @@ class _ExpandableTextState extends State<ExpandableText>
                         : CrossFadeState.showSecond,
                     firstChild: Text(
                       widget.textWidget!.data!,
-                      style: widget.textWidget!.style!,
+                      style: widget.textWidget!.style ??
+                          TextStyle(color: Colors.black),
                     ),
                     secondChild: widget.textWidget!,
                   ),

@@ -295,7 +295,8 @@ class _ExpandableState extends State<Expandable> with TickerProviderStateMixin {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceEvenly,
                                       children: [
-                                        if (widget.centralizeAdditionalWidget! &&
+                                        if (widget
+                                                .centralizeAdditionalWidget! &&
                                             widget.arrowWidget == null)
                                           holderIcon
                                         else if (widget
