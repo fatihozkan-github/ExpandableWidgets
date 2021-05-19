@@ -216,6 +216,7 @@ class _ExpandableState extends State<Expandable> with TickerProviderStateMixin {
     return Directionality(
       textDirection: TextDirection.ltr,
       child: Material(
+        color: Colors.transparent,
         child: InkWell(
           hoverColor: Colors.transparent,
           splashColor: Colors.transparent,

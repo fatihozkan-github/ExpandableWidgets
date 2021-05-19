@@ -8,6 +8,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+        backgroundColor: Colors.black,
         appBar: AppBar(
           title: Center(child: Text('Expandable Widget Showcase')),
         ),
@@ -77,23 +78,27 @@ class MyApp extends StatelessWidget {
             SizedBox(height: 10),
 
             /// Example with background image
-            ExpandableWidget(
-              primaryWidget: Container(height: 30),
-              secondaryWidget: Container(height: 30),
-              showArrowIcon: true,
-              backgroundImage: DecorationImage(
-                image: AssetImage('background.png'),
-                repeat: ImageRepeat.repeatX,
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 300.0),
+              child: ExpandableWidget(
+                // primaryWidget: Container(height: 30),
+                primaryWidget: Text('ADfdg'),
+                secondaryWidget: Container(height: 30),
+                showArrowIcon: true,
+                backgroundImage: DecorationImage(
+                  image: AssetImage('background.png'),
+                  repeat: ImageRepeat.repeatX,
+                ),
+                backgroundColor: Colors.grey.withOpacity(.3),
+                cardMargin: EdgeInsets.all(0),
+                arrowWidget: Icon(
+                  Icons.arrow_upward_rounded,
+                  color: Colors.blue,
+                  size: 20.0,
+                ),
+                animationDuration: Duration(seconds: 1),
+                centralizePrimaryWidget: true,
               ),
-              backgroundColor: Colors.grey.withOpacity(.3),
-              cardMargin: EdgeInsets.all(0),
-              arrowWidget: Icon(
-                Icons.arrow_upward_rounded,
-                color: Colors.blue,
-                size: 20.0,
-              ),
-              animationDuration: Duration(seconds: 1),
-              centralizePrimaryWidget: true,
             ),
             SizedBox(height: 10),
           ],
