@@ -71,7 +71,7 @@ void main() {
       secondaryWidget: Container(height: 20),
       showArrowIcon: true,
       backgroundImage: DecorationImage(
-        image: AssetImage('background.png'),
+        image: AssetImage('assets/background.png'),
         repeat: ImageRepeat.repeatX,
       ),
       backgroundColor: Colors.transparent,

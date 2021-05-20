@@ -1,5 +1,4 @@
-import 'package:expandable_widgets/src/expandable_text_widget.dart';
-import 'package:expandable_widgets/src/expandable_widget.dart';
+import 'package:expandable_widgets/expandable_widgets.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(ExpandableShowcase());
@@ -15,7 +14,7 @@ class ExpandableShowcase extends StatelessWidget {
         ),
         body: ListView(
           children: [
-            SizedBox(height: 10),
+            SizedBox(height: 20),
 
             /// General use
             ExpandableWidget(
@@ -39,7 +38,7 @@ class ExpandableShowcase extends StatelessWidget {
               centralizePrimaryWidget: true,
               isClickable: true,
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 20),
 
             /// For long texts
             ExpandableTextWidget(
@@ -50,16 +49,11 @@ class ExpandableShowcase extends StatelessWidget {
                 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,
-                // style: TextStyle(color: Colors.black),
               ),
               showArrowIcon: true,
               initiallyExpanded: true,
-              // backgroundImage: DecorationImage(
-              //   image: AssetImage('background.png'),
-              //   repeat: ImageRepeat.repeatX,
-              // ),
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 20),
 
             /// Extended example
             ExpandableWidget.extended(
@@ -92,7 +86,7 @@ class ExpandableShowcase extends StatelessWidget {
               ),
               additionalWidget: Text('Show me'),
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 20),
 
             /// Example with background image
             ExpandableWidget(
@@ -109,7 +103,7 @@ class ExpandableShowcase extends StatelessWidget {
               isClickable: false,
               showArrowIcon: true,
               backgroundImage: DecorationImage(
-                image: AssetImage('background.png'),
+                image: AssetImage('assets/background.png'),
                 repeat: ImageRepeat.repeatX,
               ),
               backgroundColor: Colors.grey.withOpacity(0.3),
@@ -121,6 +115,9 @@ class ExpandableShowcase extends StatelessWidget {
               animationDuration: Duration(seconds: 1),
               centralizePrimaryWidget: true,
             ),
+
+            SizedBox(height: 20),
+
             ExpandableWidget(
               primaryWidget: Text('HELLO'),
               secondaryWidget: Row(
@@ -135,7 +132,7 @@ class ExpandableShowcase extends StatelessWidget {
               isClickable: false,
               showArrowIcon: true,
               backgroundImage: DecorationImage(
-                image: AssetImage('background.png'),
+                image: AssetImage('assets/background.png'),
                 repeat: ImageRepeat.repeatX,
               ),
               backgroundColor: Colors.grey.withOpacity(0.3),

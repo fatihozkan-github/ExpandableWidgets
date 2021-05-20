@@ -16,10 +16,10 @@ abstract class ExpandableText extends StatefulWidget {
     this.cardMargin,
     this.initiallyExpanded,
     this.hoverOn,
+    this.arrowWidget,
 
     /// TODO
-    this.showArrowIcon,
-    this.arrowWidget,
+    // this.showArrowIcon,
   });
 
   /// [Text] widget for [ExpandableTextWidget].
@@ -61,7 +61,7 @@ abstract class ExpandableText extends StatefulWidget {
   final EdgeInsets? cardMargin;
 
   /// • Icon that changes its direction with respect to expand animation.
-  final bool? showArrowIcon;
+  final bool? showArrowIcon = false;
 
   /// • Whether this expandable widget will be expanded or collapsed at first.
   final bool? initiallyExpanded;
