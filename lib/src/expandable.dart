@@ -83,9 +83,12 @@ abstract class Expandable extends StatefulWidget {
   /// • Provides better alignment for [additionalWidget].
   final bool? centralizeAdditionalWidget;
 
+  /// • Decide whether this widget will be clickable everywhere or clickable only at [arrowWidget].
   final bool? isClickable;
 
-  /// TODO - TEST
+  /// TEST
+  ///
+  /// • Custom arrow widget.
   final Widget? arrowWidget;
 
   @override

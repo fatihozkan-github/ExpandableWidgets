@@ -18,7 +18,7 @@ abstract class ExpandableText extends StatefulWidget {
     this.hoverOn,
     this.arrowWidget,
 
-    /// TODO
+    /// Test
     // this.showArrowIcon,
   });
 

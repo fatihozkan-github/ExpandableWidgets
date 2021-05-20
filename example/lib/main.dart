@@ -8,9 +8,10 @@ class ExpandableShowcase extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        // backgroundColor: Colors.black,
         appBar: AppBar(
-          title: Center(child: Text('Expandable Widget Showcase')),
+          title: Center(
+            child: Text('Expandable Widget Showcase'),
+          ),
         ),
         body: ListView(
           children: [
@@ -95,9 +96,9 @@ class ExpandableShowcase extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  Container(width: 30, height: 10, color: Colors.red),
-                  Container(width: 30, height: 10, color: Colors.red),
-                  Container(width: 30, height: 10, color: Colors.red),
+                  Container(width: 30, height: 10, color: Colors.black),
+                  Container(width: 30, height: 10, color: Colors.black),
+                  Container(width: 30, height: 10, color: Colors.black),
                 ],
               ),
               isClickable: false,
@@ -118,15 +119,16 @@ class ExpandableShowcase extends StatelessWidget {
 
             SizedBox(height: 20),
 
+            /// Example without centralizePrimaryWidget
             ExpandableWidget(
               primaryWidget: Text('HELLO'),
               secondaryWidget: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  Container(width: 30, height: 10, color: Colors.red),
-                  Container(width: 30, height: 10, color: Colors.red),
-                  Container(width: 30, height: 10, color: Colors.red),
+                  Container(width: 30, height: 10, color: Colors.black),
+                  Container(width: 30, height: 10, color: Colors.black),
+                  Container(width: 30, height: 10, color: Colors.black),
                 ],
               ),
               isClickable: false,
