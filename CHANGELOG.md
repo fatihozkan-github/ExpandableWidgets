@@ -15,8 +15,8 @@
 
 ## Initial Release ##
    # Widgets:
-     • Expandable
-     • Expandable.extended
+     • ExpandableWidget - renamed.
+     • ExpandableWidget.extended - renamed.
      • ExpandableTextWidget - added.
      • Expandable.singleTextChild - removed.
 
