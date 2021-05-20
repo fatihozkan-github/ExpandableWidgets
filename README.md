@@ -1,7 +1,7 @@
 <h1>Expandable Widgets</h1>
 A package that provides expandable widgets for Flutter. Written in %100 Dart.
-https://user-images.githubusercontent.com/69001201/119015657-c8858980-b9a1-11eb-9b4b-ae6095e554a5.mp4
 
+https://user-images.githubusercontent.com/69001201/119015657-c8858980-b9a1-11eb-9b4b-ae6095e554a5.mp4
 
 <h1>Examples</h1>
 General use:
