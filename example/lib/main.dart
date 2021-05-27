@@ -18,7 +18,7 @@ class ExpandableShowcase extends StatelessWidget {
             SizedBox(height: 20),
 
             /// General use
-            ExpandableWidget(
+            Expandable(
               primaryWidget: Container(
                 height: 30,
                 child: Center(child: Text('Hello world!')),
@@ -42,7 +42,7 @@ class ExpandableShowcase extends StatelessWidget {
             SizedBox(height: 20),
 
             /// For long texts
-            ExpandableTextWidget(
+            ExpandableText(
               elevation: 5,
               padding: EdgeInsets.all(20),
               animationDuration: Duration(milliseconds: 500),
@@ -52,12 +52,12 @@ class ExpandableShowcase extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
               ),
               showArrowIcon: true,
-              initiallyExpanded: true,
+              initiallyExpanded: false,
             ),
             SizedBox(height: 20),
 
             /// Extended example
-            ExpandableWidget.extended(
+            Expandable.extended(
               elevation: 10,
               isClickable: false,
               initiallyExpanded: true,
@@ -90,7 +90,7 @@ class ExpandableShowcase extends StatelessWidget {
             SizedBox(height: 20),
 
             /// Example with background image
-            ExpandableWidget(
+            Expandable(
               primaryWidget: Text('HELLO'),
               secondaryWidget: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -120,7 +120,7 @@ class ExpandableShowcase extends StatelessWidget {
             SizedBox(height: 20),
 
             /// Example without centralizePrimaryWidget
-            ExpandableWidget(
+            Expandable(
               primaryWidget: Text('HELLO'),
               secondaryWidget: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
