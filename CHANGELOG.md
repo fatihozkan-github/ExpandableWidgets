@@ -13,7 +13,18 @@
 
 ## [1.0.1] - Release Date: 20.05.2021
 
-## Initial Release ##
+   # Widgets:
+     • ExpandableWidget - renamed.
+     • ExpandableWidget.extended - renamed.
+     • ExpandableTextWidget - added.
+     • Expandable.singleTextChild - removed.
+
+   # TODOs:
+     • More features for ExpandableTextWidget
+
+     /// TODO - date.
+## [1.0.2] - Release Date: xx.05.2021
+
    # Widgets:
      • ExpandableWidget - renamed.
      • ExpandableWidget.extended - renamed.
