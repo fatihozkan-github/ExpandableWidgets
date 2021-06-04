@@ -1,3 +1,4 @@
+import 'package:expandable_widgets/src/constants.dart';
 import 'package:expandable_widgets/src/expandable_text_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -7,11 +8,11 @@ class ExpandableText extends ExpandableTextWidget {
   /// • One should add [maxLines] property to [textWidget] otherwise widget will
   /// not be expandable.
   ///
-  /// • See [Expandable] for more details.
+  /// • See [ExpandableTextWidget] for more details.
   ExpandableText({
     Color? backGroundColor,
     double? elevation = 0.0,
-    EdgeInsets? padding = const EdgeInsets.all(5.0),
+    EdgeInsets? padding = const EdgeInsets.all(20.0),
     ShapeBorder? shape,
     Duration? animationDuration = const Duration(milliseconds: 100),
     Function? onPressed,
@@ -20,6 +21,8 @@ class ExpandableText extends ExpandableTextWidget {
     DecorationImage? backgroundImage,
     bool? showArrowIcon = false,
     bool? initiallyExpanded = false,
+    TextDirection textDirection = TextDirection.ltr,
+    ArrowLocation arrowLocation = ArrowLocation.right,
   })  : assert(textWidget != null),
         super(
           backgroundColor: backGroundColor,
@@ -31,7 +34,9 @@ class ExpandableText extends ExpandableTextWidget {
           textWidget: textWidget,
           hoverOn: hoverOn,
           backgroundImage: backgroundImage,
-          // showArrowIcon: showArrowIcon,
+          showArrowIcon: showArrowIcon,
           initiallyExpanded: initiallyExpanded,
+          textDirection: textDirection,
+          arrowLocation: arrowLocation,
         );
 }

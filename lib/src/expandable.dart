@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class Expandable extends ExpandableWidget {
   /// • Provides an expandable widget for general use.
   ///
-  /// • See [Expandable] for more details.
+  /// • See [ExpandableWidget] for more details.
   Expandable({
     Widget? primaryWidget,
     Widget? secondaryWidget,
@@ -12,7 +12,7 @@ class Expandable extends ExpandableWidget {
     Color? backgroundColor = Colors.white,
     double? elevation = 0,
     ShapeBorder? shape,
-    EdgeInsets? padding = const EdgeInsets.all(5.0),
+    EdgeInsets? padding = const EdgeInsets.all(20.0),
     Duration? animationDuration = const Duration(milliseconds: 100),
     Duration? beforeAnimationDuration,
     DecorationImage? backgroundImage,
@@ -48,7 +48,7 @@ class Expandable extends ExpandableWidget {
   ///
   /// • [additionalWidget] brings an iconWidget next to it.
   ///
-  /// • See [Expandable] for more details.
+  /// • See [ExpandableWidget] for more details.
   Expandable.extended({
     Widget? primaryWidget,
     Widget? secondaryWidget,
@@ -57,7 +57,7 @@ class Expandable extends ExpandableWidget {
     Color? backGroundColor = Colors.white,
     double? elevation = 0,
     ShapeBorder? shape,
-    EdgeInsets? padding = const EdgeInsets.all(5.0),
+    EdgeInsets? padding = const EdgeInsets.all(20.0),
     Duration? animationDuration = const Duration(milliseconds: 100),
     Duration? beforeAnimationDuration,
     DecorationImage? backgroundImage,
