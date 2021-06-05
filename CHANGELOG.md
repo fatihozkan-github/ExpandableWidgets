@@ -21,13 +21,12 @@
    # TODOs:
      • More features for ExpandableTextWidget
 
-     /// TODO
-## [1.0.2] - Release Date: 05.06.2021
+## [1.0.2] - Release Date: 06.06.2021
 
    # Widgets:
      • Expandable & ExpandableText - renamed.
      • Arrow locations for Expandable widgets.
-     • textDirection support.
+     • textDirection added.
 
    # TODOs:
      • Custom animations.
