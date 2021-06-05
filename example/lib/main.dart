@@ -76,6 +76,7 @@ class ExpandableShowcase extends StatelessWidget {
                 height: 70,
                 child: Center(
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Text('More'),
                       Text('Details'),
@@ -91,6 +92,7 @@ class ExpandableShowcase extends StatelessWidget {
                 size: 20.0,
               ),
               additionalWidget: Text('Show me'),
+              arrowLocation: ArrowLocation.left,
             ),
             SizedBox(height: 20),
 
