@@ -19,6 +19,7 @@ abstract class ExpandableTextWidget extends StatefulWidget {
     this.showArrowIcon,
     this.textDirection,
     this.arrowLocation,
+    this.finalArrowLocation,
   });
 
   /// [Text] widget for [ExpandableText].
@@ -77,19 +78,15 @@ abstract class ExpandableTextWidget extends StatefulWidget {
   /// TEST
   final Widget? arrowWidget;
 
-  /// TEST
+  /// • Decide where the arrow widget will be placed.
   final ArrowLocation? arrowLocation;
+
+  /// • Test
+  final ArrowLocation? finalArrowLocation;
 
   @override
   _ExpandableTextWidgetState createState() => _ExpandableTextWidgetState();
 }
-
-// enum ArrowLocation {
-//   top,
-//   bottom,
-//   left,
-//   right,
-// }
 
 class _ExpandableTextWidgetState extends State<ExpandableTextWidget>
     with TickerProviderStateMixin {
@@ -141,6 +138,19 @@ class _ExpandableTextWidgetState extends State<ExpandableTextWidget>
       _toggleExpand();
       initiallyExpanded = false;
     }
+    Text finalText = Text(
+      widget.textWidget!.data!,
+      style: widget.textWidget!.style ?? TextStyle(color: Colors.black),
+      strutStyle: widget.textWidget!.strutStyle,
+      textAlign: widget.textWidget!.textAlign,
+      textDirection: widget.textWidget!.textDirection,
+      locale: widget.textWidget!.locale,
+      softWrap: widget.textWidget!.softWrap,
+      textScaleFactor: widget.textWidget!.textScaleFactor,
+      semanticsLabel: widget.textWidget!.semanticsLabel,
+      textWidthBasis: widget.textWidget!.textWidthBasis,
+      textHeightBehavior: widget.textWidget!.textHeightBehavior,
+    );
     return Directionality(
       textDirection: widget.textDirection!,
       child: Material(
@@ -168,55 +178,76 @@ class _ExpandableTextWidgetState extends State<ExpandableTextWidget>
                     crossFadeState: _isExpanded
                         ? CrossFadeState.showFirst
                         : CrossFadeState.showSecond,
-                    firstChild: Column(
-                      children: [
-                        Text(
-                          widget.textWidget!.data!,
-                          style: widget.textWidget!.style ??
-                              TextStyle(color: Colors.black),
-                          strutStyle: widget.textWidget!.strutStyle,
-                          textAlign: widget.textWidget!.textAlign,
-                          textDirection: widget.textWidget!.textDirection,
-                          locale: widget.textWidget!.locale,
-                          softWrap: widget.textWidget!.softWrap,
-                          textScaleFactor: widget.textWidget!.textScaleFactor,
-                          semanticsLabel: widget.textWidget!.semanticsLabel,
-                          textWidthBasis: widget.textWidget!.textWidthBasis,
-                          textHeightBehavior:
-                              widget.textWidget!.textHeightBehavior,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(top: widget.padding!.top),
-                          child: Icon(
-                            Icons.keyboard_arrow_up_rounded,
-                            color: Colors.black,
-                            size: 25.0,
-                          ),
-                        ),
-                      ],
-                    ),
-                    secondChild: (widget.arrowLocation == ArrowLocation.left ||
-                            widget.arrowLocation == ArrowLocation.right)
+                    firstChild: (widget.finalArrowLocation ==
+                                ArrowLocation.left ||
+                            widget.finalArrowLocation == ArrowLocation.right)
                         ? Row(
-                            textDirection: TextDirection.ltr,
+                            textDirection:
+                                widget.arrowLocation == ArrowLocation.right
+                                    ? TextDirection.ltr
+                                    : TextDirection.rtl,
                             children: [
-                              if (widget.arrowLocation == ArrowLocation.left)
-                                Expanded(child: widget.textWidget!),
+                              Expanded(child: finalText),
                               Padding(
                                 padding:
                                     widget.arrowLocation == ArrowLocation.left
                                         ? EdgeInsets.only(
-                                            left: widget.padding!.left)
+                                            right: widget.padding!.right)
                                         : EdgeInsets.only(
-                                            right: widget.padding!.right),
+                                            left: widget.padding!.left),
+                                child: Icon(
+                                  Icons.keyboard_arrow_up_rounded,
+                                  color: Colors.black,
+                                  size: 25.0,
+                                ),
+                              ),
+                            ],
+                          )
+                        : Column(
+                            children: [
+                              if (widget.finalArrowLocation ==
+                                  ArrowLocation.bottom)
+                                finalText,
+                              Padding(
+                                padding: widget.finalArrowLocation ==
+                                        ArrowLocation.top
+                                    ? EdgeInsets.only(
+                                        bottom: widget.padding!.top)
+                                    : EdgeInsets.only(
+                                        top: widget.padding!.bottom),
+                                child: Icon(
+                                  Icons.keyboard_arrow_up_rounded,
+                                  color: Colors.black,
+                                  size: 25.0,
+                                ),
+                              ),
+                              if (widget.finalArrowLocation ==
+                                  ArrowLocation.top)
+                                finalText,
+                            ],
+                          ),
+                    secondChild: (widget.arrowLocation == ArrowLocation.left ||
+                            widget.arrowLocation == ArrowLocation.right)
+                        ? Row(
+                            textDirection:
+                                widget.arrowLocation == ArrowLocation.right
+                                    ? TextDirection.ltr
+                                    : TextDirection.rtl,
+                            children: [
+                              Expanded(child: widget.textWidget!),
+                              Padding(
+                                padding:
+                                    widget.arrowLocation == ArrowLocation.left
+                                        ? EdgeInsets.only(
+                                            right: widget.padding!.right)
+                                        : EdgeInsets.only(
+                                            left: widget.padding!.left),
                                 child: Icon(
                                   Icons.keyboard_arrow_down_rounded,
                                   color: Colors.black,
                                   size: 25.0,
                                 ),
                               ),
-                              if (widget.arrowLocation == ArrowLocation.right)
-                                Expanded(child: widget.textWidget!),
                             ],
                           )
                         : Column(

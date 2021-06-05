@@ -56,7 +56,8 @@ class ExpandableShowcase extends StatelessWidget {
               showArrowIcon: true,
               initiallyExpanded: false,
               hoverOn: false,
-              arrowLocation: ArrowLocation.bottom,
+              arrowLocation: ArrowLocation.top,
+              finalArrowLocation: ArrowLocation.top,
             ),
             SizedBox(height: 20),
 

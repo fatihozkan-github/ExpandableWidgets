@@ -23,6 +23,7 @@ class ExpandableText extends ExpandableTextWidget {
     bool? initiallyExpanded = false,
     TextDirection textDirection = TextDirection.ltr,
     ArrowLocation arrowLocation = ArrowLocation.right,
+    ArrowLocation finalArrowLocation = ArrowLocation.bottom,
   })  : assert(textWidget != null),
         super(
           backgroundColor: backGroundColor,
@@ -38,5 +39,6 @@ class ExpandableText extends ExpandableTextWidget {
           initiallyExpanded: initiallyExpanded,
           textDirection: textDirection,
           arrowLocation: arrowLocation,
+          finalArrowLocation: finalArrowLocation,
         );
 }
