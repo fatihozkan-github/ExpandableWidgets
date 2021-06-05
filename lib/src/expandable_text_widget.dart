@@ -75,13 +75,13 @@ abstract class ExpandableTextWidget extends StatefulWidget {
   /// • See [ExpandableTextWidget] & [TextDirection] for more info.
   final TextDirection? textDirection;
 
-  /// TEST
+  /// • Custom arrow widget.
   final Widget? arrowWidget;
 
-  /// • Decide where the arrow widget will be placed.
+  /// • Place of the arrow widget when this expandable is collapsed.
   final ArrowLocation? arrowLocation;
 
-  /// • Test
+  /// • Place of the arrow widget when this expandable is expanded.
   final ArrowLocation? finalArrowLocation;
 
   @override

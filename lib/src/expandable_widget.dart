@@ -88,12 +88,10 @@ abstract class ExpandableWidget extends StatefulWidget {
   /// • Decide whether this widget will be clickable everywhere or clickable only at [arrowWidget].
   final bool? isClickable;
 
-  /// TEST
-  ///
   /// • Custom arrow widget.
   final Widget? arrowWidget;
 
-  /// TEST
+  /// • Place of the arrow widget.
   final ArrowLocation? arrowLocation;
 
   @override
