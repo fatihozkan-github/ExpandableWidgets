@@ -1,14 +1,12 @@
 <h1>Expandable Widgets</h1>
 A package that provides expandable widgets for Flutter. Written in %100 Dart.
 
-https://user-images.githubusercontent.com/69001201/119015657-c8858980-b9a1-11eb-9b4b-ae6095e554a5.mp4
+<h1> Examples </h1>
+<h2> General use: </h2>
 
 ![general_use](https://user-images.githubusercontent.com/69001201/120908143-15d74b80-c670-11eb-81df-b3a5f83a99ac.gif)
 
-<h1>Examples</h1>
-General use:
-
-            ExpandableWidget(
+             Expandable(
               primaryWidget: Container(
                 height: 30,
                 child: Center(child: Text('Hello world!')),
@@ -28,26 +26,34 @@ General use:
               showArrowIcon: true,
               centralizePrimaryWidget: true,
               isClickable: true,
-            ),
+              padding: EdgeInsets.all(5.0),
+             ),
 
-For long texts:
+<h2> For a long text: </h2>
 
-            ExpandableTextWidget(
+![expandableText](https://user-images.githubusercontent.com/69001201/120908163-4ae39e00-c670-11eb-880d-c82e944931b2.gif)
+
+             ExpandableText(
               elevation: 5,
-              padding: EdgeInsets.all(20),
+              padding: EdgeInsets.all(10.0),
               animationDuration: Duration(milliseconds: 500),
               textWidget: Text(
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+                data,
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,
               ),
               showArrowIcon: true,
-              initiallyExpanded: true,
-            ),
+              initiallyExpanded: false,
+              hoverOn: false,
+              arrowLocation: ArrowLocation.right,
+              finalArrowLocation: ArrowLocation.bottom,
+             ),
 
-Extended example:
+<h2> Extended example: </h2>
 
-            ExpandableWidget.extended(
+![extended](https://user-images.githubusercontent.com/69001201/120908186-87af9500-c670-11eb-8bef-b5ba7e424a08.gif)
+
+             Expandable.extended(
               elevation: 10,
               isClickable: false,
               initiallyExpanded: true,
@@ -61,6 +67,7 @@ Extended example:
                 height: 70,
                 child: Center(
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Text('More'),
                       Text('Details'),
@@ -76,12 +83,13 @@ Extended example:
                 size: 20.0,
               ),
               additionalWidget: Text('Show me'),
-            ),
+              arrowLocation: ArrowLocation.left,
+             ),
+            
+<h2> Example with background image: </h2>
 
-Example with background image:
- 
-            ExpandableWidget(
-              primaryWidget: Text('HELLO'),
+             Expandable(
+              primaryWidget: Text('centralizePrimaryWidget: true'),
               secondaryWidget: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 mainAxisSize: MainAxisSize.max,
@@ -107,10 +115,12 @@ Example with background image:
               centralizePrimaryWidget: true,
             ),
 
-Same example with background image but without centralizePrimaryWidget:
+<h2> Same example with background image but without centralizePrimaryWidget: </h2>
 
-            ExpandableWidget(
-              primaryWidget: Text('HELLO'),
+![centralized](https://user-images.githubusercontent.com/69001201/120908212-a44bcd00-c670-11eb-8566-1c022fb05060.gif)
+
+             Expandable(
+              primaryWidget: Text('centralizePrimaryWidget: false'),
               secondaryWidget: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 mainAxisSize: MainAxisSize.max,
@@ -134,4 +144,4 @@ Same example with background image but without centralizePrimaryWidget:
               ),
               animationDuration: Duration(seconds: 1),
               centralizePrimaryWidget: false,
-            ),
+             ),
