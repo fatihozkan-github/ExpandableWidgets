@@ -46,7 +46,7 @@ class ExpandableShowcase extends StatelessWidget {
             /// For long texts
             ExpandableText(
               elevation: 5,
-              padding: EdgeInsets.all(8.0),
+              padding: EdgeInsets.all(10.0),
               animationDuration: Duration(milliseconds: 500),
               textWidget: Text(
                 data,
@@ -56,8 +56,8 @@ class ExpandableShowcase extends StatelessWidget {
               showArrowIcon: true,
               initiallyExpanded: false,
               hoverOn: false,
-              arrowLocation: ArrowLocation.top,
-              finalArrowLocation: ArrowLocation.top,
+              arrowLocation: ArrowLocation.right,
+              finalArrowLocation: ArrowLocation.bottom,
             ),
             SizedBox(height: 20),
 

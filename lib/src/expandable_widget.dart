@@ -254,20 +254,7 @@ class _ExpandableWidgetState extends State<ExpandableWidget>
                               holderIcon
                             else if (widget.centralizePrimaryWidget! &&
                                 widget.arrowWidget != null)
-                              Opacity(
-                                opacity: 0,
-                                child: TextButton(
-                                  child: widget.arrowWidget!,
-                                  clipBehavior: Clip.antiAlias,
-                                  style: ButtonStyle(
-                                    overlayColor: MaterialStateProperty.all(
-                                        Colors.transparent),
-                                    mouseCursor: MaterialStateProperty.all(
-                                        SystemMouseCursors.basic),
-                                  ),
-                                  onPressed: () {},
-                                ),
-                              ),
+                              Opacity(opacity: 0, child: widget.arrowWidget!),
                             widget.primaryWidget!,
                             defaultRotation,
                           ],
