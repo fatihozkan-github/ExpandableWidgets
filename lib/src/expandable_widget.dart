@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'constants.dart';
 
 abstract class ExpandableWidget extends StatefulWidget {
   /// • Expandable abstract class for general use.
@@ -23,6 +24,7 @@ abstract class ExpandableWidget extends StatefulWidget {
     this.arrowWidget,
     this.centralizeAdditionalWidget,
     this.isClickable,
+    this.arrowLocation,
   });
 
   /// • The widget that is placed at the non-collapsing part of the expandable.
@@ -91,11 +93,15 @@ abstract class ExpandableWidget extends StatefulWidget {
   /// • Custom arrow widget.
   final Widget? arrowWidget;
 
+  /// TEST
+  final ArrowLocation? arrowLocation;
+
   @override
   _ExpandableWidgetState createState() => _ExpandableWidgetState();
 }
 
-class _ExpandableWidgetState extends State<ExpandableWidget> with TickerProviderStateMixin {
+class _ExpandableWidgetState extends State<ExpandableWidget>
+    with TickerProviderStateMixin {
   late AnimationController _sizeController;
   late Animation<double> _sizeAnimation;
   bool _isExpanded = false;
@@ -173,51 +179,28 @@ class _ExpandableWidgetState extends State<ExpandableWidget> with TickerProvider
     super.dispose();
   }
 
-  Widget defaultIcon = Icon(
-    Icons.keyboard_arrow_up_rounded,
-    color: Colors.black,
-    size: 25.0,
-  );
-
-  Widget holderIcon = Icon(
-    Icons.keyboard_arrow_up_rounded,
-    color: Colors.transparent,
-    size: 25.0,
-  );
-
-  ShapeBorder defaultShapeBorder = RoundedRectangleBorder(
-    borderRadius: BorderRadius.all(
-      Radius.circular(20.0),
-    ),
-  );
-
   @override
   Widget build(BuildContext context) {
     RotationTransition defaultRotation = RotationTransition(
       turns: Tween(begin: 0.0, end: 1.0).animate(_rotationController),
       child: widget.isClickable!
           ? widget.arrowWidget ?? defaultIcon
-          : TextButton(
+          : GestureDetector(
               child: widget.arrowWidget!,
-              clipBehavior: Clip.antiAlias,
-              style: ButtonStyle(
-                overlayColor: MaterialStateProperty.all(Colors.transparent),
-              ),
-              onPressed: () {
+              onTap: () {
                 Timer(
                     widget.beforeAnimationDuration ??
                         Duration(milliseconds: 20), () {
                   _toggleExpand();
                   _toggleRotate();
                 });
-              }),
+              },
+            ),
     );
-
     if (initiallyExpanded == true) {
       _toggleExpand();
       initiallyExpanded = false;
     }
-
     return Directionality(
       textDirection: TextDirection.ltr,
       child: Material(
@@ -257,12 +240,16 @@ class _ExpandableWidgetState extends State<ExpandableWidget> with TickerProvider
           child: Container(
             decoration: BoxDecoration(image: widget.backgroundImage ?? null),
             child: Padding(
-              padding: widget.padding ?? EdgeInsets.all(0),
+              padding: widget.padding ?? EdgeInsets.all(20.0),
               child: Column(
                 children: [
                   widget.showArrowIcon == true
                       ? Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          textDirection:
+                              widget.arrowLocation == ArrowLocation.right
+                                  ? TextDirection.ltr
+                                  : TextDirection.rtl,
                           children: [
                             if (widget.centralizePrimaryWidget! &&
                                 widget.arrowWidget == null)
@@ -297,6 +284,10 @@ class _ExpandableWidgetState extends State<ExpandableWidget> with TickerProvider
                                     Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceEvenly,
+                                      textDirection: widget.arrowLocation ==
+                                              ArrowLocation.right
+                                          ? TextDirection.ltr
+                                          : TextDirection.rtl,
                                       children: [
                                         if (widget
                                                 .centralizeAdditionalWidget! &&
@@ -307,20 +298,7 @@ class _ExpandableWidgetState extends State<ExpandableWidget> with TickerProvider
                                             widget.arrowWidget != null)
                                           Opacity(
                                             opacity: 0,
-                                            child: TextButton(
-                                              child: widget.arrowWidget!,
-                                              clipBehavior: Clip.antiAlias,
-                                              style: ButtonStyle(
-                                                overlayColor:
-                                                    MaterialStateProperty.all(
-                                                        Colors.transparent),
-                                                mouseCursor:
-                                                    MaterialStateProperty.all(
-                                                        SystemMouseCursors
-                                                            .basic),
-                                              ),
-                                              onPressed: () {},
-                                            ),
+                                            child: widget.arrowWidget!,
                                           ),
                                         widget.additionalWidget!,
                                         RotatedBox(

@@ -1,3 +1,4 @@
+import 'package:expandable_widgets/expandable_widgets.dart';
 import 'package:expandable_widgets/src/expandable_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -21,9 +22,12 @@ class Expandable extends ExpandableWidget {
     Widget? arrowWidget,
     bool? centralizePrimaryWidget = false,
     bool? isClickable = true,
+    ArrowLocation? arrowLocation = ArrowLocation.right,
   })  : assert(primaryWidget != null),
         assert((isClickable == false && arrowWidget != null) ||
             (isClickable == true)),
+        assert(arrowLocation != ArrowLocation.bottom &&
+            arrowLocation != ArrowLocation.top),
         super(
           primaryWidget: primaryWidget,
           secondaryWidget: secondaryWidget,
@@ -40,6 +44,7 @@ class Expandable extends ExpandableWidget {
           arrowWidget: arrowWidget,
           centralizePrimaryWidget: centralizePrimaryWidget,
           isClickable: isClickable,
+          arrowLocation: arrowLocation,
         );
 
   /// • Almost similar to [Expandable].
@@ -67,9 +72,12 @@ class Expandable extends ExpandableWidget {
     bool? centralizeAdditionalWidget = false,
     Widget? arrowWidget,
     bool? isClickable = true,
+    ArrowLocation? arrowLocation = ArrowLocation.right,
   })  : assert(primaryWidget != null || secondaryWidget != null),
         assert((isClickable == false && arrowWidget != null) ||
             (isClickable == true)),
+        assert(arrowLocation != ArrowLocation.bottom &&
+            arrowLocation != ArrowLocation.top),
         super(
           primaryWidget: primaryWidget,
           secondaryWidget: secondaryWidget,
@@ -88,5 +96,6 @@ class Expandable extends ExpandableWidget {
           centralizeAdditionalWidget: centralizeAdditionalWidget,
           arrowWidget: arrowWidget,
           isClickable: isClickable,
+          arrowLocation: arrowLocation,
         );
 }
