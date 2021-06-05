@@ -3,6 +3,8 @@ A package that provides expandable widgets for Flutter. Written in %100 Dart.
 
 https://user-images.githubusercontent.com/69001201/119015657-c8858980-b9a1-11eb-9b4b-ae6095e554a5.mp4
 
+![general_use](https://user-images.githubusercontent.com/69001201/120908143-15d74b80-c670-11eb-81df-b3a5f83a99ac.gif)
+
 <h1>Examples</h1>
 General use:
 
