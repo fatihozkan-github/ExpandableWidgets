@@ -4,15 +4,15 @@ import 'package:flutter/material.dart';
 
 void main() {
   testWidgets(
-    'description',
+    'pumpWidget',
     (WidgetTester test) async {
       await test.pumpWidget(
         Expandable(
-          primaryWidget: Container(
+          firstChild: Container(
             height: 30,
             child: Center(child: Text('Hello world!')),
           ),
-          secondaryWidget: Container(
+          secondChild: Container(
             height: 45,
             child: Center(
               child: Column(
@@ -39,6 +39,10 @@ void main() {
           elevation: 5,
           padding: EdgeInsets.all(10),
           animationDuration: Duration(seconds: 1),
+          showHelperText: true,
+          showArrowIcon: false,
+          onPressed: () => print('test'),
+          hoverOn: true,
         ),
       );
 
@@ -48,11 +52,11 @@ void main() {
           initiallyExpanded: true,
           centralizePrimaryWidget: true,
           centralizeAdditionalWidget: true,
-          primaryWidget: Container(
+          firstChild: Container(
             height: 30,
             child: Center(child: Text('Important Summary')),
           ),
-          secondaryWidget: Container(
+          secondChild: Container(
             child: Center(
               child: Column(
                 children: [
@@ -64,22 +68,22 @@ void main() {
               ),
             ),
           ),
-          additionalWidget: Text('Show me details'),
+          additionalChild: Text('Show me details'),
         ),
       );
 
       await test.pumpWidget(
         Expandable.extended(
-          primaryWidget: Text('hello world!'),
-          secondaryWidget: Text('STILL D.R.E'),
+          firstChild: Text('hello world!'),
+          secondChild: Text('STILL D.R.E'),
           backGroundColor: Colors.orange,
         ),
       );
 
       await test.pumpWidget(
         Expandable(
-          primaryWidget: Container(height: 10),
-          secondaryWidget: Container(height: 20),
+          firstChild: Container(height: 10),
+          secondChild: Container(height: 20),
           showArrowIcon: true,
           backgroundImage: DecorationImage(
             image: AssetImage('assets/background.png'),

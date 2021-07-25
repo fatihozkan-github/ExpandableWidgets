@@ -7,8 +7,8 @@ class Expandable extends ExpandableWidget {
   ///
   /// • See [ExpandableWidget] for more details.
   Expandable({
-    Widget? primaryWidget,
-    Widget? secondaryWidget,
+    Widget? firstChild,
+    Widget? secondChild,
     Function? onPressed,
     Color? backgroundColor = Colors.white,
     double? elevation = 0,
@@ -21,16 +21,17 @@ class Expandable extends ExpandableWidget {
     bool? hoverOn,
     Widget? arrowWidget,
     bool? centralizePrimaryWidget = false,
+    bool? isEverywhereClickable = false,
     bool? isClickable = true,
     ArrowLocation? arrowLocation = ArrowLocation.right,
-  })  : assert(primaryWidget != null),
-        assert((isClickable == false && arrowWidget != null) ||
-            (isClickable == true)),
-        assert(arrowLocation != ArrowLocation.bottom &&
-            arrowLocation != ArrowLocation.top),
+    Function? onLongPress,
+    Animation<double>? animation,
+    AnimationController? animationController,
+  })  : assert(firstChild != null),
+        assert(arrowLocation != ArrowLocation.bottom && arrowLocation != ArrowLocation.top),
         super(
-          primaryWidget: primaryWidget,
-          secondaryWidget: secondaryWidget,
+          firstChild: firstChild,
+          secondChild: secondChild,
           onPressed: onPressed,
           backgroundColor: backgroundColor,
           elevation: elevation,
@@ -40,11 +41,17 @@ class Expandable extends ExpandableWidget {
           padding: padding,
           backgroundImage: backgroundImage,
           hoverOn: hoverOn,
-          showArrowIcon: showArrowIcon,
+          showArrowWidget: showArrowIcon,
           arrowWidget: arrowWidget,
-          centralizePrimaryWidget: centralizePrimaryWidget,
-          isClickable: isClickable,
+          centralizeFirstChild: centralizePrimaryWidget,
+          isEverywhereClickable: isEverywhereClickable,
           arrowLocation: arrowLocation,
+          onLongPress: onLongPress,
+          isClickable: isClickable,
+          animation: animation,
+          animationController: animationController,
+          // rotationController: rotationAnimationController,
+          // rotationAnimation: rotationAnimation,
         );
 
   /// • Almost similar to [Expandable].
@@ -55,9 +62,9 @@ class Expandable extends ExpandableWidget {
   ///
   /// • See [ExpandableWidget] for more details.
   Expandable.extended({
-    Widget? primaryWidget,
-    Widget? secondaryWidget,
-    Widget? additionalWidget,
+    Widget? firstChild,
+    Widget? secondChild,
+    Widget? additionalChild,
     Function? onPressed,
     Color? backGroundColor = Colors.white,
     double? elevation = 0,
@@ -71,17 +78,18 @@ class Expandable extends ExpandableWidget {
     bool? centralizePrimaryWidget = false,
     bool? centralizeAdditionalWidget = false,
     Widget? arrowWidget,
+    bool? isEverywhereClickable = false,
     bool? isClickable = true,
     ArrowLocation? arrowLocation = ArrowLocation.right,
-  })  : assert(primaryWidget != null || secondaryWidget != null),
-        assert((isClickable == false && arrowWidget != null) ||
-            (isClickable == true)),
-        assert(arrowLocation != ArrowLocation.bottom &&
-            arrowLocation != ArrowLocation.top),
+    Function? onLongPress,
+    Animation<double>? animation,
+    AnimationController? animationController,
+  })  : assert(firstChild != null || secondChild != null),
+        assert(arrowLocation != ArrowLocation.bottom && arrowLocation != ArrowLocation.top),
         super(
-          primaryWidget: primaryWidget,
-          secondaryWidget: secondaryWidget,
-          additionalWidget: additionalWidget,
+          firstChild: firstChild,
+          secondChild: secondChild,
+          additionalChild: additionalChild,
           onPressed: onPressed,
           backgroundColor: backGroundColor,
           elevation: elevation,
@@ -92,10 +100,14 @@ class Expandable extends ExpandableWidget {
           backgroundImage: backgroundImage,
           hoverOn: hoverOn,
           initiallyExpanded: initiallyExpanded,
-          centralizePrimaryWidget: centralizePrimaryWidget,
-          centralizeAdditionalWidget: centralizeAdditionalWidget,
+          centralizeFirstChild: centralizePrimaryWidget,
+          centralizeAdditionalChild: centralizeAdditionalWidget,
           arrowWidget: arrowWidget,
           isClickable: isClickable,
+          isEverywhereClickable: isEverywhereClickable,
           arrowLocation: arrowLocation,
+          onLongPress: onLongPress,
+          animation: animation,
+          animationController: animationController,
         );
 }
