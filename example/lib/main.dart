@@ -51,7 +51,7 @@ class _ExpandableShowcaseState extends State<ExpandableShowcase> with TickerProv
                   ),
                 ),
                 backgroundColor: Colors.grey.withOpacity(0.4),
-                showArrowIcon: true,
+                showArrowWidget: true,
                 centralizePrimaryWidget: true,
                 isEverywhereClickable: false,
                 padding: EdgeInsets.all(5.0),
@@ -75,7 +75,7 @@ class _ExpandableShowcaseState extends State<ExpandableShowcase> with TickerProv
                       color: Colors.blue,
                       borderRadius: BorderRadius.vertical(bottom: Radius.circular(20))),
                 ),
-                showArrowIcon: false,
+                showArrowWidget: false,
                 centralizePrimaryWidget: true,
                 isClickable: false,
                 isEverywhereClickable: false,
@@ -90,28 +90,33 @@ class _ExpandableShowcaseState extends State<ExpandableShowcase> with TickerProv
                 padding: EdgeInsets.all(10.0),
                 animationDuration: Duration(milliseconds: 500),
                 textWidget: Text(data, maxLines: 3, overflow: TextOverflow.ellipsis),
-                showArrowIcon: false,
-                showHelperText: true,
+                showArrowWidget: true,
+                showHelperText: false,
                 initiallyExpanded: false,
                 hoverOn: false,
                 arrowLocation: ArrowLocation.right,
-                finalArrowLocation: ArrowLocation.bottom,
+                finalArrowLocation: ArrowLocation.right,
               ),
 
               /// Extended example
               Expandable.extended(
                 centralizeAdditionalWidget: true,
                 arrowLocation: ArrowLocation.left,
+                backGroundColor: Colors.grey.withOpacity(0.2),
                 firstChild: Text('Team'),
                 additionalChild: Text('Show Roaster'),
-                secondChild: Container(
-                  height: 40,
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    children: [
-                      for (int i = 0; i < 5; i++)
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 15.0),
+                secondChild: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    for (int i = 0; i < 5; i++)
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 10),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.white,
+                          ),
+                          padding: EdgeInsets.all(12),
                           child: Column(
                             children: [
                               Icon(Icons.person_outline_rounded),
@@ -119,8 +124,8 @@ class _ExpandableShowcaseState extends State<ExpandableShowcase> with TickerProv
                             ],
                           ),
                         ),
-                    ],
-                  ),
+                      ),
+                  ],
                 ),
               ),
 
@@ -137,7 +142,7 @@ class _ExpandableShowcaseState extends State<ExpandableShowcase> with TickerProv
                   ],
                 ),
                 isClickable: true,
-                showArrowIcon: true,
+                showArrowWidget: true,
                 backgroundImage: DecorationImage(
                   image: AssetImage('assets/background.png'),
                   repeat: ImageRepeat.repeatX,
@@ -165,7 +170,7 @@ class _ExpandableShowcaseState extends State<ExpandableShowcase> with TickerProv
                   ],
                 ),
                 isClickable: true,
-                showArrowIcon: true,
+                showArrowWidget: true,
                 backgroundImage: DecorationImage(
                   image: AssetImage('assets/background.png'),
                   repeat: ImageRepeat.repeatX,

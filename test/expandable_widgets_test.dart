@@ -40,7 +40,7 @@ void main() {
           padding: EdgeInsets.all(10),
           animationDuration: Duration(seconds: 1),
           showHelperText: true,
-          showArrowIcon: false,
+          showArrowWidget: false,
           onPressed: () => print('test'),
           hoverOn: true,
         ),
