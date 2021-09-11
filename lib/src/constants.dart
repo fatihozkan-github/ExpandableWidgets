@@ -1,24 +1,14 @@
-import 'package:flutter/material.dart';
+/// • enum for deciding the clickable area of [Expandable] widgets.
+enum Clickable {
+  none,
+  everywhere,
+  firstChildOnly,
+}
 
+/// • enum for [arrowLocation] which is a parameter of [ExpandableText] widget.
 enum ArrowLocation {
   top,
   bottom,
   left,
   right,
 }
-
-ShapeBorder defaultShapeBorder = RoundedRectangleBorder(
-  borderRadius: BorderRadius.all(Radius.circular(20)),
-);
-
-Widget holderIcon = Icon(
-  Icons.keyboard_arrow_up_rounded,
-  color: Colors.transparent,
-  size: 25.0,
-);
-
-Widget defaultIcon = Icon(
-  Icons.keyboard_arrow_up_rounded,
-  color: Colors.black,
-  size: 25.0,
-);

@@ -167,7 +167,7 @@ class _ExpandableTextState extends State<ExpandableText> with TickerProviderStat
       child: Material(
         color: widget.backgroundColor ?? Colors.white,
         elevation: widget.elevation ?? 0,
-        shape: widget.shape ?? defaultShapeBorder,
+        // shape: widget.shape ?? defaultShapeBorder,
         clipBehavior: Clip.antiAlias,
         child: InkWell(
           hoverColor: Colors.transparent,
@@ -244,7 +244,7 @@ class _ExpandableTextState extends State<ExpandableText> with TickerProviderStat
                     padding: widget.arrowLocation == ArrowLocation.left
                         ? EdgeInsets.only(right: widget.padding!.right)
                         : EdgeInsets.only(left: widget.padding!.left),
-                    child: widget.arrowWidget ?? defaultIcon,
+                    child: widget.arrowWidget,
                   ),
                 ],
               )
@@ -255,7 +255,7 @@ class _ExpandableTextState extends State<ExpandableText> with TickerProviderStat
                     padding: widget.finalArrowLocation == ArrowLocation.top
                         ? EdgeInsets.only(bottom: widget.padding!.top)
                         : EdgeInsets.only(top: widget.padding!.bottom),
-                    child: widget.arrowWidget ?? defaultIcon,
+                    child: widget.arrowWidget,
                   ),
                   if (widget.finalArrowLocation == ArrowLocation.top) finalText,
                 ],
@@ -274,7 +274,7 @@ class _ExpandableTextState extends State<ExpandableText> with TickerProviderStat
                         : EdgeInsets.only(left: widget.padding!.left),
                     child: RotatedBox(
                       quarterTurns: 2,
-                      child: widget.arrowWidget ?? defaultIcon,
+                      child: widget.arrowWidget,
                     ),
                   ),
                 ],
@@ -288,7 +288,7 @@ class _ExpandableTextState extends State<ExpandableText> with TickerProviderStat
                         : EdgeInsets.only(top: widget.padding!.bottom),
                     child: RotatedBox(
                       quarterTurns: 2,
-                      child: widget.arrowWidget ?? defaultIcon,
+                      child: widget.arrowWidget,
                     ),
                   ),
                   if (widget.arrowLocation == ArrowLocation.top) widget.textWidget!,
