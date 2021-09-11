@@ -6,28 +6,28 @@ A package that provides expandable widgets for Flutter. Written in %100 Dart.
 
 ![general_use](https://user-images.githubusercontent.com/69001201/120908143-15d74b80-c670-11eb-81df-b3a5f83a99ac.gif)
 
-Expandable(
- primaryWidget: Container(
-   height: 30,
-   child: Center(child: Text('Hello world!')),
- ),
- secondaryWidget: Container(
-   height: 45,
-   child: Center(
-     child: Column(
-       children: [
-         Text('Hello'),
-         Text('World!'),
-       ],
+     Expandable(
+      primaryWidget: Container(
+        height: 30,
+        child: Center(child: Text('Hello world!')),
+      ),
+      secondaryWidget: Container(
+        height: 45,
+        child: Center(
+          child: Column(
+            children: [
+              Text('Hello'),
+              Text('World!'),
+            ],
+          ),
+        ),
+      ),
+      backgroundColor: Colors.grey.withOpacity(0.4),
+      showArrowIcon: true,
+      centralizePrimaryWidget: true,
+      isClickable: true,
+      padding: EdgeInsets.all(5.0),
      ),
-   ),
- ),
- backgroundColor: Colors.grey.withOpacity(0.4),
- showArrowIcon: true,
- centralizePrimaryWidget: true,
- isClickable: true,
- padding: EdgeInsets.all(5.0),
-),
 
 <h2> For a long text: </h2>
 
