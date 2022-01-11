@@ -5,7 +5,7 @@ enum Clickable {
   firstChildOnly,
 }
 
-/// • enum for [arrowLocation] which is a parameter of [ExpandableText] widget.
+/// • enum for [arrowLocation] which is a property of [ExpandableText] widget.
 enum ArrowLocation {
   top,
   bottom,
