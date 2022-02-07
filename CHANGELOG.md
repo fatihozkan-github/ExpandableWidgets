@@ -33,11 +33,13 @@
 ## [1.0.3] - Release Date: TODO
     # Widgets:
       • New enum - Clickable
-      • New property - wrapContent
       • shape property removed -> borderRadius property added.
-      • direction property added.
-      • animation and animationController added for custom animations(sorry for being too late).
-      • Various bug fixes and performance improvements.
+      • padding property removed -> was causing problems on click events.
+      • TODO: lints added.
+      • animation and animationController added for custom animations.
+      • Issue #1 closed (sorry for being too late).
+      • Performance improvements.
+      • TODO: tests
 
     # TODOs:
       • More features.

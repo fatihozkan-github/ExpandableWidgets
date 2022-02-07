@@ -3,20 +3,24 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'test_utils.dart';
+
 void main() {
-  testWidgets('hitTest', (WidgetTester tester) async {
+  testWidgets('hitTest????', (WidgetTester tester) async {
     await tester.pumpWidget(
-      Expandable(
-        firstChild: Container(height: 30, child: Center(child: Text('Hello world!'))),
-        secondChild: Container(
-          height: 45,
-          child: Center(child: Column(children: [Text('Hello'), Text('World!')])),
+      TestUtils.widgetBase(
+        Expandable(
+          firstChild: Container(height: 30, child: Center(child: Text('Hello world!'))),
+          secondChild: Container(
+            height: 45,
+            child: Center(child: Column(children: [Text('Hello'), Text('World!')])),
+          ),
+          backgroundColor: Colors.grey.withOpacity(0.4),
+          clickable: Clickable.everywhere,
         ),
-        backgroundColor: Colors.grey.withOpacity(0.4),
-        clickable: Clickable.everywhere,
       ),
     );
-    tester.hitTestOnBinding(Offset.infinite);
+    // tester.hitTestOnBinding(Offset.infinite);
   });
 }
 

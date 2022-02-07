@@ -28,7 +28,7 @@ class ExpandableText extends StatefulWidget {
     this.borderRadius,
     this.direction = Axis.vertical,
   })  : assert(!(showArrowWidget == true && showHelperText == true), 'showArrowIcon and showHelperText cannot both be true.'),
-        assert(textWidget != null, "Provide a Text for textWidget parameter.");
+        assert(textWidget != null, 'Provide a Text for textWidget parameter.');
 
   /// • TODO - TEST
   final List<String> helperText;
@@ -82,7 +82,7 @@ class ExpandableText extends StatefulWidget {
   ///
   /// • Notice that this property does not belong to [textWidget] but [ExpandableText].
   ///
-  /// • See [ExpandableTextWidget] & [TextDirection] for more info.
+  /// • See ExpandableTextWidget & [TextDirection] for more info.
   final TextDirection textDirection;
 
   /// • Custom arrow widget.
@@ -110,7 +110,7 @@ class _ExpandableTextState extends State<ExpandableText> with TickerProviderStat
   bool? initiallyExpanded = false;
   Text finalText = Text('');
 
-  _toggleExpand() {
+  void _toggleExpand() {
     setState(() {
       _isExpanded = !_isExpanded;
       if (initiallyExpanded == true) initiallyExpanded = false;
@@ -129,7 +129,7 @@ class _ExpandableTextState extends State<ExpandableText> with TickerProviderStat
   }
 
   @override
-  initState() {
+  void initState() {
     super.initState();
     _controller = AnimationController(vsync: this, duration: widget.animationDuration);
     CurvedAnimation curve = CurvedAnimation(parent: _controller, curve: Curves.fastOutSlowIn);
