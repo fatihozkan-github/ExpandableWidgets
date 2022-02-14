@@ -2,25 +2,12 @@ import 'package:expandable_widgets/expandable_widgets.dart';
 import 'package:flutter/material.dart';
 
 class Expandable extends StatefulWidget {
-  // final EdgeInsets margin;
-  final Axis direction;
-
-  /// • [BorderRadius] of Expandable.
-  ///
-  /// • shape property removed from the version 1.0.2 (no need) and [borderRadius] added.
-  final BorderRadius? borderRadius;
-
-  /// • Decide click behaviour of the Expandable.
-  final Clickable clickable;
-
   /// • The widget that is placed at the non-collapsing part of the expandable.
-  final Widget? firstChild;
+  final Widget firstChild;
 
   /// • The widget that size transition affects.
-  final Widget? secondChild;
+  final Widget secondChild;
 
-  /// • Function that is placed top of the widget tree.
-  ///
   /// • Animation starts BEFORE and ends AFTER this function.
   ///
   /// • Notice that this function can not be triggered more than once while animating Expandable.
@@ -28,9 +15,6 @@ class Expandable extends StatefulWidget {
 
   /// • Background color of the expandable.
   final Color backgroundColor;
-
-  /// • Elevation of the expandable widget.
-  final double elevation;
 
   /// • Duration for expand & rotate animations.
   final Duration animationDuration;
@@ -41,7 +25,7 @@ class Expandable extends StatefulWidget {
   /// • Whether [arrowWidget] will be shown or not.
   final bool? showArrowWidget;
 
-  /// • Whether this expandable widget will be expanded or collapsed at first.
+  /// • Whether expandable will be expanded or collapsed at first.
   final bool? initiallyExpanded;
 
   /// • Provides better alignment for [firstChild].
@@ -56,6 +40,8 @@ class Expandable extends StatefulWidget {
   final Function? onLongPress;
 
   /// • Custom animation for size & rotation animations.
+  ///
+  /// • Notice that there is no separate support for size & rotation animations.
   final Animation<double>? animation;
 
   /// • Controller for [animation].
@@ -63,16 +49,31 @@ class Expandable extends StatefulWidget {
   /// • Useful when one want to interact with the expandable with an external button etc.
   final AnimationController? animationController;
 
-  final Function(bool)? onHover;
+  final void Function(bool)? onHover;
+
+  final Axis direction;
+
+  final List<BoxShadow>? boxShadow;
+
+  /// • [BorderRadius] of Expandable.
+  ///
+  /// • shape property removed from the version 1.0.2 (no need) and [borderRadius] added.
+  final BorderRadius? borderRadius;
+
+  /// • Decide click behaviour of the Expandable.
+  ///
+  /// • See [Clickable] for possible options.
+  final Clickable clickable;
 
   /// • Expandable class for general use.
+  ///
+  /// • [backgroundColor], [animationDuration], [centralizeFirstChild], [direction], [clickable] arguments must not be null.
   Expandable({
-    this.firstChild,
-    this.secondChild,
+    required this.firstChild,
+    required this.secondChild,
     this.onPressed,
     this.backgroundColor = Colors.white,
-    this.elevation = 0,
-    this.animationDuration = const Duration(milliseconds: 500),
+    this.animationDuration = const Duration(milliseconds: 400),
     this.backgroundImage,
     this.showArrowWidget = true,
     this.initiallyExpanded = false,
@@ -87,9 +88,11 @@ class Expandable extends StatefulWidget {
     this.animation,
     this.animationController,
     this.direction = Axis.vertical,
-    // this.margin = const EdgeInsets.all(0.0),
     this.onHover,
+    this.boxShadow,
   });
+  // : assert(
+  //       arrowWidget != null && arrowLocation != null, 'arrowWidget and arrowLocation arguments can not be used at the same time.');
 
   @override
   _ExpandableState createState() => _ExpandableState();
@@ -111,8 +114,8 @@ class _ExpandableState extends State<Expandable> with TickerProviderStateMixin {
 
   @override
   void dispose() {
-    super.dispose();
     _controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -128,39 +131,65 @@ class _ExpandableState extends State<Expandable> with TickerProviderStateMixin {
     );
   }
 
-  Material _buildBody() => Material(
-        color: widget.backgroundColor,
-        elevation: widget.elevation,
-        borderRadius: widget.borderRadius ?? BorderRadius.circular(5.0),
-        child: Container(
-          decoration: BoxDecoration(
-            image: widget.backgroundImage ?? null,
-          ),
-          child: Column(
-            children: [
-              InkWell(
-                hoverColor: Colors.transparent,
-                splashColor: Colors.transparent,
-                highlightColor: Colors.transparent,
-                onTap: widget.clickable != Clickable.none ? _onPressed : null,
-                onLongPress: widget.clickable != Clickable.none ? _onLongPress : null,
-                onHover: widget.onHover != null ? _onHover() : null,
-                child: widget.showArrowWidget == true
-                    ? _buildBodyWithArrow()
-                    : Row(mainAxisAlignment: MainAxisAlignment.center, children: [widget.firstChild!]),
-              ),
-              InkWell(
-                child: _buildSecondChild(),
-                hoverColor: Colors.transparent,
-                splashColor: Colors.transparent,
-                highlightColor: Colors.transparent,
-                onHover: widget.onHover != null ? _onHover() : null,
-                onTap: widget.clickable == Clickable.everywhere ? _onPressed : null,
-                onLongPress: widget.clickable == Clickable.everywhere ? _onLongPress : null,
-              ),
-            ],
-          ),
+  Container _buildBody() => Container(
+        child: widget.direction == Axis.vertical ? _buildVerticalExpandable() : _buildHorizontalExpandable(),
+        decoration: BoxDecoration(
+          color: widget.backgroundColor,
+          image: widget.backgroundImage ?? null,
+          borderRadius: widget.borderRadius ?? BorderRadius.circular(5.0),
+          boxShadow: widget.boxShadow ?? [BoxShadow(color: Colors.grey, offset: Offset(1, 1), blurRadius: 2)],
         ),
+      );
+
+  Column _buildVerticalExpandable() => Column(
+        children: [
+          InkWell(
+            hoverColor: Colors.transparent,
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+            onHover: widget.onHover != null ? _onHover() : null,
+            onTap: widget.clickable != Clickable.none ? _onPressed : null,
+            onLongPress: widget.clickable != Clickable.none ? _onLongPress : null,
+            child: widget.showArrowWidget == true
+                ? _buildBodyWithArrow()
+                : Row(mainAxisAlignment: MainAxisAlignment.center, children: [widget.firstChild]),
+          ),
+          InkWell(
+            child: _buildSecondChild(),
+            hoverColor: Colors.transparent,
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+            onHover: widget.onHover != null ? _onHover() : null,
+            onTap: widget.clickable == Clickable.everywhere ? _onPressed : null,
+            onLongPress: widget.clickable == Clickable.everywhere ? _onLongPress : null,
+          ),
+        ],
+      );
+
+  Row _buildHorizontalExpandable() => Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          InkWell(
+            hoverColor: Colors.transparent,
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+            onHover: widget.onHover != null ? _onHover() : null,
+            onTap: widget.clickable != Clickable.none ? _onPressed : null,
+            onLongPress: widget.clickable != Clickable.none ? _onLongPress : null,
+            child: widget.showArrowWidget == true
+                ? _buildBodyWithArrow()
+                : Row(mainAxisAlignment: MainAxisAlignment.center, children: [widget.firstChild]),
+          ),
+          InkWell(
+            child: _buildSecondChild(),
+            hoverColor: Colors.transparent,
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+            onHover: widget.onHover != null ? _onHover() : null,
+            onTap: widget.clickable == Clickable.everywhere ? _onPressed : null,
+            onLongPress: widget.clickable == Clickable.everywhere ? _onLongPress : null,
+          ),
+        ],
       );
 
   Flex _buildBodyWithArrow() => Flex(
@@ -169,13 +198,13 @@ class _ExpandableState extends State<Expandable> with TickerProviderStateMixin {
         textDirection: widget.arrowLocation == ArrowLocation.right ? TextDirection.ltr : TextDirection.rtl,
         children: [
           if (widget.centralizeFirstChild) Visibility(visible: false, child: _buildRotation()),
-          widget.firstChild!,
+          widget.firstChild,
           _buildRotation(),
         ],
       );
 
   SizeTransition _buildSecondChild() => SizeTransition(
-        // axisAlignment: 1,
+        axisAlignment: 1,
         axis: widget.direction,
         sizeFactor: _animation,
         child: widget.secondChild,

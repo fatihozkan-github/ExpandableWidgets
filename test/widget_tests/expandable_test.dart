@@ -1,8 +1,6 @@
 import 'package:expandable_widgets/expandable_widgets.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
+import 'package:flutter/material.dart';
 import 'test_utils.dart';
 
 void main() {
@@ -11,10 +9,7 @@ void main() {
       TestUtils.widgetBase(
         Expandable(
           firstChild: Container(height: 30, child: Center(child: Text('Hello world!'))),
-          secondChild: Container(
-            height: 45,
-            child: Center(child: Column(children: [Text('Hello'), Text('World!')])),
-          ),
+          secondChild: Container(height: 45, child: Center(child: Column(children: [Text('Hello'), Text('World!')]))),
           backgroundColor: Colors.grey.withOpacity(0.4),
           clickable: Clickable.everywhere,
         ),

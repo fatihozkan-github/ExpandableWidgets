@@ -8,7 +8,7 @@ enum Clickable {
 /// • enum for arrowLocation (which is a property of ExpandableText widget).
 enum ArrowLocation {
   top,
+  right,
   bottom,
   left,
-  right,
 }

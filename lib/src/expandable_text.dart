@@ -1,66 +1,26 @@
-import 'package:expandable_widgets/src/constants.dart';
+import 'package:expandable_widgets/src/enums.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'extensions.dart';
 import 'dart:math';
 
 class ExpandableText extends StatefulWidget {
-  ExpandableText({
-    this.textWidget,
-    this.onPressed,
-    this.padding = const EdgeInsets.all(4.0),
-    this.backgroundColor = Colors.white,
-    this.elevation = 0,
-    this.animationDuration = const Duration(seconds: 1),
-    this.beforeAnimationDuration = const Duration(milliseconds: 20),
-    this.backgroundImage,
-    this.initiallyExpanded = false,
-    this.expandOnHover = false,
-    this.arrowWidget = const Icon(Icons.keyboard_arrow_up_rounded, color: Colors.black, size: 25.0),
-    this.showArrowWidget = false,
-    this.textDirection = TextDirection.ltr,
-    this.arrowLocation = ArrowLocation.right,
-    this.finalArrowLocation = ArrowLocation.right,
-    this.showHelperText = false,
-    this.helperText = const ['...Show More', '...Show Less'],
-    this.helperTextStyle,
-
-    /// TODO : TEST
-    this.borderRadius,
-    this.direction = Axis.vertical,
-  })  : assert(!(showArrowWidget == true && showHelperText == true), 'showArrowIcon and showHelperText cannot both be true.'),
-        assert(textWidget != null, 'Provide a Text for textWidget parameter.');
-
-  /// • TODO - TEST
-  final List<String> helperText;
-  final TextStyle? helperTextStyle;
-  final BorderRadius? borderRadius;
-  final Axis direction;
-
-  ///
   /// [Text] widget for [ExpandableText].
-  final Text? textWidget;
+  final Text textWidget;
 
-  /// • Function that is placed top of the widget tree.
+  /// • Animation starts BEFORE and ends AFTER this function.
   ///
-  /// • Animation starts AFTER this function.
-  ///
-  /// • For the duration between see [beforeAnimationDuration].
+  /// • Notice that this function can not be triggered more than once while animating Expandable.
   final Function? onPressed;
 
   /// • Padding of the expandable.
-  final EdgeInsets? padding;
+  final EdgeInsets padding;
 
   /// • Background color of the expandable.
   final Color backgroundColor;
 
-  /// • Elevation of the expandable.
-  final double elevation;
-
   /// • Duration for expand animation.
   final Duration animationDuration;
-
-  /// • Duration between [onPressed] & expand animation.
-  final Duration beforeAnimationDuration;
 
   /// • Background image of the expandable.
   final DecorationImage? backgroundImage;
@@ -71,20 +31,6 @@ class ExpandableText extends StatefulWidget {
   /// • Whether this expandable widget will be expanded or collapsed at first.
   final bool initiallyExpanded;
 
-  /// • Whether expand animation will be triggered when hovered over this widget or not.
-  ///
-  /// • Added for web.
-  final bool expandOnHover;
-
-  /// • [TextDirection] of the expandable.
-  ///
-  /// • Default value is [TextDirection.ltr].
-  ///
-  /// • Notice that this property does not belong to [textWidget] but [ExpandableText].
-  ///
-  /// • See ExpandableTextWidget & [TextDirection] for more info.
-  final TextDirection textDirection;
-
   /// • Custom arrow widget.
   final Widget? arrowWidget;
 
@@ -94,8 +40,33 @@ class ExpandableText extends StatefulWidget {
   /// • Place of the arrow widget when this expandable is expanded.
   final ArrowLocation? finalArrowLocation;
 
-  /// •
+  /// • TODO - TEST
   final bool showHelperText;
+  final List<String> helperText;
+  final TextStyle? helperTextStyle;
+  final BorderRadius? borderRadius;
+  final Axis direction;
+  final void Function(bool)? onHover;
+
+  ExpandableText({
+    required this.textWidget,
+    this.onPressed,
+    this.padding = const EdgeInsets.all(4.0),
+    this.backgroundColor = Colors.white,
+    this.animationDuration = const Duration(milliseconds: 500),
+    this.backgroundImage,
+    this.initiallyExpanded = false,
+    this.onHover,
+    this.arrowWidget = const Icon(Icons.keyboard_arrow_up_rounded, color: Colors.black, size: 25.0),
+    this.showArrowWidget = false,
+    this.arrowLocation = ArrowLocation.right,
+    this.finalArrowLocation = ArrowLocation.right,
+    this.showHelperText = false,
+    this.helperText = const ['...Show More', '...Show Less'],
+    this.helperTextStyle,
+    this.borderRadius,
+    this.direction = Axis.vertical,
+  }) : assert(!(showArrowWidget == true && showHelperText == true), 'showArrowIcon and showHelperText cannot both be true.');
 
   @override
   _ExpandableTextState createState() => _ExpandableTextState();
@@ -103,18 +74,16 @@ class ExpandableText extends StatefulWidget {
 
 class _ExpandableTextState extends State<ExpandableText> with TickerProviderStateMixin {
   Animatable<double> _sizeTween = Tween<double>(begin: 0.0, end: 1.0);
+  // late TapGestureRecognizer _tapGestureRecognizer;
   late AnimationController _controller;
   late Animation<double> _animation;
-  late TapGestureRecognizer tapGestureRecognizer;
+  bool _initiallyExpanded = false;
   bool _isExpanded = false;
-  bool? initiallyExpanded = false;
-  Text finalText = Text('');
 
   void _toggleExpand() {
-    setState(() {
-      _isExpanded = !_isExpanded;
-      if (initiallyExpanded == true) initiallyExpanded = false;
-    });
+    _isExpanded = !_isExpanded;
+    if (_initiallyExpanded == true) _initiallyExpanded = false;
+    setState(() {});
     switch (_animation.status) {
       case AnimationStatus.completed:
         _controller.reverse();
@@ -132,44 +101,32 @@ class _ExpandableTextState extends State<ExpandableText> with TickerProviderStat
   void initState() {
     super.initState();
     _controller = AnimationController(vsync: this, duration: widget.animationDuration);
-    CurvedAnimation curve = CurvedAnimation(parent: _controller, curve: Curves.fastOutSlowIn);
-    _animation = _sizeTween.animate(curve);
-    initiallyExpanded = widget.initiallyExpanded;
-    tapGestureRecognizer = TapGestureRecognizer()..onTap = _handleTap;
-    finalText = Text(
-      widget.textWidget!.data!,
-      style: widget.textWidget!.style ?? TextStyle(color: Colors.black),
-      strutStyle: widget.textWidget!.strutStyle,
-      textAlign: widget.textWidget!.textAlign,
-      textDirection: widget.textWidget!.textDirection,
-      locale: widget.textWidget!.locale,
-      softWrap: widget.textWidget!.softWrap,
-      textScaleFactor: widget.textWidget!.textScaleFactor,
-      semanticsLabel: widget.textWidget!.semanticsLabel,
-      textWidthBasis: widget.textWidget!.textWidthBasis,
-      textHeightBehavior: widget.textWidget!.textHeightBehavior,
-    );
+    _animation = _sizeTween.animate(CurvedAnimation(parent: _controller, curve: Curves.fastOutSlowIn));
+    _initiallyExpanded = widget.initiallyExpanded;
+    // _tapGestureRecognizer = TapGestureRecognizer()..onTap = _handleTap;
   }
 
   @override
   Widget build(BuildContext context) {
-    if (initiallyExpanded == true) _toggleExpand();
-    return Directionality(
-      textDirection: widget.textDirection,
-      child: Material(
-        color: widget.backgroundColor,
-        elevation: widget.elevation,
-        clipBehavior: Clip.antiAlias,
-        borderRadius: widget.borderRadius ?? BorderRadius.circular(5.0),
+    if (_initiallyExpanded == true) _toggleExpand();
+    return _buildBody();
+  }
+
+  Container _buildBody() => Container(
+        decoration: BoxDecoration(
+          color: widget.backgroundColor,
+          image: widget.backgroundImage ?? null,
+          borderRadius: widget.borderRadius ?? BorderRadius.circular(5.0),
+          boxShadow: [BoxShadow(color: Colors.grey, offset: Offset(1, 1), blurRadius: 2)],
+        ),
         child: InkWell(
           hoverColor: Colors.transparent,
           splashColor: Colors.transparent,
           highlightColor: Colors.transparent,
-          onHover: widget.expandOnHover ? _onHover() : null,
+          onHover: _onHover(),
           onTap: widget.showHelperText ? null : _onTap,
-          child: Container(
-            decoration: BoxDecoration(image: widget.backgroundImage ?? null),
-            // padding: widget.padding,
+          child: Padding(
+            padding: widget.padding,
             child: widget.showArrowWidget
                 ? _bodyWithArrow()
                 : widget.showHelperText
@@ -177,23 +134,77 @@ class _ExpandableTextState extends State<ExpandableText> with TickerProviderStat
                     : _defaultBody(),
           ),
         ),
+      );
+
+  AnimatedCrossFade _bodyWithHelper() {
+    TextStyle _defaultHelperStyle = TextStyle(color: Colors.blue, backgroundColor: Colors.white, fontWeight: FontWeight.bold);
+    bool _shouldAddHelper =
+        widget.textWidget.copyWith(maxLines: _isExpanded ? null : widget.textWidget.maxLines, softWrap: true).hasOverflow();
+    print(_shouldAddHelper);
+
+    return AnimatedCrossFade(
+      duration: widget.animationDuration,
+      crossFadeState: !_isExpanded ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+      firstChild: Stack(
+        alignment: AlignmentDirectional.bottomEnd,
+        children: [
+          Text(
+            widget.textWidget.data!,
+            style: widget.textWidget.style ?? DefaultTextStyle.of(context).style,
+            maxLines: _isExpanded ? null : widget.textWidget.maxLines,
+            overflow: TextOverflow.ellipsis,
+            softWrap: true,
+          ),
+          // if (_shouldAddHelper)
+          Positioned(
+            child: GestureDetector(
+              child: Text(_isExpanded ? '' : widget.helperText.first, style: widget.helperTextStyle ?? _defaultHelperStyle),
+              onTap: () => _toggleExpand(),
+            ),
+          ),
+        ],
+      ),
+      secondChild: Text.rich(
+        TextSpan(
+          text: widget.textWidget.data,
+          style: widget.textWidget.style ?? DefaultTextStyle.of(context).style,
+          children: [
+            TextSpan(
+              text: widget.helperText.last,
+              style: widget.helperTextStyle?.copyWith(backgroundColor: Colors.white) ?? _defaultHelperStyle,
+              // recognizer: _tapGestureRecognizer,
+              recognizer: TapGestureRecognizer()..onTap = _handleTap,
+              mouseCursor: SystemMouseCursors.click,
+            ),
+          ],
+        ),
       ),
     );
   }
 
-  _bodyWithArrow() => AnimatedCrossFade(
+  /// Seems ok.
+  AnimatedCrossFade _defaultBody() => AnimatedCrossFade(
+        firstChild: widget.textWidget.copyWith(softWrap: true),
+        secondChild: widget.textWidget.copyWith(maxLines: 999999),
+        duration: widget.animationDuration,
+        crossFadeState: !_isExpanded ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+      );
+
+  /// TODO: Change seems bad.
+  AnimatedCrossFade _bodyWithArrow() => AnimatedCrossFade(
         duration: widget.animationDuration,
         crossFadeState: _isExpanded ? CrossFadeState.showFirst : CrossFadeState.showSecond,
         firstChild: _getFirstChild(),
         secondChild: _getSecondChild(),
       );
 
-  _getFirstChild() {
-    Widget _child = Text(
-      widget.textWidget!.data!,
-      style: widget.textWidget!.style ?? DefaultTextStyle.of(context).style,
-      maxLines: _isExpanded ? null : widget.textWidget!.maxLines,
-    );
+  Widget _getFirstChild() {
+    // Widget _child = Text(
+    //   widget.textWidget.data!,
+    //   style: widget.textWidget.style ?? DefaultTextStyle.of(context).style,
+    //   maxLines: _isExpanded ? null : widget.textWidget.maxLines,
+    // );
+    Widget _child = widget.textWidget.copyWith(maxLines: _isExpanded ? null : widget.textWidget.maxLines);
     Widget _arrowWidget = widget.arrowWidget!;
     Axis _direction = Axis.horizontal;
     TextDirection _textDirection = TextDirection.ltr;
@@ -228,11 +239,11 @@ class _ExpandableTextState extends State<ExpandableText> with TickerProviderStat
     );
   }
 
-  _getSecondChild() {
+  Widget _getSecondChild() {
     Widget _child = Text(
-      widget.textWidget!.data!,
-      style: widget.textWidget!.style ?? DefaultTextStyle.of(context).style,
-      maxLines: _isExpanded ? null : widget.textWidget!.maxLines,
+      widget.textWidget.data!,
+      style: widget.textWidget.style ?? DefaultTextStyle.of(context).style,
+      maxLines: _isExpanded ? null : widget.textWidget.maxLines,
     );
     Widget _arrowWidget = widget.arrowWidget!;
     Axis _direction = Axis.horizontal;
@@ -268,64 +279,22 @@ class _ExpandableTextState extends State<ExpandableText> with TickerProviderStat
     );
   }
 
-  _bodyWithHelper() => AnimatedCrossFade(
-        duration: widget.animationDuration,
-        crossFadeState: _isExpanded ? CrossFadeState.showFirst : CrossFadeState.showSecond,
-        firstChild: Text.rich(
-          TextSpan(
-            text: widget.textWidget!.data,
-            style: widget.textWidget!.style ?? DefaultTextStyle.of(context).style,
-            children: [
-              TextSpan(
-                text: widget.helperText.last,
-                style: widget.helperTextStyle ??
-                    TextStyle(color: Colors.blue, backgroundColor: Colors.white, fontWeight: FontWeight.bold),
-                recognizer: tapGestureRecognizer,
-              ),
-            ],
-          ),
-        ),
-        secondChild: Stack(
-          alignment: AlignmentDirectional.bottomEnd,
-          children: [
-            Text(
-              widget.textWidget!.data!,
-              style: widget.textWidget!.style ?? DefaultTextStyle.of(context).style,
-              maxLines: _isExpanded ? null : widget.textWidget!.maxLines,
-            ),
-            Positioned(
-              child: GestureDetector(
-                child: Text(
-                  _isExpanded ? '' : widget.helperText.first,
-                  style: widget.helperTextStyle ??
-                      TextStyle(color: Colors.blue, backgroundColor: Colors.white, fontWeight: FontWeight.bold),
-                ),
-                onTap: () => _toggleExpand(),
-              ),
-            ),
-          ],
-        ),
-      );
+  ///
 
-  _defaultBody() => AnimatedCrossFade(
-        duration: widget.animationDuration,
-        crossFadeState: _isExpanded ? CrossFadeState.showFirst : CrossFadeState.showSecond,
-        firstChild: finalText,
-        secondChild: widget.textWidget!,
-      );
-
-  _onTap() async {
+  void _onTap() async {
     if (widget.onPressed != null) await widget.onPressed!();
     _toggleExpand();
   }
 
-  _handleTap() => _toggleExpand();
+  void _handleTap() => _toggleExpand();
 
-  _onHover() => (value) {
-        if (value == true) {
-          _toggleExpand();
-        } else if (value == false) {
-          if (initiallyExpanded != true) _controller.reverse();
-        }
-      };
+  Function(bool) _onHover() {
+    return (value) {
+      if (value == true) {
+        _toggleExpand();
+      } else if (value == false) {
+        if (_initiallyExpanded != true) _controller.reverse();
+      }
+    };
+  }
 }
