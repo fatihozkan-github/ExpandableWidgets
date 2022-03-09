@@ -55,7 +55,7 @@ class Expandable extends StatefulWidget {
 
   final List<BoxShadow>? boxShadow;
 
-  /// • [BorderRadius] of Expandable.
+  /// • [BorderRadius] of [Expandable].
   ///
   /// • shape property removed from the version 1.0.2 (no need) and [borderRadius] added.
   final BorderRadius? borderRadius;
@@ -65,7 +65,7 @@ class Expandable extends StatefulWidget {
   /// • See [Clickable] for possible options.
   final Clickable clickable;
 
-  /// • Expandable class for general use.
+  /// • Expandable widget for general use.
   ///
   /// • [backgroundColor], [animationDuration], [centralizeFirstChild], [direction], [clickable] arguments must not be null.
   Expandable({
@@ -82,8 +82,6 @@ class Expandable extends StatefulWidget {
     this.arrowLocation = ArrowLocation.right,
     this.borderRadius,
     this.clickable = Clickable.firstChildOnly,
-
-    /// TODO - TEST
     this.onLongPress,
     this.animation,
     this.animationController,
@@ -91,8 +89,6 @@ class Expandable extends StatefulWidget {
     this.onHover,
     this.boxShadow,
   });
-  // : assert(
-  //       arrowWidget != null && arrowLocation != null, 'arrowWidget and arrowLocation arguments can not be used at the same time.');
 
   @override
   _ExpandableState createState() => _ExpandableState();
@@ -108,7 +104,8 @@ class _ExpandableState extends State<Expandable> with TickerProviderStateMixin {
   void initState() {
     _initiallyExpanded = widget.initiallyExpanded;
     _controller = widget.animationController ?? AnimationController(vsync: this, duration: widget.animationDuration);
-    _animation = widget.animation ?? _sizeTween.animate(CurvedAnimation(parent: _controller, curve: Curves.fastOutSlowIn));
+    _animation =
+        widget.animation ?? _sizeTween.animate(CurvedAnimation(parent: _controller, curve: Curves.fastOutSlowIn));
     super.initState();
   }
 
@@ -127,7 +124,9 @@ class _ExpandableState extends State<Expandable> with TickerProviderStateMixin {
   RotationTransition _buildRotation() {
     return RotationTransition(
       turns: Tween(begin: 0.5, end: 0.0).animate(_animation),
-      child: widget.arrowWidget == null ? Icon(Icons.keyboard_arrow_up_rounded, color: Colors.black, size: 25.0) : widget.arrowWidget,
+      child: widget.arrowWidget == null
+          ? Icon(Icons.keyboard_arrow_up_rounded, color: Colors.black, size: 25.0)
+          : widget.arrowWidget,
     );
   }
 

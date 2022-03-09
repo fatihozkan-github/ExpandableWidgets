@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-extension CopyTextWidget on Text {
+extension TextExtensions on Text {
   Text copyWith({
     TextStyle? style,
     StrutStyle? strutStyle,
@@ -31,15 +31,13 @@ extension CopyTextWidget on Text {
       textHeightBehavior: textHeightBehavior ?? this.textHeightBehavior,
     );
   }
-}
 
-extension TextHasOverFlow on Text {
-  bool hasOverflow() {
+  bool hasOverflow(double width) {
     TextPainter textPainter = TextPainter(
       text: TextSpan(text: data, style: style),
       maxLines: maxLines,
       textDirection: TextDirection.ltr,
-    )..layout(minWidth: 0, maxWidth: double.infinity);
+    )..layout(minWidth: 0, maxWidth: width);
     return textPainter.didExceedMaxLines;
   }
 }

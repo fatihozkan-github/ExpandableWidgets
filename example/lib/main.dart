@@ -19,13 +19,13 @@ class _ExpandableShowcaseState extends State<ExpandableShowcase> with TickerProv
   late AnimationController _exteriorController;
   late Animation<double> _exteriorAnimation;
 
-  Expandable _showcaseExpandable = Expandable(
-    clickable: Clickable.firstChildOnly,
-    firstChild: Text('Hello world!'),
-    secondChild: Center(child: Column(children: [Text('Hello'), Text('World!')])),
-    backgroundColor: Colors.white,
-    showArrowWidget: false,
-  );
+  // Expandable _showcaseExpandable = Expandable(
+  //   clickable: Clickable.firstChildOnly,
+  //   firstChild: Text('Hello world!'),
+  //   secondChild: Center(child: Column(children: [Text('Hello'), Text('World!')])),
+  //   backgroundColor: Colors.white,
+  //   showArrowWidget: false,
+  // );
 
   @override
   void initState() {
@@ -58,30 +58,40 @@ class _ExpandableShowcaseState extends State<ExpandableShowcase> with TickerProv
           children: [
             SizedBox(height: 20),
 
-            /// General use
+            /// Simple case
             ExpandableText(textWidget: Text(data, maxLines: 3)),
+
+            SizedBox(height: 20),
+
+            /// General use
+            ExpandableText(textWidget: Text(data, maxLines: 3), helper: Helper.none),
+
             SizedBox(height: 20),
 
             /// Usage with helperText
-            ExpandableText(textWidget: Text(data, maxLines: 3), showHelperText: true),
-            SizedBox(height: 10),
+            ExpandableText(textWidget: Text(data, maxLines: 3), helper: Helper.text, onPressed: () => print('hi!')),
+
+            SizedBox(height: 20),
 
             /// Custom helperText
             ExpandableText(
-              textWidget: Text(data, maxLines: 5),
-              showHelperText: true,
-              helperTextStyle: TextStyle(color: Colors.orange, fontWeight: FontWeight.bold, backgroundColor: Colors.white),
+              textWidget: Text(data, maxLines: 5, textAlign: TextAlign.center),
+              helper: Helper.text,
+              backgroundColor: Colors.white,
+              helperTextList: ['...More', '...Less'],
+              boxShadow: [BoxShadow(color: Colors.orange, offset: Offset(2, 2), blurRadius: 4)],
+              helperTextStyle: TextStyle(color: Colors.orange, fontWeight: FontWeight.bold),
+              borderRadius: BorderRadius.circular(20.0),
+              padding: EdgeInsets.all(12.0),
             ),
 
             SizedBox(height: 20),
 
-            /// change
-            // ExpandableText(
-            //   textWidget: Text(data).copyWith(maxLines: 3),
-            //   showArrowWidget: true,
-            //   arrowLocation: ArrowLocation.top,
-            //   finalArrowLocation: ArrowLocation.right,
-            // ),
+            ExpandableText(
+              textWidget: Text(data).copyWith(maxLines: 3),
+              arrowLocation: ArrowLocation.bottom,
+              finalArrowLocation: ArrowLocation.bottom,
+            ),
           ],
         ),
       ),
