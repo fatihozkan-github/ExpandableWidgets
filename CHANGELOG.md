@@ -1,42 +1,54 @@
 ## [1.0.3] - Release Date: 10.03.2022
-    # Widgets:
-      • Expandable
-        ○ New enum - Clickable
-        ○ animation and animationController added for custom animations.
-      • ExpandableText
-        ○ New enum - Helper
-    # Quality of Life
-      • [#1](https://github.com/fatihozkan-github/ExpandableWidgets/issues/1) closed.
-      • shape property removed -> borderRadius property added.
-      • padding property removed, was causing problems on click events.
-      • bug fixes.
-      • Performance improvements.
-      • TODO: tests
 
-    # TODOs:
-      • More features.
+# Widgets:
+
+    • Expandable
+      ○ New enum - Clickable
+      ○ animation and animationController added for custom animations.
+    • ExpandableText
+      ○ New enum - Helper
+
+# Quality of Life
+
+    • [#1](https://github.com/fatihozkan-github/ExpandableWidgets/issues/1) closed.
+    • shape property removed -> borderRadius property added.
+    • padding property removed, was causing problems on click events.
+    • bug fixes.
+    • Performance improvements.
+    • TODO: tests
+
+# TODOs:
+
+    • More features.
 
 ## [1.0.2] - Release Date: 06.06.2021
-   # Widgets:
+
+# Widgets:
+
      • Expandable & ExpandableText - renamed.
      • Arrow locations for Expandable widgets.
      • textDirection added.
 
-   # TODOs:
+# TODOs:
+
      • Custom animations.
      • More features.
 
 ## [1.0.1] - Release Date: 20.05.2021
-   # Widgets:
+
+# Widgets:
+
      • ExpandableWidget - renamed.
      • ExpandableWidget.extended - renamed.
      • ExpandableTextWidget - added.
      • Expandable.singleTextChild - removed.
 
-   # TODOs:
+# TODOs:
+
      • More features for ExpandableTextWidget
 
 ## [1.0.0] - Release Date: 16.05.2021
+
     ## Initial Release ##
        # Widgets:
          • Expandable
