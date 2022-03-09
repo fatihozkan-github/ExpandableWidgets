@@ -75,7 +75,7 @@ class _ExpandableShowcaseState extends State<ExpandableShowcase> with TickerProv
 
             /// Custom helperText
             ExpandableText(
-              textWidget: Text(data, maxLines: 5, textAlign: TextAlign.center),
+              textWidget: Text(data, maxLines: 5, textAlign: TextAlign.justify),
               helper: Helper.text,
               backgroundColor: Colors.white,
               helperTextList: ['...More', '...Less'],

@@ -40,4 +40,20 @@ extension TextExtensions on Text {
     )..layout(minWidth: 0, maxWidth: width);
     return textPainter.didExceedMaxLines;
   }
+
+  RichText toRichText(InlineSpan textspanList) {
+    return RichText(
+      textAlign: this.textAlign ?? TextAlign.start,
+      textDirection: this.textDirection,
+      softWrap: this.softWrap ?? true,
+      overflow: this.overflow ?? TextOverflow.ellipsis,
+      textScaleFactor: this.textScaleFactor ?? 1.0,
+      maxLines: 999999,
+      locale: this.locale,
+      strutStyle: this.strutStyle,
+      textWidthBasis: this.textWidthBasis ?? TextWidthBasis.parent,
+      textHeightBehavior: this.textHeightBehavior,
+      text: TextSpan(text: data, style: style ?? TextStyle(color: Colors.black), children: [textspanList]),
+    );
+  }
 }

@@ -1,24 +1,20 @@
-## [1.0.0] - Release Date: 16.05.2021
-    ## Initial Release ##
-       # Widgets:
-         • Expandable
-         • Expandable.singleTextChild
-         • Expandable.extended
+## [1.0.3] - Release Date: 10.03.2022
+    # Widgets:
+      • Expandable
+        ○ New enum - Clickable
+        ○ animation and animationController added for custom animations.
+      • ExpandableText
+        ○ New enum - Helper
+    # Quality of Life
+      • [#1](https://github.com/fatihozkan-github/ExpandableWidgets/issues/1) closed.
+      • shape property removed -> borderRadius property added.
+      • padding property removed, was causing problems on click events.
+      • bug fixes.
+      • Performance improvements.
+      • TODO: tests
 
-       # TODOs:
-         • Fixing test error.
-         • Separating expandable & expandable text widgets.
-         • More features for both widgets.
-
-## [1.0.1] - Release Date: 20.05.2021
-   # Widgets:
-     • ExpandableWidget - renamed.
-     • ExpandableWidget.extended - renamed.
-     • ExpandableTextWidget - added.
-     • Expandable.singleTextChild - removed.
-
-   # TODOs:
-     • More features for ExpandableTextWidget
+    # TODOs:
+      • More features.
 
 ## [1.0.2] - Release Date: 06.06.2021
    # Widgets:
@@ -30,16 +26,24 @@
      • Custom animations.
      • More features.
 
-## [1.0.3] - Release Date: TODO
-    # Widgets:
-      • New enum - Clickable
-      • shape property removed -> borderRadius property added.
-      • padding property removed -> was causing problems on click events.
-      • TODO: lints added.
-      • animation and animationController added for custom animations.
-      • Issue #1 closed (sorry for being too late).
-      • Performance improvements.
-      • TODO: tests
+## [1.0.1] - Release Date: 20.05.2021
+   # Widgets:
+     • ExpandableWidget - renamed.
+     • ExpandableWidget.extended - renamed.
+     • ExpandableTextWidget - added.
+     • Expandable.singleTextChild - removed.
 
-    # TODOs:
-      • More features.
+   # TODOs:
+     • More features for ExpandableTextWidget
+
+## [1.0.0] - Release Date: 16.05.2021
+    ## Initial Release ##
+       # Widgets:
+         • Expandable
+         • Expandable.singleTextChild
+         • Expandable.extended
+
+       # TODOs:
+         • Fixing test error.
+         • Separating expandable & expandable text widgets.
+         • More features for both widgets.

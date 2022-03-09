@@ -142,13 +142,7 @@ class _ExpandableTextState extends State<ExpandableText> with TickerProviderStat
       firstChild: Stack(
         alignment: AlignmentDirectional.bottomEnd,
         children: [
-          Text(
-            widget.textWidget.data!,
-            style: widget.textWidget.style ?? DefaultTextStyle.of(context).style,
-            maxLines: _isExpanded ? null : widget.textWidget.maxLines,
-            overflow: TextOverflow.ellipsis,
-            softWrap: true,
-          ),
+          widget.textWidget.copyWith(maxLines: _isExpanded ? null : widget.textWidget.maxLines),
           if (_shouldShowHelper)
             Positioned(
               child: GestureDetector(
@@ -160,18 +154,12 @@ class _ExpandableTextState extends State<ExpandableText> with TickerProviderStat
             ),
         ],
       ),
-      secondChild: Text.rich(
+      secondChild: widget.textWidget.toRichText(
         TextSpan(
-          text: widget.textWidget.data,
-          style: widget.textWidget.style ?? DefaultTextStyle.of(context).style,
-          children: [
-            TextSpan(
-              text: widget.helperTextList.last,
-              style: widget.helperTextStyle?.copyWith(backgroundColor: widget.backgroundColor) ?? _defaultHelperStyle,
-              recognizer: TapGestureRecognizer()..onTap = _onTap,
-              mouseCursor: SystemMouseCursors.click,
-            ),
-          ],
+          text: widget.helperTextList.last,
+          style: widget.helperTextStyle?.copyWith(backgroundColor: widget.backgroundColor) ?? _defaultHelperStyle,
+          recognizer: TapGestureRecognizer()..onTap = _onTap,
+          mouseCursor: SystemMouseCursors.click,
         ),
       ),
     );
