@@ -1,5 +1,4 @@
 import 'package:expandable_widgets/expandable_widgets.dart';
-import 'package:expandable_widgets/src/extensions.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/material.dart';
 import 'test_utils.dart';

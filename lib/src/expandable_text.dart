@@ -5,8 +5,6 @@ import 'extensions.dart';
 import 'dart:math';
 
 class ExpandableText extends StatefulWidget {
-  final Key? key;
-
   /// [Text] widget for [ExpandableText].
   final Text textWidget;
 
@@ -59,8 +57,11 @@ class ExpandableText extends StatefulWidget {
 
   final List<BoxShadow>? boxShadow;
 
-  ExpandableText({
-    this.key,
+  /// • Expandable text widget for general use.
+  ///
+  /// • `textWidget`, `helper`, `initiallyExpanded`, `padding`, `backgroundColor`, `helperTextList` & `animationDuration` arguments must not be null.
+  const ExpandableText({
+    Key? key,
     required this.textWidget,
     this.onPressed,
     this.padding = const EdgeInsets.all(4.0),
@@ -112,9 +113,9 @@ class _ExpandableTextState extends State<ExpandableText> with TickerProviderStat
   Container _buildBody() => Container(
         decoration: BoxDecoration(
           color: widget.backgroundColor,
-          image: widget.backgroundImage ?? null,
+          image: widget.backgroundImage,
           borderRadius: widget.borderRadius ?? BorderRadius.circular(5.0),
-          boxShadow: widget.boxShadow ?? [BoxShadow(color: Colors.grey, offset: Offset(1, 1), blurRadius: 2)],
+          boxShadow: widget.boxShadow ?? [const BoxShadow(color: Colors.grey, offset: Offset(1, 1), blurRadius: 2)],
         ),
         child: InkWell(
           hoverColor: Colors.transparent,
@@ -134,8 +135,7 @@ class _ExpandableTextState extends State<ExpandableText> with TickerProviderStat
       );
 
   AnimatedCrossFade _bodyWithText() {
-    TextStyle _defaultHelperStyle =
-        TextStyle(color: Colors.blue, backgroundColor: Colors.white, fontWeight: FontWeight.bold);
+    TextStyle _defaultHelperStyle = const TextStyle(color: Colors.blue, backgroundColor: Colors.white, fontWeight: FontWeight.bold);
     return AnimatedCrossFade(
       duration: widget.animationDuration,
       crossFadeState: !_isExpanded ? CrossFadeState.showFirst : CrossFadeState.showSecond,
@@ -147,8 +147,7 @@ class _ExpandableTextState extends State<ExpandableText> with TickerProviderStat
             Positioned(
               child: GestureDetector(
                 child: Text(_isExpanded ? '' : widget.helperTextList.first,
-                    style: widget.helperTextStyle?.copyWith(backgroundColor: widget.backgroundColor) ??
-                        _defaultHelperStyle),
+                    style: widget.helperTextStyle?.copyWith(backgroundColor: widget.backgroundColor) ?? _defaultHelperStyle),
                 onTap: () => _onTap(),
               ),
             ),
@@ -217,7 +216,6 @@ class _ExpandableTextState extends State<ExpandableText> with TickerProviderStat
   }
 
   void _onTap() async {
-    //  && !_controller.isAnimating
     if (widget.onPressed != null) await widget.onPressed!();
     _toggleExpand();
   }
@@ -226,9 +224,7 @@ class _ExpandableTextState extends State<ExpandableText> with TickerProviderStat
     return (value) {
       if (value == true) {
         _toggleExpand();
-      } else if (value == false) {
-        // if (_initiallyExpanded != true) _controller.reverse();
-      }
+      } else if (value == false) {}
     };
   }
 }

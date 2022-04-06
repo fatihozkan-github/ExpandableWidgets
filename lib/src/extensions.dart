@@ -16,8 +16,8 @@ extension TextExtensions on Text {
     TextHeightBehavior? textHeightBehavior,
   }) {
     return Text(
-      this.data ?? '',
-      style: style ?? this.style ?? TextStyle(color: Colors.black),
+      data ?? '',
+      style: style ?? this.style ?? const TextStyle(color: Colors.black),
       strutStyle: strutStyle ?? this.strutStyle,
       textAlign: textAlign ?? this.textAlign,
       textDirection: textDirection ?? this.textDirection,
@@ -41,19 +41,19 @@ extension TextExtensions on Text {
     return textPainter.didExceedMaxLines;
   }
 
-  RichText toRichText(InlineSpan textspanList) {
+  RichText toRichText(InlineSpan textSpanList) {
     return RichText(
-      textAlign: this.textAlign ?? TextAlign.start,
-      textDirection: this.textDirection,
-      softWrap: this.softWrap ?? true,
-      overflow: this.overflow ?? TextOverflow.ellipsis,
-      textScaleFactor: this.textScaleFactor ?? 1.0,
+      textAlign: textAlign ?? TextAlign.start,
+      textDirection: textDirection,
+      softWrap: softWrap ?? true,
+      overflow: overflow ?? TextOverflow.ellipsis,
+      textScaleFactor: textScaleFactor ?? 1.0,
       maxLines: 999999,
-      locale: this.locale,
-      strutStyle: this.strutStyle,
-      textWidthBasis: this.textWidthBasis ?? TextWidthBasis.parent,
-      textHeightBehavior: this.textHeightBehavior,
-      text: TextSpan(text: data, style: style ?? TextStyle(color: Colors.black), children: [textspanList]),
+      locale: locale,
+      strutStyle: strutStyle,
+      textWidthBasis: textWidthBasis ?? TextWidthBasis.parent,
+      textHeightBehavior: textHeightBehavior,
+      text: TextSpan(text: data, style: style ?? const TextStyle(color: Colors.black), children: [textSpanList]),
     );
   }
 }

@@ -8,6 +8,9 @@ class Expandable extends StatefulWidget {
   /// • The widget that size transition affects.
   final Widget secondChild;
 
+  /// •
+  final Widget? subChild;
+
   /// • Animation starts BEFORE and ends AFTER this function.
   ///
   /// • Notice that this function can not be triggered more than once while animating Expandable.
@@ -51,8 +54,6 @@ class Expandable extends StatefulWidget {
 
   final void Function(bool)? onHover;
 
-  final Axis direction;
-
   final List<BoxShadow>? boxShadow;
 
   /// • [BorderRadius] of [Expandable].
@@ -67,16 +68,18 @@ class Expandable extends StatefulWidget {
 
   /// • Expandable widget for general use.
   ///
-  /// • [backgroundColor], [animationDuration], [centralizeFirstChild], [direction], [clickable] arguments must not be null.
-  Expandable({
+  /// • [backgroundColor], [animationDuration], [centralizeFirstChild] & [clickable] arguments must not be null.
+  const Expandable({
+    Key? key,
     required this.firstChild,
     required this.secondChild,
+    this.subChild,
     this.onPressed,
     this.backgroundColor = Colors.white,
     this.animationDuration = const Duration(milliseconds: 400),
     this.backgroundImage,
-    this.showArrowWidget = true,
-    this.initiallyExpanded = false,
+    this.showArrowWidget,
+    this.initiallyExpanded,
     this.centralizeFirstChild = true,
     this.arrowWidget,
     this.arrowLocation = ArrowLocation.right,
@@ -85,87 +88,56 @@ class Expandable extends StatefulWidget {
     this.onLongPress,
     this.animation,
     this.animationController,
-    this.direction = Axis.vertical,
     this.onHover,
     this.boxShadow,
-  });
+  }) : super(key: key);
 
   @override
   _ExpandableState createState() => _ExpandableState();
 }
 
 class _ExpandableState extends State<Expandable> with TickerProviderStateMixin {
-  Animatable<double> _sizeTween = Tween<double>(begin: 0.0, end: 1.0);
+  final Animatable<double> _sizeTween = Tween<double>(begin: 0.0, end: 1.0);
   late AnimationController _controller;
   late Animation<double> _animation;
   bool? _initiallyExpanded = false;
 
   @override
   void initState() {
-    _initiallyExpanded = widget.initiallyExpanded;
+    _initiallyExpanded = widget.initiallyExpanded ?? false;
     _controller = widget.animationController ?? AnimationController(vsync: this, duration: widget.animationDuration);
-    _animation =
-        widget.animation ?? _sizeTween.animate(CurvedAnimation(parent: _controller, curve: Curves.fastOutSlowIn));
+    _animation = widget.animation ?? _sizeTween.animate(CurvedAnimation(parent: _controller, curve: Curves.fastOutSlowIn));
     super.initState();
   }
 
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   _controller.dispose();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
     if (_initiallyExpanded == true) _toggleExpand();
-    return _buildBody();
+    return Container(
+      child: _buildVerticalExpandable(),
+      decoration: BoxDecoration(
+        color: widget.backgroundColor,
+        image: widget.backgroundImage,
+        borderRadius: widget.borderRadius ?? BorderRadius.circular(5.0),
+        boxShadow: widget.boxShadow ?? [const BoxShadow(color: Colors.grey, offset: Offset(1, 1), blurRadius: 2)],
+      ),
+    );
   }
 
   RotationTransition _buildRotation() {
     return RotationTransition(
       turns: Tween(begin: 0.5, end: 0.0).animate(_animation),
-      child: widget.arrowWidget == null
-          ? Icon(Icons.keyboard_arrow_up_rounded, color: Colors.black, size: 25.0)
-          : widget.arrowWidget,
+      child: widget.arrowWidget ?? const Icon(Icons.keyboard_arrow_up_rounded, color: Colors.black, size: 25.0),
     );
   }
 
-  Container _buildBody() => Container(
-        child: widget.direction == Axis.vertical ? _buildVerticalExpandable() : _buildHorizontalExpandable(),
-        decoration: BoxDecoration(
-          color: widget.backgroundColor,
-          image: widget.backgroundImage ?? null,
-          borderRadius: widget.borderRadius ?? BorderRadius.circular(5.0),
-          boxShadow: widget.boxShadow ?? [BoxShadow(color: Colors.grey, offset: Offset(1, 1), blurRadius: 2)],
-        ),
-      );
-
   Column _buildVerticalExpandable() => Column(
-        children: [
-          InkWell(
-            hoverColor: Colors.transparent,
-            splashColor: Colors.transparent,
-            highlightColor: Colors.transparent,
-            onHover: widget.onHover != null ? _onHover() : null,
-            onTap: widget.clickable != Clickable.none ? _onPressed : null,
-            onLongPress: widget.clickable != Clickable.none ? _onLongPress : null,
-            child: widget.showArrowWidget == true
-                ? _buildBodyWithArrow()
-                : Row(mainAxisAlignment: MainAxisAlignment.center, children: [widget.firstChild]),
-          ),
-          InkWell(
-            child: _buildSecondChild(),
-            hoverColor: Colors.transparent,
-            splashColor: Colors.transparent,
-            highlightColor: Colors.transparent,
-            onHover: widget.onHover != null ? _onHover() : null,
-            onTap: widget.clickable == Clickable.everywhere ? _onPressed : null,
-            onLongPress: widget.clickable == Clickable.everywhere ? _onLongPress : null,
-          ),
-        ],
-      );
-
-  Row _buildHorizontalExpandable() => Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           InkWell(
@@ -175,36 +147,52 @@ class _ExpandableState extends State<Expandable> with TickerProviderStateMixin {
             onHover: widget.onHover != null ? _onHover() : null,
             onTap: widget.clickable != Clickable.none ? _onPressed : null,
             onLongPress: widget.clickable != Clickable.none ? _onLongPress : null,
-            child: widget.showArrowWidget == true
+            child: widget.showArrowWidget ?? true == true
                 ? _buildBodyWithArrow()
-                : Row(mainAxisAlignment: MainAxisAlignment.center, children: [widget.firstChild]),
+                : widget.subChild != null
+                    ? Column(
+                        children: [
+                          Row(mainAxisAlignment: MainAxisAlignment.center, children: [widget.firstChild]),
+                          widget.subChild!,
+                        ],
+                      )
+                    : Row(mainAxisAlignment: MainAxisAlignment.center, children: [widget.firstChild]),
           ),
-          InkWell(
-            child: _buildSecondChild(),
-            hoverColor: Colors.transparent,
-            splashColor: Colors.transparent,
-            highlightColor: Colors.transparent,
-            onHover: widget.onHover != null ? _onHover() : null,
-            onTap: widget.clickable == Clickable.everywhere ? _onPressed : null,
-            onLongPress: widget.clickable == Clickable.everywhere ? _onLongPress : null,
-          ),
+          _inkWellContainer(_buildSecondChild()),
         ],
       );
 
-  Flex _buildBodyWithArrow() => Flex(
-        direction: widget.direction == Axis.horizontal ? Axis.vertical : Axis.horizontal,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        textDirection: widget.arrowLocation == ArrowLocation.right ? TextDirection.ltr : TextDirection.rtl,
-        children: [
-          if (widget.centralizeFirstChild) Visibility(visible: false, child: _buildRotation()),
-          widget.firstChild,
-          _buildRotation(),
-        ],
-      );
+  Widget _buildBodyWithArrow() {
+    return widget.subChild != null
+        ? Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              widget.firstChild,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                textDirection: widget.arrowLocation == ArrowLocation.right ? TextDirection.ltr : TextDirection.rtl,
+                children: [
+                  if (widget.centralizeFirstChild) Visibility(visible: false, child: _buildRotation()),
+                  widget.subChild!,
+                  _buildRotation(),
+                ],
+              ),
+            ],
+          )
+        : Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            textDirection: widget.arrowLocation == ArrowLocation.right ? TextDirection.ltr : TextDirection.rtl,
+            children: [
+              if (widget.centralizeFirstChild) Visibility(visible: false, child: _buildRotation()),
+              widget.firstChild,
+              _buildRotation(),
+            ],
+          );
+  }
 
   SizeTransition _buildSecondChild() => SizeTransition(
         axisAlignment: 1,
-        axis: widget.direction,
+        axis: Axis.vertical,
         sizeFactor: _animation,
         child: widget.secondChild,
       );
@@ -242,5 +230,17 @@ class _ExpandableState extends State<Expandable> with TickerProviderStateMixin {
         if (_initiallyExpanded != true) _controller.reverse();
       }
     };
+  }
+
+  InkWell _inkWellContainer(Widget child) {
+    return InkWell(
+      child: child,
+      hoverColor: Colors.transparent,
+      splashColor: Colors.transparent,
+      highlightColor: Colors.transparent,
+      onHover: widget.onHover != null ? _onHover() : null,
+      onTap: widget.clickable == Clickable.everywhere ? _onPressed : null,
+      onLongPress: widget.clickable == Clickable.everywhere ? _onLongPress : null,
+    );
   }
 }
