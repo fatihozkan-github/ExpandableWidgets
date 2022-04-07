@@ -16,7 +16,7 @@ Expandable Widgets offers a variety of uses. Check [More Usecases](#-more-usecas
 <h4>General Use:</h4>
 <p>You can use Expandable with two required parameters.</p>
 
-<img src="https://user-images.githubusercontent.com/69001201/162217368-1d600882-5fea-4df0-bef5-dab4366b8751.gif" align="right" width="450px">
+<img src="https://user-images.githubusercontent.com/69001201/162217368-1d600882-5fea-4df0-bef5-dab4366b8751.gif" width="450px">
 
 ```dart
 Expandable(
@@ -28,7 +28,7 @@ Expandable(
 <h4>Extended Example:</h4>
 <p>If you add subChild argument you will get an expandable with subtitle. See 1.0.2 or older versions for previous extended expandables.</p>
 
-<img src="https://user-images.githubusercontent.com/69001201/162217577-fe50bb92-3768-491e-91da-98c116a14331.gif" align="right" width="450px">
+<img src="https://user-images.githubusercontent.com/69001201/162217577-fe50bb92-3768-491e-91da-98c116a14331.gif" width="450px">
 
 ```dart
 Expandable(
@@ -48,25 +48,20 @@ Expandable(
 
 <h2>Expandable Text: </h2>
 <p> You can use ExpandableText by giving the required parameter, textWidget. ExpandableText will handle the rest. </p>
-<img src="https://user-images.githubusercontent.com/69001201/162217681-ac9850c9-113b-49d7-9e3f-df9ef03bf7d8.gif" align="right" width="450px">
+<img src="https://user-images.githubusercontent.com/69001201/162217681-ac9850c9-113b-49d7-9e3f-df9ef03bf7d8.gif"  width="450px">
 
 ```dart
 ExpandableText(textWidget: Text(data, maxLines: 3),
 ```
 
-<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-
 <h2> More Usecases </h2>
 <h3>Expandable</h3>
 
-<img src="https://user-images.githubusercontent.com/69001201/162217789-3140fcd3-08cf-439f-9843-7771c9d5ed64.gif" width="450px" align="right">
+<img src="https://user-images.githubusercontent.com/69001201/162217789-3140fcd3-08cf-439f-9843-7771c9d5ed64.gif" width="450px">
 
 <p> Let's say you want to use Expandable and Flutter's AnimatedIcon at the same time.</p>
 <p> Just add the relevant animationController. Expandable will handle the rest!</p>
-<br/>
-<br/>
-<br/>
-  
+
 ```dart
 Row(
   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -109,7 +104,7 @@ Row(
 ```
 
 <h4> Nested Expandable Widgets </h4>
-<img src="https://user-images.githubusercontent.com/69001201/162217836-1e85151d-ea49-42fe-ac08-ec2b6bdb5d8d.gif" width="450px" align="right">
+<img src="https://user-images.githubusercontent.com/69001201/162217836-1e85151d-ea49-42fe-ac08-ec2b6bdb5d8d.gif" width="450px" >
 
 ```dart
 Expandable(
@@ -132,7 +127,7 @@ Expandable(
 
 <p> You can change the location of the arrow </p>
 
-<img src="https://user-images.githubusercontent.com/69001201/162217874-ec3e641b-adc7-4df4-b6eb-24dbbdccd683.gif" width="450px" align="right">
+<img src="https://user-images.githubusercontent.com/69001201/162217874-ec3e641b-adc7-4df4-b6eb-24dbbdccd683.gif" width="450px" >
 
 ```dart
 ExpandableText(
@@ -141,21 +136,19 @@ ExpandableText(
   finalArrowLocation: ArrowLocation.bottom,
 ),
 ```
-<br/><br/><br/><br/><br/><br/><br/><br/><br/>
   
 <p> You can use helper text </p>
 
-<img src="https://user-images.githubusercontent.com/69001201/162217908-6fdd80f3-4342-4ca6-af2c-91edd1a841ef.gif" width="450px" align="right">
+<img src="https://user-images.githubusercontent.com/69001201/162217908-6fdd80f3-4342-4ca6-af2c-91edd1a841ef.gif" width="450px" >
 
 ```dart
 ExpandableText(textWidget: Text(data, maxLines: 3), helper: Helper.text),
 ```
   
-<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 
 <p> Customized ExpandableText with helper text </p>
 
-<img src="https://user-images.githubusercontent.com/69001201/162217925-8d0bd92b-ec74-4695-a4e9-9716f9538bc0.gif" width="450px" align="right">
+<img src="https://user-images.githubusercontent.com/69001201/162217925-8d0bd92b-ec74-4695-a4e9-9716f9538bc0.gif" width="450px" >
 
 ```dart
 ExpandableText(
@@ -171,17 +164,15 @@ ExpandableText(
 ),
 ```
   
-<br/><br/><br/><br/><br/><br/>
 
 <p> Or you can remove the helper </p>
 
-<img src="https://user-images.githubusercontent.com/69001201/162217945-ca8c41ba-9ee5-4c8c-a041-21597eb863d1.gif" width="450px" align="right">
+<img src="https://user-images.githubusercontent.com/69001201/162217945-ca8c41ba-9ee5-4c8c-a041-21597eb863d1.gif" width="450px" >
 
 ```dart
 ExpandableText(textWidget: Text(data, maxLines: 3), helper: Helper.none),
 ```
 
-<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 
 <h2>Known issues</h2>
 <ul>
