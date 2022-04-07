@@ -1,7 +1,7 @@
 <h1>Expandable Widgets</h1>
 A package provides expandable widgets for Flutter, written in 100% Dart.
 
-<h2> Abstract </h2>
+<h2> Summary </h2>
 <h3>Why?</h3>
 
 <h4>Fast</h4>
