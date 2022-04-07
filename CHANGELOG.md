@@ -1,4 +1,4 @@
-# [1.0.3] - Release Date: 12.03.2022
+# [1.0.3] - Release Date: 07.04.2022
 
 ## Widgets:
 
@@ -18,11 +18,11 @@
     • elevation argument removed, boxShadow argument added.
     • Bug fixes.
     • Performance improvements.
-    • TODO: tests
 
 ## TODOs:
 
     • More features.
+    • More tests.
 
 # [1.0.2] - Release Date: 06.06.2021
 
