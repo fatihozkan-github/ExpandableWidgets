@@ -8,7 +8,8 @@ A package provides expandable widgets for Flutter, written in 100% Dart.
 There are various ways of getting expandable behaviour in Flutter. This package provides boilerplate code and reduces production time.
 
 <h4>Inclusive</h4>
-Expandable Widgets offers a variety of uses. Check [More Usecases](#more-usescases)
+
+Expandable Widgets offers a variety of uses. Check [More Usecases](#-more-usecases-)
 
 <h4>Easy</h4>
 <p>You can get the basic expandable widgets by writing one single line of code.</p>
@@ -48,7 +49,7 @@ Expandable(
 
 <h2>Expandable Text: </h2>
 <p> You can use ExpandableText by giving the required parameter, textWidget. ExpandableText will handle the rest. </p>
-For more features see [More Usecases](#more-usescases)
+For more features see [More Usecases](#-more-usecases-)
 
 ![expandableText](https://user-images.githubusercontent.com/69001201/120908163-4ae39e00-c670-11eb-880d-c82e944931b2.gif)
 
@@ -58,6 +59,50 @@ ExpandableText(textWidget: Text(data, maxLines: 3),
 
 <h2> More Usecases </h2>
 <h3>Expandable</h3>
+<p> Let's say you want to use Expandable and Flutter's AnimatedIcon at the same time.</p>
+<p> Just add the relevant animationController. Expandable will handle the rest!</p>
+  
+```
+Row(
+  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+  children: [
+    Expandable(
+      firstChild: Padding(
+        padding: const EdgeInsets.only(right: 8.0),
+        child: Text('Settings', style: TextStyle(fontSize: 18)),
+      ),
+      secondChild: Column(children: [Text('Option 1'), Text('Option 2'), Text('Option 3')]),
+      animationController: _animationController,
+      arrowLocation: ArrowLocation.left,
+      arrowWidget: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: AnimatedIcon(icon: AnimatedIcons.menu_close, progress: _animation, size: 16),
+      ),
+    ),
+```
+
+<p> Even more, one can combine AnimatedIcon and Expandable's rotation animation. </p>
+<p> Give the same animation to AnimatedIcon and Expandable and finally,  do not forget to add relevant animationController to Expandable. </p>
+
+```
+    Expandable(
+      firstChild: Padding(
+        padding: const EdgeInsets.only(right: 8.0),
+        child: Text('Settings', style: TextStyle(fontSize: 18)),
+      ),
+      secondChild: Column(children: [Text('Option 1'), Text('Option 2'), Text('Option 3')]),
+      animation: _animation,
+      animationController: _animationController,
+      arrowLocation: ArrowLocation.left,
+      arrowWidget: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: AnimatedIcon(icon: AnimatedIcons.menu_close, progress: _animation, size: 16),
+      ),
+    ),
+  ],
+),
+```
+
 <h4> Nested Expandable Widgets </h4>
 
 ```
@@ -95,7 +140,7 @@ ExpandableText(
 ExpandableText(textWidget: Text(data, maxLines: 3), helper: Helper.text),
 ```
 
-<p> Customized ExpandableText </p>
+<p> Customized ExpandableText with helper text </p>
 
 ```
 ExpandableText(
@@ -116,3 +161,5 @@ ExpandableText(
 ```
 ExpandableText(textWidget: Text(data, maxLines: 3), helper: Helper.none),
 ```
+
+For more info please see [example](https://github.com/fatihozkan-github/ExpandableWidgets/blob/master/example/lib/main.dart).
