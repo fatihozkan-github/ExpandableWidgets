@@ -1,22 +1,20 @@
 <h1>Expandable Widgets</h1>
 A package provides expandable widgets for Flutter, written in 100% Dart.
 
-<h2> Summary </h2>
-<h3>Why?</h3>
-
-<h4>Fast</h4>
+<h2> Why? </h2>
+<h3>Fast</h3>
 There are various ways of getting expandable behaviour in Flutter. This package provides boilerplate code and reduces production time.
 
-<h4>Inclusive</h4>
+<h3>Inclusive</h3>
 
 Expandable Widgets offers a variety of uses. Check [More Usecases](#-more-usecases-)
 
-<h4>Easy</h4>
-<p>You can get the basic expandable widgets by writing one single line of code.</p>
+<h3>Easy</h3>
+<p>You can obtain the basic expandable widgets by writing one single line of code.</p>
 
 <h2>Examples</h2>
 <h4>General Use:</h4>
-<p>You can simply use Expandable with 2 required parameters.</p>
+<p>You can use Expandable with two required parameters.</p>
 
 <img src="https://user-images.githubusercontent.com/69001201/162217368-1d600882-5fea-4df0-bef5-dab4366b8751.gif" align="right" width="450px">
 
@@ -184,5 +182,15 @@ ExpandableText(textWidget: Text(data, maxLines: 3), helper: Helper.none),
 ```
 
 <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+
+<h2>Known issues</h2>
+<ul>
+  <li>
+    ExpandableText with helper text is problematic on Web. Please see <a href="https://github.com/flutter/flutter/issues/65940" target="_blank"> TextPainter.didExceedMaxLines method is always returning false on Web</a>
+  </li>
+   <li>
+     Expandable with subChild has an inconsistent behaviour. This subject will be addressed in later versions.
+  </li>
+</ul>
 
 For more info please see [example](https://github.com/fatihozkan-github/ExpandableWidgets/blob/master/example/lib/main.dart).
