@@ -31,10 +31,10 @@ class _ExpandableShowcaseState extends State<ExpandableShowcase> with TickerProv
 
   @override
   void initState() {
-    _animationController = AnimationController(vsync: this, duration: Duration(seconds: 1));
+    _animationController = AnimationController(vsync: this, duration: const Duration(seconds: 1));
     CurvedAnimation curve = CurvedAnimation(parent: _animationController, curve: Curves.linear);
     _animation = _sizeTween.animate(curve);
-    _exteriorController = AnimationController(vsync: this, duration: Duration(seconds: 1));
+    _exteriorController = AnimationController(vsync: this, duration: const Duration(seconds: 1));
     CurvedAnimation curve2 = CurvedAnimation(parent: _exteriorController, curve: Curves.linear);
     _exteriorAnimation = _sizeTween.animate(curve2);
     _exteriorAnimation.addListener(() => setState(() {}));
@@ -71,7 +71,7 @@ class _ExpandableShowcaseState extends State<ExpandableShowcase> with TickerProv
             const SizedBox(height: 20),
 
             /// Usage with helperText
-            ExpandableText(textWidget: Text(data, maxLines: 3), helper: Helper.text, onPressed: () => print('hi!')),
+            ExpandableText(textWidget: Text(data, maxLines: 3), helper: Helper.text, onPressed: () => debugPrint('hi!')),
 
             const SizedBox(height: 20),
 
@@ -98,9 +98,9 @@ class _ExpandableShowcaseState extends State<ExpandableShowcase> with TickerProv
             const SizedBox(height: 20),
 
             /// General use
-            Expandable(
-              firstChild: const Text('Hello world!'),
-              secondChild: Center(child: const Text('Hello world!')),
+            const Expandable(
+              firstChild: Text('Hello world!'),
+              secondChild: Center(child: Text('Hello world!')),
             ),
 
             const SizedBox(height: 20),
@@ -109,7 +109,7 @@ class _ExpandableShowcaseState extends State<ExpandableShowcase> with TickerProv
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Expanded(flex: 2, child: Padding(padding: EdgeInsets.only(right: 8.0), child: _showcaseExpandable)),
+                Expanded(flex: 2, child: Padding(padding: const EdgeInsets.only(right: 8.0), child: _showcaseExpandable)),
                 Expanded(child: _showcaseExpandable),
               ],
             ),
@@ -128,14 +128,14 @@ class _ExpandableShowcaseState extends State<ExpandableShowcase> with TickerProv
                 child: Text(data, maxLines: 3, overflow: TextOverflow.ellipsis),
               ),
               showArrowWidget: true,
-              onPressed: () => print('done!'),
+              onPressed: () => debugPrint('done!'),
               clickable: Clickable.everywhere,
             ),
 
             const SizedBox(height: 30),
 
             /// Nested Expandable Widgets
-            Expandable(
+            const Expandable(
               firstChild: Text('Nested Expandable Widgets'),
               secondChild: Expandable(
                 borderRadius: BorderRadius.zero,
@@ -158,11 +158,11 @@ class _ExpandableShowcaseState extends State<ExpandableShowcase> with TickerProv
                 /// Let's say you want to use Expandable and Flutter's AnimatedIcon at the same time.
                 /// Just add the relevant animationController. Expandable will handle the rest!
                 Expandable(
-                  firstChild: Padding(
-                    padding: const EdgeInsets.only(right: 8.0),
+                  firstChild: const Padding(
+                    padding: EdgeInsets.only(right: 8.0),
                     child: Text('Settings', style: TextStyle(fontSize: 18)),
                   ),
-                  secondChild: Column(children: [Text('Option 1'), Text('Option 2'), Text('Option 3')]),
+                  secondChild: Column(children: const [Text('Option 1'), Text('Option 2'), Text('Option 3')]),
                   animationController: _animationController,
                   arrowLocation: ArrowLocation.left,
                   arrowWidget: Padding(
@@ -177,11 +177,11 @@ class _ExpandableShowcaseState extends State<ExpandableShowcase> with TickerProv
                 ///
                 /// Do not forget to add relevant animationController to Expandable!
                 Expandable(
-                  firstChild: Padding(
-                    padding: const EdgeInsets.only(right: 8.0),
+                  firstChild: const Padding(
+                    padding: EdgeInsets.only(right: 8.0),
                     child: Text('Settings', style: TextStyle(fontSize: 18)),
                   ),
-                  secondChild: Column(children: [Text('Option 1'), Text('Option 2'), Text('Option 3')]),
+                  secondChild: Column(children: const [Text('Option 1'), Text('Option 2'), Text('Option 3')]),
                   animation: _animation,
                   animationController: _animationController,
                   arrowLocation: ArrowLocation.left,
@@ -198,7 +198,7 @@ class _ExpandableShowcaseState extends State<ExpandableShowcase> with TickerProv
             /// Triggering expandable by a button.
             Center(
               child: ElevatedButton(
-                child: Text('Trigger animation'),
+                child: const Text('Trigger animation'),
                 onPressed: () {
                   switch (_exteriorAnimation.status) {
                     case AnimationStatus.completed:
@@ -218,9 +218,9 @@ class _ExpandableShowcaseState extends State<ExpandableShowcase> with TickerProv
             const SizedBox(height: 5),
 
             Expandable(
-              firstChild: Text('Change Icon'),
-              secondChild: Center(child: Text('Icon Changed')),
-              arrowWidget: _exteriorAnimation.value >= 0.5 ? Icon(Icons.close) : Icon(Icons.keyboard_arrow_up_rounded),
+              firstChild: const Text('Change Icon'),
+              secondChild: const Center(child: Text('Icon Changed')),
+              arrowWidget: _exteriorAnimation.value >= 0.5 ? const Icon(Icons.close) : const Icon(Icons.keyboard_arrow_up_rounded),
               animationController: _exteriorController,
               clickable: Clickable.none,
             ),
@@ -232,18 +232,18 @@ class _ExpandableShowcaseState extends State<ExpandableShowcase> with TickerProv
               children: [
                 for (int i = 0; i < 6; i++)
                   Padding(
-                    padding: EdgeInsets.all(4.0),
+                    padding: const EdgeInsets.all(4.0),
                     child: Expandable(
                       firstChild: Expanded(
                         child: ListTile(
-                          leading: Icon(Icons.book_rounded, color: Colors.blueGrey),
+                          leading: const Icon(Icons.book_rounded, color: Colors.blueGrey),
                           title: Text('Book ${i + 1}'),
                           subtitle: Text('Author ${i + 1}'),
                         ),
                       ),
-                      secondChild: Center(child: Text('Contents')),
+                      secondChild: const Center(child: Text('Contents')),
                       onHover: (value) {},
-                      animationDuration: Duration(seconds: 1),
+                      animationDuration: const Duration(seconds: 1),
                       centralizeFirstChild: false,
                       clickable: Clickable.firstChildOnly,
                       borderRadius: BorderRadius.circular(5.0),
@@ -263,7 +263,7 @@ class _ExpandableShowcaseState extends State<ExpandableShowcase> with TickerProv
                 padding: const EdgeInsets.all(8.0),
                 child: Text(data, maxLines: 3, textAlign: TextAlign.justify),
               ),
-              subChild: Text("Show Details"),
+              subChild: const Text("Show Details"),
             ),
 
             const SizedBox(height: 20),

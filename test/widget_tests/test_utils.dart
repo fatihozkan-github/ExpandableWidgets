@@ -11,7 +11,7 @@ class TestUtils {
     Stopwatch _testWatch = Stopwatch()..start();
     await pumpWidgetBasic(tester, child).whenComplete(() => _testWatch.stop());
 
-    if (printRenderTime) print(_testWatch.elapsed.inMilliseconds.toString() + ' milliseconds');
+    if (printRenderTime) debugPrint(_testWatch.elapsed.inMilliseconds.toString() + ' milliseconds');
 
     expect(true, _testWatch.elapsedMilliseconds < duration.inMilliseconds,
         reason: 'Render Time: ${_testWatch.elapsed.inMilliseconds} milliseconds\n'

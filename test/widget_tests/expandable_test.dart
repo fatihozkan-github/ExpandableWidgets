@@ -8,8 +8,8 @@ void main() {
     await tester.pumpWidget(
       TestUtils.widgetBase(
         Expandable(
-          firstChild: Container(height: 30, child: Center(child: Text('Hello world!'))),
-          secondChild: Container(height: 45, child: Center(child: Column(children: [Text('Hello'), Text('World!')]))),
+          firstChild: const SizedBox(height: 30, child: Center(child: Text('Hello world!'))),
+          secondChild: SizedBox(height: 45, child: Center(child: Column(children: const [Text('Hello'), Text('World!')]))),
           backgroundColor: Colors.grey.withOpacity(0.4),
           clickable: Clickable.everywhere,
         ),

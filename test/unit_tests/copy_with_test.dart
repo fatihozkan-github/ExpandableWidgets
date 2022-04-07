@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 void main() {
   group('copyWith cases', () {
     test('copyWith extension works', () {
-      Text _originalText = Text('testData', style: TextStyle(color: Colors.black));
+      Text _originalText = const Text('testData', style: TextStyle(color: Colors.black));
       Text _copiedText = _originalText.copyWith(softWrap: false, maxLines: 123);
       expect('testData', _copiedText.data);
       expect(false, _copiedText.softWrap);
@@ -17,7 +17,7 @@ void main() {
     });
 
     test('copyWith extension works - v2', () {
-      Text _originalText = Text(
+      Text _originalText = const Text(
         'test data',
         style: TextStyle(color: Colors.white),
         softWrap: true,
