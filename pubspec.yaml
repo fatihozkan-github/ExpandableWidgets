@@ -1,6 +1,6 @@
 name: expandable_widgets
 description: A package provides expandable widgets for Flutter, written in 100% Dart.
-version: 1.0.3
+version: 1.0.3+1
 homepage: https://github.com/fatihozkan-github/ExpandableWidgets
 
 environment:

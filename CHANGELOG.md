@@ -1,3 +1,6 @@
+# [1.0.3+1] - Release Date: 07.04.2022
+    • README.md fix.
+
 # [1.0.3] - Release Date: 07.04.2022
 
 ## Widgets:
