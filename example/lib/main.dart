@@ -22,9 +22,9 @@ class _ExpandableShowcaseState extends State<ExpandableShowcase> with TickerProv
   late Animation<double> _exteriorAnimation;
 
   final Expandable _showcaseExpandable = Expandable(
-    clickable: Clickable.firstChildOnly,
     firstChild: const Text('Hello world!'),
     secondChild: Center(child: Column(children: const [Text('Hello'), Text('World!')])),
+    clickable: Clickable.firstChildOnly,
     backgroundColor: Colors.white,
     showArrowWidget: false,
   );
@@ -59,20 +59,6 @@ class _ExpandableShowcaseState extends State<ExpandableShowcase> with TickerProv
           padding: const EdgeInsets.symmetric(horizontal: 15.0),
           children: [
             const SizedBox(height: 20),
-
-            Expandable(
-              firstChild: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(data, maxLines: 3, textAlign: TextAlign.justify),
-              ),
-              secondChild: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(data, maxLines: 3, textAlign: TextAlign.justify),
-              ),
-              subChild: Text("asadsa"),
-            ),
-
-            const SizedBox(height: 100),
 
             /// Simple case
             ExpandableText(textWidget: Text(data, maxLines: 3, textAlign: TextAlign.justify)),
@@ -112,7 +98,10 @@ class _ExpandableShowcaseState extends State<ExpandableShowcase> with TickerProv
             const SizedBox(height: 20),
 
             /// General use
-            Expandable(firstChild: const Text('Hello world!'), secondChild: Center(child: const Text('Hello world!'))),
+            Expandable(
+              firstChild: const Text('Hello world!'),
+              secondChild: Center(child: const Text('Hello world!')),
+            ),
 
             const SizedBox(height: 20),
 
@@ -128,9 +117,6 @@ class _ExpandableShowcaseState extends State<ExpandableShowcase> with TickerProv
             const SizedBox(height: 20),
 
             Expandable(
-              showArrowWidget: true,
-              onPressed: () => print('done!'),
-              clickable: Clickable.everywhere,
               firstChild: Expanded(
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -141,6 +127,9 @@ class _ExpandableShowcaseState extends State<ExpandableShowcase> with TickerProv
                 padding: const EdgeInsets.all(8.0),
                 child: Text(data, maxLines: 3, overflow: TextOverflow.ellipsis),
               ),
+              showArrowWidget: true,
+              onPressed: () => print('done!'),
+              clickable: Clickable.everywhere,
             ),
 
             const SizedBox(height: 30),
@@ -236,7 +225,7 @@ class _ExpandableShowcaseState extends State<ExpandableShowcase> with TickerProv
               clickable: Clickable.none,
             ),
 
-            const SizedBox(height: 40),
+            const SizedBox(height: 20),
 
             /// List of expandable widgets.
             Column(
@@ -263,7 +252,21 @@ class _ExpandableShowcaseState extends State<ExpandableShowcase> with TickerProv
               ],
             ),
 
-            const SizedBox(height: 40),
+            const SizedBox(height: 20),
+
+            Expandable(
+              firstChild: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(data, maxLines: 3, textAlign: TextAlign.justify),
+              ),
+              secondChild: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(data, maxLines: 3, textAlign: TextAlign.justify),
+              ),
+              subChild: Text("Show Details"),
+            ),
+
+            const SizedBox(height: 20),
           ],
         ),
       ),
