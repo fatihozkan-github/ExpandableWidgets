@@ -169,7 +169,7 @@ class _ExpandableState extends State<Expandable> with TickerProviderStateMixin {
             children: [
               widget.firstChild,
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: widget.centralizeFirstChild ? MainAxisAlignment.spaceEvenly : MainAxisAlignment.spaceBetween,
                 textDirection: widget.arrowLocation == ArrowLocation.right ? TextDirection.ltr : TextDirection.rtl,
                 children: [
                   if (widget.centralizeFirstChild) Visibility(visible: false, child: _buildRotation()),
@@ -180,7 +180,7 @@ class _ExpandableState extends State<Expandable> with TickerProviderStateMixin {
             ],
           )
         : Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: widget.centralizeFirstChild ? MainAxisAlignment.spaceEvenly : MainAxisAlignment.spaceBetween,
             textDirection: widget.arrowLocation == ArrowLocation.right ? TextDirection.ltr : TextDirection.rtl,
             children: [
               if (widget.centralizeFirstChild) Visibility(visible: false, child: _buildRotation()),
