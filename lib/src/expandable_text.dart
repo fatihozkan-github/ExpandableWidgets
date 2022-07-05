@@ -99,7 +99,7 @@ class _ExpandableTextState extends State<ExpandableText> with TickerProviderStat
   void initState() {
     super.initState();
     _initiallyExpanded = widget.initiallyExpanded;
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() => _shouldShowHelper = widget.textWidget.hasOverflow(context.size?.width ?? 0.0));
     });
   }
