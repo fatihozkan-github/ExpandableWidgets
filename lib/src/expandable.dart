@@ -262,6 +262,7 @@ class _ExpandableState extends State<Expandable> with TickerProviderStateMixin {
   InkWell _inkWellContainer(Widget child) {
     return InkWell(
       child: child,
+      focusNode: FocusNode(canRequestFocus: false),
       hoverColor: Colors.transparent,
       splashColor: Colors.transparent,
       highlightColor: Colors.transparent,
