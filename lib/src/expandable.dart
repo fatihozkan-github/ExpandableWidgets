@@ -66,6 +66,8 @@ class Expandable extends StatefulWidget {
   /// • See [Clickable] for possible options.
   final Clickable clickable;
 
+  final FocusNode? focusNode;
+
   /// • Expandable widget for general use.
   ///
   /// • [backgroundColor], [animationDuration], [centralizeFirstChild] & [clickable] arguments must not be null.
@@ -90,6 +92,7 @@ class Expandable extends StatefulWidget {
     this.animationController,
     this.onHover,
     this.boxShadow,
+    this.focusNode,
   }) : super(key: key);
 
   @override
@@ -150,6 +153,7 @@ class _ExpandableState extends State<Expandable> with TickerProviderStateMixin {
         mainAxisSize: MainAxisSize.min,
         children: [
           InkWell(
+            focusNode: widget.focusNode,
             hoverColor: Colors.transparent,
             splashColor: Colors.transparent,
             highlightColor: Colors.transparent,
