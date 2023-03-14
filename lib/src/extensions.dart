@@ -53,7 +53,11 @@ extension TextExtensions on Text {
       strutStyle: strutStyle,
       textWidthBasis: textWidthBasis ?? TextWidthBasis.parent,
       textHeightBehavior: textHeightBehavior,
-      text: TextSpan(text: data, style: style ?? const TextStyle(color: Colors.black), children: [textSpanList]),
+      text: TextSpan(
+        text: data,
+        style: style ?? const TextStyle(color: Colors.black),
+        children: [textSpanList],
+      ),
     );
   }
 }

@@ -97,88 +97,138 @@ class Expandable extends StatefulWidget {
 }
 
 class _ExpandableState extends State<Expandable> with TickerProviderStateMixin {
-  final Animatable<double> _sizeTween = Tween<double>(begin: 0.0, end: 1.0);
-  late AnimationController _controller;
-  late Animation<double> _animation;
-  bool? _initiallyExpanded = false;
+  late AnimationController controller;
+  late Animation<double> animation;
+
+  final sizeTween = Tween<double>(begin: 0.0, end: 1.0);
+
+  bool initiallyExpanded = false;
 
   @override
   void initState() {
-    _initiallyExpanded = widget.initiallyExpanded ?? false;
-    _controller = widget.animationController ??
-        AnimationController(vsync: this, duration: widget.animationDuration);
-    _animation = widget.animation ??
-        _sizeTween.animate(
-            CurvedAnimation(parent: _controller, curve: Curves.fastOutSlowIn));
     super.initState();
+    initiallyExpanded = widget.initiallyExpanded ?? false;
+    controller = widget.animationController ??
+        AnimationController(
+          vsync: this,
+          duration: widget.animationDuration,
+        );
+
+    animation = widget.animation ??
+        sizeTween.animate(
+          CurvedAnimation(
+            parent: controller,
+            curve: Curves.fastOutSlowIn,
+          ),
+        );
   }
 
   @override
   void dispose() {
     if (widget.animationController != null) {
-      _controller.dispose();
+      controller.dispose();
     }
     super.dispose();
   }
 
+  void toggleExpand() {
+    if (initiallyExpanded == true) initiallyExpanded = false;
+    switch (animation.status) {
+      case AnimationStatus.completed:
+        controller.reverse();
+        break;
+      case AnimationStatus.dismissed:
+        controller.forward();
+        break;
+      case AnimationStatus.reverse:
+      case AnimationStatus.forward:
+        break;
+    }
+  }
+
+  Future<void> onPressed() async {
+    if (widget.onPressed != null && !controller.isAnimating) {
+      await widget.onPressed!();
+    }
+    toggleExpand();
+  }
+
+  Future<void> onLongPress() async {
+    if (widget.onLongPress != null && !controller.isAnimating) {
+      await widget.onLongPress!();
+    }
+  }
+
+  void onHover(bool isHovered) {
+    if (widget.onHover != null) widget.onHover!(isHovered);
+
+    if (isHovered) {
+      toggleExpand();
+    } else if (!isHovered) {
+      if (initiallyExpanded != true) controller.reverse();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    if (_initiallyExpanded == true) _toggleExpand();
+    if (initiallyExpanded == true) toggleExpand();
     return Container(
-      child: _buildVerticalExpandable(),
+      child: buildVerticalExpandable(),
       decoration: BoxDecoration(
         color: widget.backgroundColor,
         image: widget.backgroundImage,
+        boxShadow: widget.boxShadow,
         borderRadius: widget.borderRadius ?? BorderRadius.circular(5.0),
-        boxShadow: widget.boxShadow ??
-            [
-              const BoxShadow(
-                  color: Colors.grey, offset: Offset(1, 1), blurRadius: 2)
-            ],
       ),
     );
   }
 
-  RotationTransition _buildRotation() {
+  RotationTransition buildRotation() {
     return RotationTransition(
-      turns: Tween(begin: 0.5, end: 0.0).animate(_animation),
+      turns: Tween(begin: 0.5, end: 0.0).animate(animation),
       child: widget.arrowWidget ??
-          const Icon(Icons.keyboard_arrow_up_rounded,
-              color: Colors.black, size: 25.0),
+          const Icon(
+            Icons.keyboard_arrow_up_rounded,
+            color: Colors.black,
+            size: 25.0,
+          ),
     );
   }
 
-  Column _buildVerticalExpandable() => Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          InkWell(
-            hoverColor: Colors.transparent,
-            splashColor: Colors.transparent,
-            highlightColor: Colors.transparent,
-            onHover: widget.onHover != null ? _onHover() : null,
-            onTap: widget.clickable != Clickable.none ? _onPressed : null,
-            onLongPress:
-                widget.clickable != Clickable.none ? _onLongPress : null,
-            child: widget.showArrowWidget ?? true == true
-                ? _buildBodyWithArrow()
-                : widget.subChild != null
-                    ? Column(
-                        children: [
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [widget.firstChild]),
-                          widget.subChild!,
-                        ],
-                      )
-                    : Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [widget.firstChild]),
-          ),
-          _inkWellContainer(_buildSecondChild()),
-        ],
-      );
+  Column buildVerticalExpandable() {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        InkWell(
+          hoverColor: Colors.transparent,
+          splashColor: Colors.transparent,
+          highlightColor: Colors.transparent,
+          onHover: widget.onHover != null ? onHover : null,
+          onTap: widget.clickable != Clickable.none ? onPressed : null,
+          onLongPress: widget.clickable != Clickable.none ? onLongPress : null,
+          child: widget.showArrowWidget ?? true == true
+              ? buildBodyWithArrow()
+              : widget.subChild != null
+                  ? Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [widget.firstChild],
+                        ),
+                        widget.subChild!,
+                      ],
+                    )
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [widget.firstChild],
+                    ),
+        ),
+        buildInkWellContainer(buildSecondChild()),
+      ],
+    );
+  }
 
-  Widget _buildBodyWithArrow() {
+  Widget buildBodyWithArrow() {
     return widget.subChild != null
         ? Column(
             mainAxisSize: MainAxisSize.min,
@@ -191,9 +241,9 @@ class _ExpandableState extends State<Expandable> with TickerProviderStateMixin {
                     : TextDirection.rtl,
                 children: [
                   if (widget.centralizeFirstChild)
-                    Visibility(visible: false, child: _buildRotation()),
+                    Visibility(visible: false, child: buildRotation()),
                   widget.subChild!,
-                  _buildRotation(),
+                  buildRotation(),
                 ],
               ),
             ],
@@ -205,67 +255,32 @@ class _ExpandableState extends State<Expandable> with TickerProviderStateMixin {
                 : TextDirection.rtl,
             children: [
               if (widget.centralizeFirstChild)
-                Visibility(visible: false, child: _buildRotation()),
+                Visibility(visible: false, child: buildRotation()),
               widget.firstChild,
-              _buildRotation(),
+              buildRotation(),
             ],
           );
   }
 
-  SizeTransition _buildSecondChild() => SizeTransition(
-        axisAlignment: 1,
-        axis: Axis.vertical,
-        sizeFactor: _animation,
-        child: widget.secondChild,
-      );
-
-  void _toggleExpand() {
-    if (_initiallyExpanded == true) _initiallyExpanded = false;
-    switch (_animation.status) {
-      case AnimationStatus.completed:
-        _controller.reverse();
-        break;
-      case AnimationStatus.dismissed:
-        _controller.forward();
-        break;
-      case AnimationStatus.reverse:
-      case AnimationStatus.forward:
-        break;
-    }
+  SizeTransition buildSecondChild() {
+    return SizeTransition(
+      axisAlignment: 1,
+      axis: Axis.vertical,
+      sizeFactor: animation,
+      child: widget.secondChild,
+    );
   }
 
-  Future<void> _onPressed() async {
-    if (widget.onPressed != null && !_controller.isAnimating)
-      await widget.onPressed!();
-    _toggleExpand();
-  }
-
-  Future<void> _onLongPress() async {
-    if (widget.onLongPress != null && !_controller.isAnimating)
-      await widget.onLongPress!();
-  }
-
-  Function(bool) _onHover() {
-    return (value) {
-      widget.onHover!;
-      if (value == true) {
-        _toggleExpand();
-      } else if (value == false) {
-        if (_initiallyExpanded != true) _controller.reverse();
-      }
-    };
-  }
-
-  InkWell _inkWellContainer(Widget child) {
+  InkWell buildInkWellContainer(Widget child) {
     return InkWell(
       child: child,
       hoverColor: Colors.transparent,
       splashColor: Colors.transparent,
       highlightColor: Colors.transparent,
-      onHover: widget.onHover != null ? _onHover() : null,
-      onTap: widget.clickable == Clickable.everywhere ? _onPressed : null,
+      onHover: widget.onHover != null ? onHover : null,
+      onTap: widget.clickable == Clickable.everywhere ? onPressed : null,
       onLongPress:
-          widget.clickable == Clickable.everywhere ? _onLongPress : null,
+          widget.clickable == Clickable.everywhere ? onLongPress : null,
     );
   }
 }

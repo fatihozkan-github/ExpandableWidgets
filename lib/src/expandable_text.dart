@@ -70,7 +70,8 @@ class ExpandableText extends StatefulWidget {
     this.backgroundImage,
     this.initiallyExpanded = false,
     this.onHover,
-    this.arrowWidget = const Icon(Icons.keyboard_arrow_down_rounded, color: Colors.black, size: 25.0),
+    this.arrowWidget = const Icon(Icons.keyboard_arrow_down_rounded,
+        color: Colors.black, size: 25.0),
     this.arrowLocation = ArrowLocation.right,
     this.finalArrowLocation = ArrowLocation.right,
     this.helperTextList = const ['...Show More', '...Show Less'],
@@ -78,77 +79,110 @@ class ExpandableText extends StatefulWidget {
     this.borderRadius,
     this.helper = Helper.arrow,
     this.boxShadow,
-  })  : assert(helperTextList.length == 2, 'helperTextList must have exactly 2 elements.'),
+  })  : assert(
+          helperTextList.length == 2,
+          'helperTextList must have exactly 2 elements.',
+        ),
         super(key: key);
 
   @override
   _ExpandableTextState createState() => _ExpandableTextState();
 }
 
-class _ExpandableTextState extends State<ExpandableText> with TickerProviderStateMixin {
-  bool _initiallyExpanded = false;
-  bool _shouldShowHelper = true;
-  bool _isExpanded = false;
-
-  void _toggleExpand() {
-    if (_initiallyExpanded == true) _initiallyExpanded = false;
-    setState(() => _isExpanded = !_isExpanded);
-  }
+class _ExpandableTextState extends State<ExpandableText>
+    with TickerProviderStateMixin {
+  bool initiallyExpanded = false;
+  bool shouldShowHelper = true;
+  bool isExpanded = false;
 
   @override
   void initState() {
     super.initState();
-    _initiallyExpanded = widget.initiallyExpanded;
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
-      setState(() => _shouldShowHelper = widget.textWidget.hasOverflow(context.size?.width ?? 0.0));
+    initiallyExpanded = widget.initiallyExpanded;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(
+        () {
+          shouldShowHelper = widget.textWidget.hasOverflow(
+            context.size?.width ?? 0.0,
+          );
+        },
+      );
     });
+  }
+
+  void toggleExpand() {
+    if (initiallyExpanded == true) initiallyExpanded = false;
+    setState(() => isExpanded = !isExpanded);
+  }
+
+  void onTap() async {
+    if (widget.onPressed != null) await widget.onPressed!();
+    toggleExpand();
+  }
+
+  void onHover(bool isHovered) {
+    if (isHovered) toggleExpand();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_initiallyExpanded == true) _toggleExpand();
-    return _buildBody();
+    if (initiallyExpanded == true) toggleExpand();
+    return buildBody();
   }
 
-  Container _buildBody() => Container(
-        decoration: BoxDecoration(
-          color: widget.backgroundColor,
-          image: widget.backgroundImage,
-          borderRadius: widget.borderRadius ?? BorderRadius.circular(5.0),
-          boxShadow: widget.boxShadow ?? [const BoxShadow(color: Colors.grey, offset: Offset(1, 1), blurRadius: 2)],
+  Container buildBody() {
+    return Container(
+      decoration: BoxDecoration(
+        color: widget.backgroundColor,
+        image: widget.backgroundImage,
+        boxShadow: widget.boxShadow,
+        borderRadius: widget.borderRadius ?? BorderRadius.circular(5.0),
+      ),
+      child: InkWell(
+        hoverColor: Colors.transparent,
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
+        onHover: widget.onHover != null ? onHover : null,
+        onTap: widget.helper == Helper.text ? null : onTap,
+        child: Padding(
+          padding: widget.padding,
+          child: widget.helper == Helper.arrow
+              ? buildBodyWithArrow()
+              : widget.helper == Helper.text
+                  ? buildBodyWithText()
+                  : buildDefaultBody(),
         ),
-        child: InkWell(
-          hoverColor: Colors.transparent,
-          splashColor: Colors.transparent,
-          highlightColor: Colors.transparent,
-          onHover: widget.onHover != null ? _onHover() : null,
-          onTap: widget.helper == Helper.text ? null : _onTap,
-          child: Padding(
-            padding: widget.padding,
-            child: widget.helper == Helper.arrow
-                ? _bodyWithArrow()
-                : widget.helper == Helper.text
-                    ? _bodyWithText()
-                    : _defaultBody(),
-          ),
-        ),
-      );
+      ),
+    );
+  }
 
-  AnimatedCrossFade _bodyWithText() {
-    TextStyle _defaultHelperStyle = const TextStyle(color: Colors.blue, backgroundColor: Colors.white, fontWeight: FontWeight.bold);
+  AnimatedCrossFade buildBodyWithText() {
+    const defaultHelperStyle = TextStyle(
+      color: Colors.blue,
+      backgroundColor: Colors.white,
+      fontWeight: FontWeight.bold,
+    );
     return AnimatedCrossFade(
       duration: widget.animationDuration,
-      crossFadeState: !_isExpanded ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+      crossFadeState:
+          !isExpanded ? CrossFadeState.showFirst : CrossFadeState.showSecond,
       firstChild: Stack(
         alignment: AlignmentDirectional.bottomEnd,
         children: [
-          widget.textWidget.copyWith(maxLines: _isExpanded ? null : widget.textWidget.maxLines),
-          if (_shouldShowHelper)
+          widget.textWidget.copyWith(
+            maxLines: isExpanded ? null : widget.textWidget.maxLines,
+          ),
+          if (shouldShowHelper)
             Positioned(
               child: GestureDetector(
-                child: Text(_isExpanded ? '' : widget.helperTextList.first,
-                    style: widget.helperTextStyle?.copyWith(backgroundColor: widget.backgroundColor) ?? _defaultHelperStyle),
-                onTap: () => _onTap(),
+                child: Text(
+                  isExpanded ? '' : widget.helperTextList.first,
+                  style: widget.helperTextStyle?.copyWith(
+                        backgroundColor: widget.backgroundColor,
+                      ) ??
+                      defaultHelperStyle,
+                ),
+                onTap: onTap,
               ),
             ),
         ],
@@ -156,75 +190,79 @@ class _ExpandableTextState extends State<ExpandableText> with TickerProviderStat
       secondChild: widget.textWidget.toRichText(
         TextSpan(
           text: widget.helperTextList.last,
-          style: widget.helperTextStyle?.copyWith(backgroundColor: widget.backgroundColor) ?? _defaultHelperStyle,
-          recognizer: TapGestureRecognizer()..onTap = _onTap,
+          style: widget.helperTextStyle?.copyWith(
+                backgroundColor: widget.backgroundColor,
+              ) ??
+              defaultHelperStyle,
+          recognizer: TapGestureRecognizer()..onTap = onTap,
           mouseCursor: SystemMouseCursors.click,
         ),
       ),
     );
   }
 
-  AnimatedCrossFade _defaultBody() => AnimatedCrossFade(
-        firstChild: widget.textWidget.copyWith(softWrap: true),
-        secondChild: widget.textWidget.copyWith(maxLines: 999999),
-        duration: widget.animationDuration,
-        crossFadeState: !_isExpanded ? CrossFadeState.showFirst : CrossFadeState.showSecond,
-      );
+  AnimatedCrossFade buildDefaultBody() {
+    return AnimatedCrossFade(
+      firstChild: widget.textWidget.copyWith(softWrap: true),
+      secondChild: widget.textWidget.copyWith(maxLines: 999999),
+      duration: widget.animationDuration,
+      crossFadeState:
+          !isExpanded ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+    );
+  }
 
-  AnimatedCrossFade _bodyWithArrow() => AnimatedCrossFade(
-        duration: widget.animationDuration,
-        crossFadeState: !_isExpanded ? CrossFadeState.showFirst : CrossFadeState.showSecond,
-        firstChild: _getChildWithArrow(widget.arrowLocation!, null),
-        secondChild: _getChildWithArrow(widget.finalArrowLocation!, 9999999),
-      );
+  AnimatedCrossFade buildBodyWithArrow() {
+    return AnimatedCrossFade(
+      duration: widget.animationDuration,
+      crossFadeState:
+          !isExpanded ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+      firstChild: buildChildWithArrow(widget.arrowLocation!, null),
+      secondChild: buildChildWithArrow(widget.finalArrowLocation!, 9999999),
+    );
+  }
 
-  Flex _getChildWithArrow(ArrowLocation locationParameter, int? maxLineOption) {
-    Widget _child = widget.textWidget.copyWith(maxLines: _isExpanded ? maxLineOption : widget.textWidget.maxLines);
-    Axis _direction = Axis.horizontal;
-    TextDirection _textDirection = TextDirection.ltr;
-    VerticalDirection _verticalDirection = VerticalDirection.up;
-    Widget _arrowWidget = Transform(
-      transform: _isExpanded ? Matrix4.rotationZ(pi) : Matrix4.identity(),
+  Flex buildChildWithArrow(
+    ArrowLocation locationParameter,
+    int? maxLineOption,
+  ) {
+    Widget child = widget.textWidget.copyWith(
+      maxLines: isExpanded ? maxLineOption : widget.textWidget.maxLines,
+    );
+
+    Axis direction = Axis.horizontal;
+    TextDirection textDirection = TextDirection.ltr;
+    VerticalDirection verticalDirection = VerticalDirection.up;
+
+    final arrowWidget = Transform(
+      transform: isExpanded ? Matrix4.rotationZ(pi) : Matrix4.identity(),
       alignment: Alignment.center,
       child: widget.arrowWidget,
     );
+
     switch (locationParameter) {
       case ArrowLocation.left:
-        _child = Expanded(child: _child);
-        _textDirection = TextDirection.rtl;
+        child = Expanded(child: child);
+        textDirection = TextDirection.rtl;
         break;
       case ArrowLocation.right:
-        _child = Expanded(child: _child);
+        child = Expanded(child: child);
         break;
       case ArrowLocation.top:
-        _direction = Axis.vertical;
+        direction = Axis.vertical;
         break;
       case ArrowLocation.bottom:
-        _direction = Axis.vertical;
-        _verticalDirection = VerticalDirection.down;
+        direction = Axis.vertical;
+        verticalDirection = VerticalDirection.down;
         break;
       default:
         break;
     }
     return Flex(
       mainAxisSize: MainAxisSize.min,
-      direction: _direction,
-      textDirection: _textDirection,
-      verticalDirection: _verticalDirection,
-      children: [_child, _arrowWidget],
+      direction: direction,
+      textDirection: textDirection,
+      verticalDirection: verticalDirection,
+      children: [child, arrowWidget],
     );
-  }
-
-  void _onTap() async {
-    if (widget.onPressed != null) await widget.onPressed!();
-    _toggleExpand();
-  }
-
-  Function(bool) _onHover() {
-    return (value) {
-      if (value == true) {
-        _toggleExpand();
-      } else if (value == false) {}
-    };
   }
 }
